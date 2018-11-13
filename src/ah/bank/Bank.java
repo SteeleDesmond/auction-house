@@ -1,4 +1,4 @@
-package bank;
+package ah.bank;
 
 public class Bank {
 }

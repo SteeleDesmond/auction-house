@@ -1,4 +1,4 @@
-package agent;
+package ah.agent;
 
 public class Agent {
 }
