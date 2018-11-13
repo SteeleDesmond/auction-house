@@ -1,0 +1,10 @@
+
+# Directories #
+.idea/
+
+# Compiled Source Code #
+*.class
+
+# Config files #
+*.iml
+*.MF
