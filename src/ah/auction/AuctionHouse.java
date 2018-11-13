@@ -1,4 +1,4 @@
-package auction;
+package ah.auction;
 
 public class AuctionHouse {
 }
