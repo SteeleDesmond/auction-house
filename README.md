@@ -36,3 +36,5 @@ Version 1.0
 
 ## Developers' Notes
 
+https://docs.google.com/document/d/1g8cQIcQ2JYmx-QWd7C_oqIhSvFnrmEUZ0OAb5I_fZ5E/edit?usp=sharing
+
