@@ -8,4 +8,13 @@ public class AgentControl {
     UserDisplay userDisplay;
     UserAccount userAccount;
     BankProxy bankProxy;
+
+    public AgentControl(String[] args) {
+
+    }
+
+
+    public void start() {
+
+    }
 }
