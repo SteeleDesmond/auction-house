@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -12,11 +13,12 @@ public class MainApplication extends Application {
     public static void main(String[] args) {
 
         //hello
+        launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Pane pane = new Pane();
+        HBox pane = new HBox();
 
         try {
 
@@ -29,6 +31,7 @@ public class MainApplication extends Application {
         runAgent.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 System.out.println("running agent");
             }
         });
