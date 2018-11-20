@@ -2,11 +2,11 @@ package ah.bank;
 
 import java.net.Socket;
 
-public class BankController implements Runnable {
+public class BankService implements Runnable {
 
 
 
-    public BankController() {
+    public BankService() {
 
     }
 

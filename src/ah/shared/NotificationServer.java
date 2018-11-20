@@ -2,7 +2,7 @@ package ah.shared;
 
 
 import ah.auction.AuctionHouseController;
-import ah.bank.BankController;
+import ah.bank.BankService;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -25,7 +25,7 @@ public class NotificationServer {
     }
 
     public void startServer() throws IOException {
-        BankController bank = new BankController();
+        BankService bank = new BankService();
         AuctionHouseController auctionHouse = new AuctionHouseController();
         ServerSocket  serverSocket = new ServerSocket(portNumber);
 
