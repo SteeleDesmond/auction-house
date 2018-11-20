@@ -21,31 +21,44 @@ public class AuctionHouse {
     public static void main(String[] args){
         //System.out.println("In auction house.");
         AuctionHouse aHouse = new AuctionHouse();
-        System.out.println("Input the number of items you wish to sell," +
-                " or d for default");
-        //will stop if num exceeds number if items in list read in
-        Scanner commandLine = new Scanner(System.in);
-        String command = commandLine.nextLine();
-        try{
-            int getItems = Integer.parseInt(command);
-            aHouse.numberOfItems = getItems;
-        }catch (NumberFormatException e){
-            if(!command.equals("d")) {
-                System.out.println("That is not a number");
-            }
-        }
-        if(aHouse.defaultItemNum == aHouse.numberOfItems){
-            System.out.println("using default");
-        }
-        System.out.println("Items you wish to sell: "+aHouse.numberOfItems);
-
+        aHouse.readInNumber();
+        System.out.println("Amount of items you wish to sell: "
+                + aHouse.numberOfItems);
 
         aHouse.readItemList("resrcs/itemList.txt");
         System.out.println("Printing item list:");
         aHouse.printItemList();
     }
 
+    /*
+     * reads in the number of items an auction house wishes to sell
+     *
+     */
+    private void readInNumber(){
+        System.out.println("Input the number of items you wish to sell," +
+                " or d for default");
+        Scanner commandLine = new Scanner(System.in);
+        String command = commandLine.nextLine();
+        try{
+            int getItems = Integer.parseInt(command);
+            numberOfItems = getItems;
+        }catch (NumberFormatException e){
+            if(!command.equals("d")) {
+                System.out.println("That is not a number");
+            }
+        }
+        if(defaultItemNum == numberOfItems){
+            System.out.println("using default");
+        }
+    }
 
+    /*
+     * reads in a list of items, and stores them in a temporary list
+     * then takes numberOfItems from that list, randomly, and
+     * stores those items inside the auction house's "inventory" , 'itemList'
+     * @param fileName -file to be read in, along with relative path
+     * @return true if successful, false if file isn't found
+     */
     private boolean readItemList(String fileName){
         LinkedList<Item> items = new LinkedList<>();
         try{
