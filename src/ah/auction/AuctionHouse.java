@@ -18,9 +18,9 @@ public class AuctionHouse {
         System.out.println("In auction house.");
         AuctionHouse aHouse = new AuctionHouse();
         Scanner commandLine = new Scanner(System.in);
-        System.out.println("Read in file__:");
-        String command = commandLine.nextLine();
-        aHouse.readItemList(command);
+        //System.out.println("Read in file__:");
+        //String command = commandLine.nextLine();
+        aHouse.readItemList("resrcs/itemList.txt");
         System.out.println("Printing item list:");
         aHouse.printItemList();
     }
