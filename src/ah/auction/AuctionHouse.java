@@ -10,6 +10,7 @@ import ah.shared.Item;
 
 public class AuctionHouse {
     private LinkedList<Item> itemList;
+    private int defaultItemNum = 5;
     private int numberOfItems = 5; //for sale, pick from temp list
     private Random rand = new Random(); //temp seed
 
@@ -20,13 +21,25 @@ public class AuctionHouse {
     public static void main(String[] args){
         //System.out.println("In auction house.");
         AuctionHouse aHouse = new AuctionHouse();
-        System.out.println("Input the number of items you wish to sell");
+        System.out.println("Input the number of items you wish to sell," +
+                " or d for default");
         //will stop if num exceeds number if items in list read in
         Scanner commandLine = new Scanner(System.in);
-        int input = commandLine.nextInt();
-        System.out.println("Input "+input);
-        aHouse.numberOfItems = input;
-        //String command = commandLine.nextLine();
+        String command = commandLine.nextLine();
+        try{
+            int getItems = Integer.parseInt(command);
+            aHouse.numberOfItems = getItems;
+        }catch (NumberFormatException e){
+            if(!command.equals("d")) {
+                System.out.println("That is not a number");
+            }
+        }
+        if(aHouse.defaultItemNum == aHouse.numberOfItems){
+            System.out.println("using default");
+        }
+        System.out.println("Items you wish to sell: "+aHouse.numberOfItems);
+
+
         aHouse.readItemList("resrcs/itemList.txt");
         System.out.println("Printing item list:");
         aHouse.printItemList();
@@ -53,14 +66,6 @@ public class AuctionHouse {
             int next = rand.nextInt(items.size());
             itemList.add(items.remove(next));
             numberOfItems--;
-        }
-        System.out.println("List of items read in");
-        if(!items.isEmpty()) {
-            for (Item i : items) {
-                System.out.println(i);
-            }
-        }else{
-            System.out.println("nothing");
         }
 
         return true;
