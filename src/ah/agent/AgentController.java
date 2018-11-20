@@ -1,6 +1,6 @@
 package ah.agent;
 
-public class AgentControl {
+public class AgentController {
 
     AuctionHouseProxy ahProxy;
     ActiveBids activeBids;
@@ -9,7 +9,7 @@ public class AgentControl {
     UserAccount userAccount;
     BankProxy bankProxy;
 
-    public AgentControl(String[] args) {
+    public AgentController(String[] args) {
 
     }
 
