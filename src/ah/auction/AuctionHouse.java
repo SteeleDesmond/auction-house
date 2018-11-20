@@ -44,7 +44,7 @@ public class AuctionHouse {
             return false;
         }
         //need to randomly pick a certain number of items
-        while(numberOfItems>0){
+        while(numberOfItems>0 && !items.isEmpty()){
             int next = rand.nextInt(items.size());
             itemList.add(items.remove(next));
             numberOfItems--;
