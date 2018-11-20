@@ -1,7 +1,7 @@
 package ah.shared;
 
 
-import ah.auction.AuctionHouseController;
+import ah.auction.AuctionHouseService;
 import ah.bank.BankService;
 
 import java.io.IOException;
@@ -16,19 +16,30 @@ public class NotificationServer {
     private String serverType;
     //private String hostName;
     private int portNumber;
+    private BankService bank;
+    private AuctionHouseService auctionHouse;
 
     public NotificationServer(int portNumber, String serverType) throws IOException {
         this.serverType = serverType;
         //this.hostName = hostName;
         this.portNumber = portNumber;
+        switch(serverType.toLowerCase()) {
+            case("bank"): {
+                bank = new BankService();
+                break;
+            }
+            case("auction house"): {
+                auctionHouse = new AuctionHouseService();
+                break;
+            }
+        }
         startServer();
     }
 
     public void startServer() throws IOException {
-        BankService bank = new BankService();
-        AuctionHouseController auctionHouse = new AuctionHouseController();
         ServerSocket  serverSocket = new ServerSocket(portNumber);
 
+        // Create new Bank thread or AuctionHouse thread depending on the type of server
         switch(serverType.toLowerCase()) {
             case("bank"): {
                 Thread t = new Thread(bank);
@@ -50,11 +61,11 @@ public class NotificationServer {
             if(clientSocket != null) {
                 switch(serverType.toLowerCase()) {
                     case("bank"): {
-                        bank.addNewAgent(clientSocket);
+                        bank.addNewClient(clientSocket);
                         break;
                     }
                     case("auction house"): {
-                        auctionHouse.addNewAgent(clientSocket);
+                        auctionHouse.addNewClient(clientSocket);
                         break;
                     }
                 }

@@ -17,7 +17,7 @@ public class Bank {
         Scanner commandLine = new Scanner(System.in);
         //System.out.println("Please enter host name:");
         //hostName = commandLine.nextLine();
-        System.out.println("Please enter port number to start on:");
+        System.out.println("Please enter the port number to start on:");
         portNumber = commandLine.nextInt();
 
         Bank bank = new Bank();
