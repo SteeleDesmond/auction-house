@@ -20,7 +20,12 @@ public class AuctionHouse {
     public static void main(String[] args){
         //System.out.println("In auction house.");
         AuctionHouse aHouse = new AuctionHouse();
-       // Scanner commandLine = new Scanner(System.in);
+        System.out.println("Input the number of items you wish to sell");
+        //will stop if num exceeds number if items in list read in
+        Scanner commandLine = new Scanner(System.in);
+        int input = commandLine.nextInt();
+        System.out.println("Input "+input);
+        aHouse.numberOfItems = input;
         //String command = commandLine.nextLine();
         aHouse.readItemList("resrcs/itemList.txt");
         System.out.println("Printing item list:");
