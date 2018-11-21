@@ -2,6 +2,8 @@ package ah.auction;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -21,6 +23,7 @@ public class AuctionHouse {
     public static void main(String[] args){
         //System.out.println("In auction house.");
         AuctionHouse aHouse = new AuctionHouse();
+        //aHouse.getServerInfoFromUser();
         aHouse.readInNumber();
         System.out.println("Amount of items you wish to sell: "
                 + aHouse.numberOfItems);
@@ -50,12 +53,39 @@ public class AuctionHouse {
         if(defaultItemNum == numberOfItems){
             System.out.println("using default");
         }
+        commandLine.close();
     }
+
+//
 
     /*
      * reads in a list of items, and stores them in a temporary list
      * then takes numberOfItems from that list, randomly, and
-     * stores those items inside the auction house's "inventory" , 'itemList'
+     * stores those items inside the auction house's "inventory" , 'itemList'    private void getServerInfoFromUser(){
+//        System.out.println("Input bank server");
+//        Scanner commandLine = new Scanner(System.in);
+//        String command = commandLine.nextLine();
+//        int portNumber = Integer.parseInt(command);
+////        try{
+////            Socket socket = new
+////        }
+//    }
+//
+//    private ServerSocket getPortInfoFromUser(){
+//        System.out.println("Input port number: ");
+//        Scanner commandLine = new Scanner(System.in);
+//        String command = commandLine.nextLine();
+//        int portNumber = Integer.parseInt(command);
+//        try{
+//            commandLine.close();
+//            return new ServerSocket(portNumber);
+//        }catch(Exception e){
+//            e.printStackTrace();
+//        }
+//        commandLine.close();
+//        return null;
+//
+//    }
      * @param fileName -file to be read in, along with relative path
      * @return true if successful, false if file isn't found
      */
