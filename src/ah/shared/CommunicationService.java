@@ -26,6 +26,7 @@ public class CommunicationService {
 
         try
         {
+            // Relevant information: https://alvinalexander.com/blog/post/java/java-class-writes-reads-remote-socket
             InetAddress addr = InetAddress.getByName(hostName);
             SocketAddress sockaddr = new InetSocketAddress(addr, portNumber);
             Socket sock = new Socket();
