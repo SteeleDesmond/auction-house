@@ -23,16 +23,6 @@ public class NotificationServer {
         this.serverType = serverType;
         //this.hostName = hostName;
         this.portNumber = portNumber;
-        switch(serverType.toLowerCase()) {
-            case("bank"): {
-                bank = new BankService();
-                break;
-            }
-            case("auction house"): {
-                auctionHouse = new AuctionHouseService();
-                break;
-            }
-        }
         startServer();
     }
 
@@ -42,11 +32,13 @@ public class NotificationServer {
         // Create new Bank thread or AuctionHouse thread depending on the type of server
         switch(serverType.toLowerCase()) {
             case("bank"): {
+                bank = new BankService();
                 Thread t = new Thread(bank);
                 t.start();
                 break;
             }
             case("auction house"): {
+                auctionHouse = new AuctionHouseService();
                 Thread t = new Thread(auctionHouse);
                 t.start();
                 break;

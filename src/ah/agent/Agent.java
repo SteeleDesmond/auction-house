@@ -1,13 +1,13 @@
 package ah.agent;
 
-import ah.auction.AuctionHouse;
-import ah.bank.Bank;
 import ah.shared.CommunicationService;
 
-import java.io.IOError;
-import java.io.IOException;
 import java.util.Scanner;
 
+
+/**
+ * The Agent class connects to the bank service via given host/port information and starts the AgentController.
+ */
 public class Agent {
 
     private AuctionHouseProxy ahProxy;
@@ -23,7 +23,7 @@ public class Agent {
 
         Scanner commandLine = new Scanner(System.in);
         System.out.println("Starting Agent!");
-        System.out.println("Please enter host name to connect to:");
+        System.out.println("Please enter host name of the bank to connect to:");
         hostName = commandLine.nextLine();
         System.out.println("Please enter port name:");
         portNumber = commandLine.nextInt();
