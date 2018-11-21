@@ -17,12 +17,13 @@ public class Agent {
 
 
     public static void main(String[] args) {
-        //AgentControl agentControl = new AgentControl(args);
+        //AgentController agentController = new AgentController(args);
         String hostName;
         int portNumber;
 
         Scanner commandLine = new Scanner(System.in);
-        System.out.println("Please enter host name:");
+        System.out.println("Starting Agent!");
+        System.out.println("Please enter host name to connect to:");
         hostName = commandLine.nextLine();
         System.out.println("Please enter port name:");
         portNumber = commandLine.nextInt();
@@ -34,6 +35,6 @@ public class Agent {
         catch (Exception e) {
             e.printStackTrace();
         }
-        //agentControl.start();
+        //agentController.start();
     }
 }
