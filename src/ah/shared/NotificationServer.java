@@ -7,6 +7,7 @@ import ah.bank.BankService;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Used by Servers to open a port and start its service. Uses a ServerSocket to allow clients to connect to the service.
@@ -18,6 +19,8 @@ public class NotificationServer {
     private int portNumber; // The port to open the service on
     private BankService bank;
     private AuctionHouseService auctionHouse;
+    private CommunicationService connector = new CommunicationService();
+    private BankProxy bankProxy;
 
     public NotificationServer(int portNumber, String serverType) throws IOException {
         this.serverType = serverType;
@@ -41,7 +44,17 @@ public class NotificationServer {
                 break;
             }
             case("auction house"): {
-                auctionHouse = new AuctionHouseService();
+
+                // If it is an auction house server then connect to the bank server. The AHService uses a BankProxy.
+                System.out.println("Please enter the host name of the bank server");
+                Scanner commandLine = new Scanner(System.in);
+                String hostName = commandLine.nextLine();
+                System.out.println("Please enter the bank's port number:");
+                int portNumber = commandLine.nextInt();
+                commandLine.nextLine(); // This is to remove the new line character after the nextInt function
+                bankProxy = connector.connectToBankServer(hostName, portNumber);
+
+                auctionHouse = new AuctionHouseService(bankProxy);
                 Thread t = new Thread(auctionHouse);
                 t.start();
                 break;

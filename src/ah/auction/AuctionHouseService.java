@@ -1,5 +1,8 @@
 package ah.auction;
 
+import ah.shared.BankProxy;
+import ah.shared.CommunicationService;
+
 import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -7,24 +10,22 @@ import java.util.Scanner;
 
 public class AuctionHouseService implements Runnable {
 
+    private BankProxy bank;
     private LinkedList<Item> itemList = new LinkedList<>();
 
-    public AuctionHouseService() {
-
-        // Register with the static bank
-
-//        System.out.println("In auction house.");
-//        Scanner commandLine = new Scanner(System.in);
-//        System.out.println("Read in file__:");
-//        String command = commandLine.nextLine();
-//        readItemList(command);
-//        System.out.println("Printing item list:");
-//        printItemList();
+    public AuctionHouseService(BankProxy bank) {
+        this.bank = bank; // Register with the static bank
     }
 
     @Override
     public void run() {
-
+        //        System.out.println("In auction house.");
+        //        Scanner commandLine = new Scanner(System.in);
+        //        System.out.println("Read in file__:");
+        //        String command = commandLine.nextLine();
+        //        readItemList(command);
+        //        System.out.println("Printing item list:");
+        //        printItemList();
     }
 
     public void addNewClient(Socket s) throws IOException {

@@ -46,6 +46,7 @@ public class CommunicationService {
             Socket ahSocket = new Socket();
             ahSocket.connect(ahServerAddress);
             System.out.println("Connected successfully.");
+
             // Create an AuctionHouseProxy object which uses the socket input/output streams
             PrintWriter AhOut = new PrintWriter(ahSocket.getOutputStream(), true);
             BufferedReader AhIn = new BufferedReader(new InputStreamReader(ahSocket.getInputStream()));
