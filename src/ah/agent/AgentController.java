@@ -27,6 +27,7 @@ public class AgentController implements Runnable {
                 case ("BankMsg"): {
                     System.out.println("Type a message to send to the bank");
                     bank.sendMsg(commandLine.nextLine());
+                    break;
                 }
             }
         }

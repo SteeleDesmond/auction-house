@@ -1,7 +1,6 @@
 package ah.auction;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -28,8 +27,13 @@ public class AuctionHouseService implements Runnable {
 
     }
 
-    public void addNewClient(Socket s) {
-
+    public void addNewClient(Socket s) throws IOException {
+        PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+        BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        while(true) {
+            if(in.readLine() != null)
+                System.out.println("AHService received message: " + in.readLine());
+        }
     }
 
 
@@ -60,5 +64,12 @@ public class AuctionHouseService implements Runnable {
         }else{
             System.out.println("nothing");
         }
+    }
+
+    /**
+     * Post an auction for bidding. Used by the AuctionHouseClient only
+     */
+    protected void postAuction() {
+
     }
 }

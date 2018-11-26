@@ -22,9 +22,15 @@ public class AuctionHouseController implements Runnable {
         while(running) {
             printCommands();
             switch(commandLine.nextLine()) {
-                case ("sendMsg"): {
-                    System.out.println("Type a message to send to the bank");
+                case ("bankMsg"): {
+                    System.out.println("Type a message to send to the bank service");
                     bank.sendMsg(commandLine.nextLine());
+                    break;
+                }
+                case ("ahMsg"): {
+                    System.out.println("Type a message to send to the Auction House service");
+                    auctionHouse.sendMsg(commandLine.nextLine());
+                    break;
                 }
             }
         }
@@ -32,7 +38,8 @@ public class AuctionHouseController implements Runnable {
 
     private void printCommands() {
         System.out.println("Auction House Client Console Options:");
-        System.out.println("sendMsg -- Send a message to the bank");
+        System.out.println("bankMsg -- Send a message to the bank");
+        System.out.println("ahMsg -- Send a message to the AH Server");
         // list auction
         // start bidding
         // etc.
