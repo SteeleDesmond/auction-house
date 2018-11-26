@@ -18,6 +18,9 @@ Version 1.0
 
 ### Quickstart
 
+They should be started in the following order:
+
+Bank --> AuctionHouseServer --> AuctionHouseClient --> Agent
 
 ## Implemented Features
 
