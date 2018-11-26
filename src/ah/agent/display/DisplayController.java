@@ -1,4 +1,4 @@
-package ah.main;
+package ah.agent.display;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -6,10 +6,12 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class MainApplication extends Application {
+/**
+ * GUI Controller for the Agent
+ */
+public class DisplayController extends Application {
     public static void main(String[] args) {
 
         //hello

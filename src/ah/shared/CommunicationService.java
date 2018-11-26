@@ -2,19 +2,24 @@ package ah.shared;
 
 
 import ah.agent.AgentController;
+import ah.auction.AuctionHouseController;
 
 import java.io.*;
 import java.net.*;
 
 /**
- * Used by clients to connect to given port and hostname (server)
+ * Used by clients to connect to a given host and port. The Agent and the AuctionHouse both have clients that connect to
+ * the Bank service. When an Agent or Auction House are created they are given the location of the bank and they setup
+ * a local proxy connection to the bank.
  */
 public class CommunicationService {
 
+    private String clientType; // agent or auction house for this application
     private String hostName;
     private int portNumber;
 
-    public CommunicationService(String hostName, int portNumber) throws IOException {
+    public CommunicationService(String hostName, int portNumber, String clientType) throws IOException {
+        this.clientType = clientType;
         this.hostName = hostName;
         this.portNumber = portNumber;
         connectToServer();
@@ -22,36 +27,40 @@ public class CommunicationService {
 
     private void connectToServer() throws IOException {
 
+        BankProxy bankProxy; // The BankProxy is under shared for this application and is used by agent and auction
         AgentController agentController;
+        AuctionHouseController auctionHouseController;
 
-        try
-        {
+        try {
             // Relevant information: https://alvinalexander.com/blog/post/java/java-class-writes-reads-remote-socket
-            InetAddress addr = InetAddress.getByName(hostName);
-            SocketAddress sockaddr = new InetSocketAddress(addr, portNumber);
-            Socket sock = new Socket();
+            SocketAddress socketAddress = new InetSocketAddress(InetAddress.getByName(hostName), portNumber);
+            Socket socket = new Socket();
+            socket.connect(socketAddress);
 
-            // this method will block for the defined number of milliseconds
-            int timeout = 2000;
-            sock.connect(sockaddr, timeout);
+            // Create a BankProxy object which uses the socket input/output streams
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            bankProxy = new BankProxy(out, in);
 
-            PrintWriter out = new PrintWriter(sock.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-            agentController = new AgentController(out, in);
+            // Instantiate either an agent or an auction house client with the given BankProxy
+            switch(clientType.toLowerCase()) {
+                case("agent"): {
+                    agentController = new AgentController(bankProxy);
+                    Thread t = new Thread(agentController);
+                    t.start();
+                    break;
+                }
+                case("auction house"): {
+                    auctionHouseController = new AuctionHouseController(bankProxy);
+                    Thread t = new Thread(auctionHouseController);
+                    t.start();
+                    break;
+                }
+            }
+            System.out.println("Connected successfully.");
         }
-        catch (UnknownHostException e)
-        {
+        catch (UnknownHostException e) {
             e.printStackTrace();
         }
-
-
-//        try (Socket socket = new Socket(hostName, portNumber);
-//             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-//             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream())))
-//        {
-//            agentController = new AgentController(out, in);
-//        }
-
-
     }
 }

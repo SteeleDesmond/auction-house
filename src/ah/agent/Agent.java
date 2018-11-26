@@ -1,40 +1,36 @@
 package ah.agent;
 
 import ah.shared.CommunicationService;
-
 import java.util.Scanner;
 
 
 /**
  * The Agent class connects to the bank service via given host/port information and starts the AgentController.
+ * AgentController can request information from the bank and connect to AuctionHouse services.
  */
 public class Agent {
 
-    private AuctionHouseProxy ahProxy;
-    private BankProxy bankProxy;
     private CommunicationService bankServer;
 
-
-
     public static void main(String[] args) {
-        //AgentController agentController = new AgentController(args);
+
+        Agent agent = new Agent();
         String hostName;
         int portNumber;
 
         Scanner commandLine = new Scanner(System.in);
         System.out.println("Starting Agent!");
-        System.out.println("Please enter host name of the bank to connect to:");
+        System.out.println("Please enter the host name of the bank to connect to:");
         hostName = commandLine.nextLine();
-        System.out.println("Please enter port name:");
+        System.out.println("Please enter the port number:");
         portNumber = commandLine.nextInt();
 
-        Agent agent = new Agent();
+        System.out.println("Connecting to the bank server...");
         try {
-            agent.bankServer = new CommunicationService(hostName, portNumber);
+            agent.bankServer = new CommunicationService(hostName, portNumber, "agent");
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        //agentController.start();
     }
 }

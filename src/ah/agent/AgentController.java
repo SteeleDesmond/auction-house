@@ -1,50 +1,44 @@
 package ah.agent;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import ah.shared.BankProxy;
+
 import java.util.Scanner;
 
-public class AgentController {
+public class AgentController implements Runnable {
 
-    AuctionHouseProxy ahProxy;
-    ActiveBids activeBids;
-    UserCommands userCommands;
-    UserDisplay userDisplay;
-    UserAccount userAccount;
-    BankProxy bankProxy;
+    private AuctionHouseProxy ahProxy;
+    private ActiveBids activeBids;
+    private UserCommands userCommands;
+    private UserDisplay userDisplay;
+    private UserAccount userAccount;
 
-    private PrintWriter out;
-    private BufferedReader in;
+    private BankProxy bank;
+    private Scanner commandLine = new Scanner(System.in);
+    Boolean running = true;
 
-    public AgentController(PrintWriter out, BufferedReader in) {
-        this.out = out;
-        this.in = in;
-
-        out.println("Sending information from Agent");
-        while(true) {
-            System.out.println("Type a message to send to the bank");
-            Scanner commandLine = new Scanner(System.in);
-            out.println(commandLine.nextLine());
-        }
-//        BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-//        String fromServer = in.readLine();
-//        while (fromServer != null) {
-//            System.out.println("Server: " + fromServer);
-//            if (fromServer.equals("Bye.")) {
-//                break;
-//            }
-//            String fromUser = stdIn.readLine();
-//            if (fromUser != null) {
-//                System.out.println("Client: " + fromUser);
-//                out.println(fromUser);
-//            }
-//            fromServer = in.readLine();
-//        }
+    public AgentController(BankProxy bank) {
+        this.bank = bank;
     }
 
+    @Override
+    public void run() {
+        while(running) {
+            printCommands();
+            switch(commandLine.nextLine()) {
+                case ("BankMsg"): {
+                    System.out.println("Type a message to send to the bank");
+                    bank.sendMsg(commandLine.nextLine());
+                }
+            }
+        }
+    }
 
-    public void start() {
-
+    private void printCommands() {
+        System.out.println("User Options:");
+        System.out.println("BankMsg -- Send a message to the bank");
+        // Check account balance
+        // check active bids
+        // bid
+        // etc
     }
 }

@@ -1,4 +1,4 @@
-package ah.auction;
+package ah.shared;
 
 public class AgentProxy {
 }
