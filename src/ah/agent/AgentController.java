@@ -12,7 +12,7 @@ public class AgentController implements Runnable {
     private UserCommands userCommands;
     private UserDisplay userDisplay;
     private UserAccount userAccount;
-    private CommunicationService connector;
+    private CommunicationService connector = new CommunicationService();
     private AuctionHouseProxy auctionHouse;
 
     private BankProxy bank;
