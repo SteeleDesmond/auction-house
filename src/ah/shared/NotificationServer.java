@@ -19,8 +19,7 @@ public class NotificationServer {
     private int portNumber; // The port to open the service on
     private BankService bank;
     private AuctionHouseService auctionHouse;
-    private CommunicationService connector = new CommunicationService();
-    private BankProxy bankProxy;
+    private CommunicationService connector = new CommunicationService(); // Used to connect the AH Service to the Bank
 
     public NotificationServer(int portNumber, String serverType) throws IOException {
         this.serverType = serverType;
@@ -29,7 +28,10 @@ public class NotificationServer {
     }
 
     /**
-     * Open the ServerSocket and start a BankService or an AuctionHouseService on the given port.
+     * Open the ServerSocket and start a BankService or an AuctionHouseService on the given port. This method starts a
+     * server and serves as a thread for servers that listens for client connections. When a client connects it is
+     * automatically accepted and the socket is given to the corresponding service to handle.
+     * The method is public in case a server needs to reconnect.
      * @throws IOException Generally thrown when the port is unavailable
      */
     public void startServer() throws IOException {
@@ -39,10 +41,11 @@ public class NotificationServer {
         switch(serverType.toLowerCase()) {
             case("bank"): {
                 bank = new BankService();
-                Thread t = new Thread(bank);
-                t.start();
+                //Thread t = new Thread(bank);
+                //t.start();
                 break;
             }
+            // If this is an auction house server, connect to the bank service first
             case("auction house"): {
 
                 // If it is an auction house server then connect to the bank server. The AHService uses a BankProxy.
@@ -52,7 +55,7 @@ public class NotificationServer {
                 System.out.println("Please enter the bank's port number:");
                 int portNumber = commandLine.nextInt();
                 commandLine.nextLine(); // This is to remove the new line character after the nextInt function
-                bankProxy = connector.connectToBankServer(hostName, portNumber);
+                BankProxy bankProxy = connector.connectToBankServer(hostName, portNumber, "auction house");
 
                 String name; // The name of the auction house
                 System.out.println("Please enter the name of this auction house:");
@@ -69,11 +72,11 @@ public class NotificationServer {
         // Listen  for  new  clients  forever
         while(true) {
             Socket clientSocket = serverSocket.accept(); // This method blocks until a connection is made
-            // If a client is trying to connect, accept and pass the socket request to the corresponding service
+            // If a client is trying to connect, accept and pass the socket connection to the corresponding service
             if(clientSocket != null) {
                 switch(serverType.toLowerCase()) {
                     case("bank"): {
-                        bank.addNewClient(clientSocket);
+                        bank.handleNewConnection(clientSocket);
                         break;
                     }
                     case("auction house"): {

@@ -16,8 +16,8 @@ public class AuctionHouseServer {
 
         AuctionHouseServer auctionHouseServer = new AuctionHouseServer();
         int portNumber; // Port number of this auction house's service
-
         Scanner commandLine = new Scanner(System.in);
+
         System.out.println("Starting Auction House!");
         System.out.println("Please enter the port number to start this auction house on:");
         portNumber = commandLine.nextInt();

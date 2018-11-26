@@ -23,13 +23,6 @@ public class AuctionHouseClient {
         auctionHouseClient.bankServer = new CommunicationService();
         // Connect to the bank and auction house servers, start the AuctionHouse client (AuctionHouseController)
         try {
-            System.out.println("Please enter the host name of the bank to connect to:");
-            hostName = commandLine.nextLine();
-            System.out.println("Please enter the bank's port number:");
-            portNumber = commandLine.nextInt();
-            commandLine.nextLine(); // This is to get rid of the new line character after the int
-            System.out.println("Connecting to bank service...");
-            bankProxy = auctionHouseClient.bankServer.connectToBankServer(hostName, portNumber);
 
             System.out.println("Please enter the host name of the auction house to connect to:");
             hostName = commandLine.nextLine();
@@ -38,7 +31,7 @@ public class AuctionHouseClient {
             System.out.println("Connecting to auction house service...");
             ahProxy = auctionHouseClient.bankServer.connectToAuctionHouseServer(hostName, portNumber);
 
-            auctionHouseController = new AuctionHouseController(bankProxy, ahProxy);
+            auctionHouseController = new AuctionHouseController(ahProxy);
             Thread t = new Thread(auctionHouseController);
             t.start();
         }
