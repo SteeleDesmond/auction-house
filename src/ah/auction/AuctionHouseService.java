@@ -13,7 +13,7 @@ public class AuctionHouseService implements Runnable {
     private BankProxy bank;
     private LinkedList<Item> itemList = new LinkedList<>();
 
-    public AuctionHouseService(BankProxy bank) {
+    public AuctionHouseService(BankProxy bank, String name) {
         this.bank = bank;
         // Register with the static bank
     }
