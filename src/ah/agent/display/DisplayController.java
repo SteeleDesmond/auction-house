@@ -12,6 +12,8 @@ import javafx.stage.Stage;
  * GUI Controller for the Agent
  */
 public class DisplayController extends Application {
+
+    // The display would be launched from the Agent class --> Moved for restructuring
     public static void main(String[] args) {
 
         //hello

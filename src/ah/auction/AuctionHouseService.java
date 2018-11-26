@@ -1,8 +1,5 @@
 package ah.auction;
 
-import ah.shared.CommunicationService;
-import ah.shared.Item;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.net.Socket;
@@ -17,13 +14,13 @@ public class AuctionHouseService implements Runnable {
 
         // Register with the static bank
 
-        System.out.println("In auction house.");
-        Scanner commandLine = new Scanner(System.in);
-        System.out.println("Read in file__:");
-        String command = commandLine.nextLine();
-        readItemList(command);
-        System.out.println("Printing item list:");
-        printItemList();
+//        System.out.println("In auction house.");
+//        Scanner commandLine = new Scanner(System.in);
+//        System.out.println("Read in file__:");
+//        String command = commandLine.nextLine();
+//        readItemList(command);
+//        System.out.println("Printing item list:");
+//        printItemList();
     }
 
     @Override

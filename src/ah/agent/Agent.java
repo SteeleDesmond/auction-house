@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 /**
  * The Agent class connects to the bank service via given host/port information and starts the AgentController.
- * AgentController can request information from the bank and connect to AuctionHouse services.
+ * AgentController can request information from the bank and connect to AuctionHouseServer services.
  */
 public class Agent {
 

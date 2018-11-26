@@ -8,7 +8,7 @@ import java.io.*;
 import java.net.*;
 
 /**
- * Used by clients to connect to a given host and port. The Agent and the AuctionHouse both have clients that connect to
+ * Used by clients to connect to a given host and port. The Agent and the AuctionHouseServer both have clients that connect to
  * the Bank service. When an Agent or Auction House are created they are given the location of the bank and they setup
  * a local proxy connection to the bank.
  */
@@ -27,7 +27,8 @@ public class CommunicationService {
 
     private void connectToServer() throws IOException {
 
-        BankProxy bankProxy; // The BankProxy is under shared for this application and is used by agent and auction
+        BankProxy bankProxy; // The BankProxy is used by agent and auction
+        AuctionHouseProxy ahProxy;
         AgentController agentController;
         AuctionHouseController auctionHouseController;
 
@@ -51,7 +52,17 @@ public class CommunicationService {
                     break;
                 }
                 case("auction house"): {
-                    auctionHouseController = new AuctionHouseController(bankProxy);
+                    // Connect to the Auction House Server
+                    SocketAddress ahServerAddress = new InetSocketAddress(InetAddress.getByName(hostName), portNumber);
+                    Socket ahSocket = new Socket();
+                    ahSocket.connect(ahServerAddress);
+
+                    // Create an AuctionHouseProxy object which uses the socket input/output streams
+                    PrintWriter AhOut = new PrintWriter(ahSocket.getOutputStream(), true);
+                    BufferedReader AhIn = new BufferedReader(new InputStreamReader(ahSocket.getInputStream()));
+                    ahProxy = new AuctionHouseProxy(out, in);
+
+                    auctionHouseController = new AuctionHouseController(bankProxy, ahProxy);
                     Thread t = new Thread(auctionHouseController);
                     t.start();
                     break;

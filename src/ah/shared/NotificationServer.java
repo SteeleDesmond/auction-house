@@ -14,7 +14,7 @@ import java.net.Socket;
  */
 public class NotificationServer {
 
-    private String serverType; // Used to distinguish between Bank servers and AuctionHouse servers
+    private String serverType; // Used to distinguish between Bank servers and AuctionHouseServer servers
     private int portNumber; // The port to open the service on
     private BankService bank;
     private AuctionHouseService auctionHouse;
@@ -32,7 +32,7 @@ public class NotificationServer {
     public void startServer() throws IOException {
         ServerSocket  serverSocket = new ServerSocket(portNumber);
 
-        // Create new Bank thread or AuctionHouse thread depending on the type of server
+        // Create new Bank thread or AuctionHouseServer thread depending on the type of server
         switch(serverType.toLowerCase()) {
             case("bank"): {
                 bank = new BankService();

@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class AgentController implements Runnable {
 
-    private AuctionHouseProxy ahProxy;
     private ActiveBids activeBids;
     private UserCommands userCommands;
     private UserDisplay userDisplay;
