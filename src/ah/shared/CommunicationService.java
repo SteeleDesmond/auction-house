@@ -14,53 +14,48 @@ import java.net.*;
  */
 public class CommunicationService {
 
-    private String clientType; // agent or auction house for this application
-    private String hostName;
-    private int portNumber;
-
-    public CommunicationService(String hostName, int portNumber, String clientType) throws IOException {
-        this.clientType = clientType;
-        this.hostName = hostName;
-        this.portNumber = portNumber;
-        connectToServer();
-    }
-
-    private void connectToServer() throws IOException {
-
-        BankProxy bankProxy; // The BankProxy is under shared for this application and is used by agent and auction
-        AgentController agentController;
-        AuctionHouseController auctionHouseController;
+    public BankProxy connectToBankServer(String hostName, int portNumber) throws IOException {
+        BankProxy bankProxy; // The BankProxy is used by agent and auction
 
         try {
             // Relevant information: https://alvinalexander.com/blog/post/java/java-class-writes-reads-remote-socket
             SocketAddress socketAddress = new InetSocketAddress(InetAddress.getByName(hostName), portNumber);
             Socket socket = new Socket();
             socket.connect(socketAddress);
+            System.out.println("Connected successfully.");
 
             // Create a BankProxy object which uses the socket input/output streams
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             bankProxy = new BankProxy(out, in);
-
-            // Instantiate either an agent or an auction house client with the given BankProxy
-            switch(clientType.toLowerCase()) {
-                case("agent"): {
-                    agentController = new AgentController(bankProxy);
-                    Thread t = new Thread(agentController);
-                    t.start();
-                    break;
-                }
-                case("auction house"): {
-                    auctionHouseController = new AuctionHouseController(bankProxy);
-                    Thread t = new Thread(auctionHouseController);
-                    t.start();
-                    break;
-                }
-            }
-            System.out.println("Connected successfully.");
+            return bankProxy;
         }
         catch (UnknownHostException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+
+    public AuctionHouseProxy connectToAuctionHouseServer(String hostName, int portNumber) throws IOException {
+        AuctionHouseProxy ahProxy;
+
+        try {
+            // Connect to the Auction House Server
+            SocketAddress ahServerAddress = new InetSocketAddress(InetAddress.getByName(hostName), portNumber);
+            Socket ahSocket = new Socket();
+            ahSocket.connect(ahServerAddress);
+            System.out.println("Connected successfully.");
+
+            // Create an AuctionHouseProxy object which uses the socket input/output streams
+            PrintWriter AhOut = new PrintWriter(ahSocket.getOutputStream(), true);
+            BufferedReader AhIn = new BufferedReader(new InputStreamReader(ahSocket.getInputStream()));
+            ahProxy = new AuctionHouseProxy(AhOut, AhIn);
+            return ahProxy;
+        }
+        catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

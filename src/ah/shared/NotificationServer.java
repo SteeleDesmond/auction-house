@@ -7,6 +7,7 @@ import ah.bank.BankService;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * Used by Servers to open a port and start its service. Uses a ServerSocket to allow clients to connect to the service.
@@ -14,10 +15,12 @@ import java.net.Socket;
  */
 public class NotificationServer {
 
-    private String serverType; // Used to distinguish between Bank servers and AuctionHouse servers
+    private String serverType; // Used to distinguish between Bank servers and AuctionHouseServer servers
     private int portNumber; // The port to open the service on
     private BankService bank;
     private AuctionHouseService auctionHouse;
+    private CommunicationService connector = new CommunicationService();
+    private BankProxy bankProxy;
 
     public NotificationServer(int portNumber, String serverType) throws IOException {
         this.serverType = serverType;
@@ -32,7 +35,7 @@ public class NotificationServer {
     public void startServer() throws IOException {
         ServerSocket  serverSocket = new ServerSocket(portNumber);
 
-        // Create new Bank thread or AuctionHouse thread depending on the type of server
+        // Create new Bank thread or AuctionHouseServer thread depending on the type of server
         switch(serverType.toLowerCase()) {
             case("bank"): {
                 bank = new BankService();
@@ -41,7 +44,21 @@ public class NotificationServer {
                 break;
             }
             case("auction house"): {
-                auctionHouse = new AuctionHouseService();
+
+                // If it is an auction house server then connect to the bank server. The AHService uses a BankProxy.
+                System.out.println("Please enter the host name of the bank server");
+                Scanner commandLine = new Scanner(System.in);
+                String hostName = commandLine.nextLine();
+                System.out.println("Please enter the bank's port number:");
+                int portNumber = commandLine.nextInt();
+                commandLine.nextLine(); // This is to remove the new line character after the nextInt function
+                bankProxy = connector.connectToBankServer(hostName, portNumber);
+
+                String name; // The name of the auction house
+                System.out.println("Please enter the name of this auction house:");
+                name = commandLine.nextLine();
+
+                auctionHouse = new AuctionHouseService(bankProxy, name);
                 Thread t = new Thread(auctionHouse);
                 t.start();
                 break;
