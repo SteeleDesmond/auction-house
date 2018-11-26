@@ -9,23 +9,26 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Used by Servers to setup port and hostname
+ * Used by Servers to open a port and start its service. Uses a ServerSocket to allow clients to connect to the service.
+ * Clients are automatically accepted upon request. The server is used for BankService and AuctionHouseService.
  */
 public class NotificationServer {
 
-    private String serverType;
-    //private String hostName;
-    private int portNumber;
+    private String serverType; // Used to distinguish between Bank servers and AuctionHouse servers
+    private int portNumber; // The port to open the service on
     private BankService bank;
     private AuctionHouseService auctionHouse;
 
     public NotificationServer(int portNumber, String serverType) throws IOException {
         this.serverType = serverType;
-        //this.hostName = hostName;
         this.portNumber = portNumber;
         startServer();
     }
 
+    /**
+     * Open the ServerSocket and start a BankService or an AuctionHouseService on the given port.
+     * @throws IOException Generally thrown when the port is unavailable
+     */
     public void startServer() throws IOException {
         ServerSocket  serverSocket = new ServerSocket(portNumber);
 
@@ -44,12 +47,12 @@ public class NotificationServer {
                 break;
             }
         }
-        System.out.println("Server successfully started");
+        System.out.println("Server is running.");
 
-        //  Listen  for  new  clients  forever
+        // Listen  for  new  clients  forever
         while(true) {
-            //  Create  new  thread  to  handle  each  client
-            Socket clientSocket = serverSocket.accept();
+            Socket clientSocket = serverSocket.accept(); // This method blocks until a connection is made
+            // If a client is trying to connect, accept and pass the socket request to the corresponding service
             if(clientSocket != null) {
                 switch(serverType.toLowerCase()) {
                     case("bank"): {
@@ -62,9 +65,6 @@ public class NotificationServer {
                     }
                 }
             }
-            //KnockKnock kk = new KnockKnock(clientSocket);
-            //Thread t = new Thread(kk);
-            //t.start();
         }
     }
 }

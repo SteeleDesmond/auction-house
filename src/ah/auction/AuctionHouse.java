@@ -1,66 +1,54 @@
 package ah.auction;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.LinkedList;
 import java.util.Scanner;
-import ah.shared.Item;
+import ah.shared.CommunicationService;
+import ah.shared.NotificationServer;
 
-
+/**
+ * The AuctionHouse class connects the auction house server and client to the bank service, opens the auction house
+ * service, and starts the auction house client.
+ */
 public class AuctionHouse {
-    private LinkedList<Item> itemList;
 
-    public AuctionHouse(){
-        itemList = new LinkedList<Item>();
-    }
+    private CommunicationService bankServer; // The bank to connect to
+    private NotificationServer auctionServer; // This service
 
-    public static void main(String[] args){
-        System.out.println("In auction house.");
-        AuctionHouse aHouse = new AuctionHouse();
+    public static void main(String[] args) {
+
+        AuctionHouse auctionHouse = new AuctionHouse();
+        String name; // The name of the auction house
+        String hostName; // Host name of the bank
+        int bankPortNumber; // Port number of the bank
+        int auctionPortNumber; // Port number of this auction house's service
+
         Scanner commandLine = new Scanner(System.in);
-        System.out.println("Read in file__:");
-        String command = commandLine.nextLine();
-        aHouse.readItemList(command);
-        System.out.println("Printing item list:");
-        aHouse.printItemList();
-    }
+        System.out.println("Starting Auction House!");
+        System.out.println("Please enter the name of this auction house:");
+        name = commandLine.nextLine();
+        System.out.println("Please enter the port number to start this auction house on:");
+        auctionPortNumber = commandLine.nextInt();
+        System.out.println("Starting auction house service...");
 
-
-    private boolean readItemList(String fileName){
-        try{
-            Scanner readin = new Scanner(new FileReader(fileName));
-            //Note adds ALL things in text file to auction house  itemlist
-            while(readin.hasNextLine()){
-                String input = readin.nextLine();
-                Item item = new Item(input);
-                itemList.add(item);
-            }
-            readin.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("file not found");
-            return false;
+        // Start the AuctionHouse server (AuctionHouseService)
+        try {
+            auctionHouse.auctionServer = new NotificationServer(auctionPortNumber, "auction house");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
 
-        return true;
-    }
+        System.out.println("Please enter the host name of the bank to connect to:");
+        hostName = commandLine.nextLine();
+        System.out.println("Please enter the bank's port number:");
+        bankPortNumber = commandLine.nextInt();
+        System.out.println("Connecting to bank service...");
 
-    private void printItemList(){
-        System.out.println("Items Available: ");
-        if(!itemList.isEmpty()) {
-            for (Item i : itemList) {
-                System.out.println(i);
-            }
-        }else{
-            System.out.println("nothing");
+        // Connect to the bank server, start the AuctionHouse client (AuctionHouseController)
+        try {
+            auctionHouse.bankServer = new CommunicationService(hostName, bankPortNumber, "auction house");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
-    //read in file
-    //use scanner
-
-   // Scanner input = new Scanner(System.in);
-    //String command;
-    //command = input.nextLine();
-    //command = command.toLowerCase();
-
 }
