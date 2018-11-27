@@ -27,6 +27,7 @@ public class AuctionHouse {
     private LinkedList<Item> pendingAuctions; //items people want, but cannot
     //bid for yet
     //probably need a way to keep track of bidders....
+    private LinkedList bidders;
 
     public AuctionHouse(String name){
         this.name = name;
@@ -67,6 +68,9 @@ public class AuctionHouse {
                     System.out.println("Set up bank account here");
                     //need to create the controller here, and the server
                     //in order: server, bank, controller
+                    break;
+                case("server"):
+                    System.out.println("create server here");
                     break;
 //                case("add item"):
 //                    aHouse.addCustomItem();
