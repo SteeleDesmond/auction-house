@@ -72,8 +72,10 @@ public class AuctionHouse {
 //                    aHouse.addCustomItem();
 //                    break;
 
+
             }
 
+            //probs should check notification here
 
 
         }
