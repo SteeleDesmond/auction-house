@@ -7,6 +7,8 @@ import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
+
+import ah.shared.Bid;
 import ah.shared.Item;
 
 
@@ -19,7 +21,11 @@ public class AuctionHouse {
     private Random rand = new Random();
     private boolean quit = false;
 
-    private LinkedList<Bid> activeBids;
+    private static Scanner commandLine = new Scanner(System.in);
+
+    private LinkedList<Bid> activeBids;  //should only be one
+    private LinkedList<Item> pendingAuctions; //items people want, but cannot
+    //bid for yet
 
     public AuctionHouse(String name){
         this.name = name;
@@ -30,7 +36,6 @@ public class AuctionHouse {
         //System.out.println("In auction house.");
         System.out.println("Welcome.");
         System.out.println("What do you want to name your Auction House?");
-        Scanner commandLine = new Scanner(System.in);
         String command = commandLine.nextLine();
         AuctionHouse aHouse = new AuctionHouse(command);
         System.out.println("Welcome "+aHouse.name+" Auction House");
@@ -59,6 +64,8 @@ public class AuctionHouse {
                     break;
                 case("bank"):
                     System.out.println("Set up bank account here");
+                    //need to create the controller here, and the server
+                    //in order: server, bank, controller
                     break;
 //                case("add item"):
 //                    aHouse.addCustomItem();
@@ -83,7 +90,7 @@ public class AuctionHouse {
         System.out.println("use 'bank' command to do this.");
         System.out.println("2. sell your items.");
         System.out.println("wait for clients to do this");
-        System.out.println("3. clean exit, type quit.");
+        System.out.println("3. clean exit, type 'quit'.");
     }
 
     /*
@@ -93,7 +100,6 @@ public class AuctionHouse {
     private void readInNumber(){
         System.out.println("Input the number of items you wish to sell," +
                 " or d for default");
-        Scanner commandLine = new Scanner(System.in);
         String command = commandLine.nextLine();
         try{
             int getItems = Integer.parseInt(command);
@@ -106,7 +112,7 @@ public class AuctionHouse {
         if(defaultItemNum == numberOfItems){
             System.out.println("using default");
         }
-        commandLine.close();
+        //commandLine.close();
     }
 
 
@@ -148,4 +154,13 @@ public class AuctionHouse {
             System.out.println("nothing");
         }
     }
+
+    /*
+    if you close the input stream in one place, it closes everywhere
+    for now, im using a static scanner
+    if it becomes an issue, then I can go back to makeing new ones
+    but I can't close any until the input stream is finished in
+    everything(therefore, at the end of main
+    I've kept hte read in in read Item list, because it isn;t from keyboard
+     */
 }
