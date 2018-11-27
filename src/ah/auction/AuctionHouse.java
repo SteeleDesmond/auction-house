@@ -11,26 +11,79 @@ import ah.shared.Item;
 
 
 public class AuctionHouse {
+    private String name;
+    private String bankID; //?
     private LinkedList<Item> itemList;
     private int defaultItemNum = 5;
     private int numberOfItems = 5; //for sale, pick from temp list
-    private Random rand = new Random(); //temp seed
+    private Random rand = new Random();
+    private boolean quit = false;
 
-    public AuctionHouse(){
+    private LinkedList<Bid> activeBids;
+
+    public AuctionHouse(String name){
+        this.name = name;
         itemList = new LinkedList<Item>();
     }
 
     public static void main(String[] args){
         //System.out.println("In auction house.");
-        AuctionHouse aHouse = new AuctionHouse();
-        //aHouse.getServerInfoFromUser();
+        System.out.println("Welcome.");
+        System.out.println("What do you want to name your Auction House?");
+        Scanner commandLine = new Scanner(System.in);
+        String command = commandLine.nextLine();
+        AuctionHouse aHouse = new AuctionHouse(command);
+        System.out.println("Welcome "+aHouse.name+" Auction House");
+
+        System.out.println("To Start, how many items do you want to sell");
         aHouse.readInNumber();
         System.out.println("Amount of items you wish to sell: "
                 + aHouse.numberOfItems);
-
+        System.out.println("Importing items...");
         aHouse.readItemList("resrcs/itemList.txt");
-        System.out.println("Printing item list:");
-        aHouse.printItemList();
+        System.out.println("Complete.");
+        System.out.println("Auction House operational");
+        System.out.println("For commands, enter help");
+        while(!aHouse.quit){
+            command = commandLine.nextLine();
+            switch(command){
+                case("quit"):
+                    aHouse.quit = true;
+                    break;
+                case("help"):
+                    aHouse.printHelp();
+                    break;
+                case("print items"):
+                    System.out.println("Printing item list:");
+                    aHouse.printItemList();
+                    break;
+                case("bank"):
+                    System.out.println("Set up bank account here");
+                    break;
+//                case("add item"):
+//                    aHouse.addCustomItem();
+//                    break;
+
+            }
+
+
+
+        }
+
+        //aHouse.getServerInfoFromUser();
+
+
+
+        commandLine.close();
+    }
+
+    private void printHelp(){
+        System.out.println("How to use your auction house:");
+        System.out.println("1. set up a bank account");
+        System.out.println("use 'bank' command to do this.");
+        System.out.println("2. sell your items.");
+        System.out.println("wait for clients to do this");
+        System.out.println("3. clean exit, type quit.");
     }
 
     /*
@@ -56,37 +109,8 @@ public class AuctionHouse {
         commandLine.close();
     }
 
-//
 
-    /*
-     * reads in a list of items, and stores them in a temporary list
-     * then takes numberOfItems from that list, randomly, and
-     * stores those items inside the auction house's "inventory" , 'itemList'    private void getServerInfoFromUser(){
-//        System.out.println("Input bank server");
-//        Scanner commandLine = new Scanner(System.in);
-//        String command = commandLine.nextLine();
-//        int portNumber = Integer.parseInt(command);
-////        try{
-////            Socket socket = new
-////        }
-//    }
-//
-//    private ServerSocket getPortInfoFromUser(){
-//        System.out.println("Input port number: ");
-//        Scanner commandLine = new Scanner(System.in);
-//        String command = commandLine.nextLine();
-//        int portNumber = Integer.parseInt(command);
-//        try{
-//            commandLine.close();
-//            return new ServerSocket(portNumber);
-//        }catch(Exception e){
-//            e.printStackTrace();
-//        }
-//        commandLine.close();
-//        return null;
-//
-//    }
-     * @param fileName -file to be read in, along with relative path
+    /* @param fileName -file to be read in, along with relative path
      * @return true if successful, false if file isn't found
      */
     private boolean readItemList(String fileName){
@@ -124,13 +148,4 @@ public class AuctionHouse {
             System.out.println("nothing");
         }
     }
-
-    //read in file
-    //use scanner
-
-   // Scanner input = new Scanner(System.in);
-    //String command;
-    //command = input.nextLine();
-    //command = command.toLowerCase();
-
 }
