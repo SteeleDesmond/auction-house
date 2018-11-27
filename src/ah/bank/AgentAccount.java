@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 public class AgentAccount extends Account {
 
+    private int accountBalance;
     private BankService parent;
     private PrintWriter out;
     private BufferedReader in;
@@ -18,5 +19,9 @@ public class AgentAccount extends Account {
     @Override
     public void run() {
 
+    }
+
+    public int getBalance() {
+        return accountBalance;
     }
 }

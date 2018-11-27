@@ -17,4 +17,8 @@ public class BankProxy {
     public void sendMsg(String msg) {
         bankOut.println(msg);
     }
+
+    public void checkBalance() {
+
+    }
 }

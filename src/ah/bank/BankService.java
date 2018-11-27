@@ -52,4 +52,8 @@ public class BankService {
             }
         }
     }
+
+    public int getAccountBalance(int accountId) {
+        return agents.get(accountId).getBalance();
+    }
 }

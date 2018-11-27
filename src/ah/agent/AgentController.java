@@ -17,7 +17,7 @@ public class AgentController implements Runnable {
 
     private BankProxy bank;
     private Scanner commandLine = new Scanner(System.in);
-    Boolean running = true;
+    private boolean running = true;
     private String hostName;
     private int portNumber;
 
@@ -37,6 +37,10 @@ public class AgentController implements Runnable {
                 }
                 case("a"): {
                     getAuctionHouses();
+                    break;
+                }
+                case("b"): {
+                    bank.checkBalance();
                     break;
                 }
                 case("c"): {
@@ -62,6 +66,7 @@ public class AgentController implements Runnable {
         System.out.println("BankMsg -- Send a message to the bank");
         System.out.println("(a)uction houses -- Get a list of auction houses from the bank");
         System.out.println(("(c)onnect to an auction house"));
+        System.out.println("(b)get account balance");
 
         // If the agent is connected to an auction house then print additional options
         if(auctionHouse != null) {
