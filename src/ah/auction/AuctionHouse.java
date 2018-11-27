@@ -26,6 +26,7 @@ public class AuctionHouse {
     private LinkedList<Bid> activeBids;  //should only be one
     private LinkedList<Item> pendingAuctions; //items people want, but cannot
     //bid for yet
+    //probably need a way to keep track of bidders....
 
     public AuctionHouse(String name){
         this.name = name;
