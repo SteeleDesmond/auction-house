@@ -169,5 +169,6 @@ public class AuctionHouse {
     but I can't close any until the input stream is finished in
     everything(therefore, at the end of main
     I've kept hte read in in read Item list, because it isn;t from keyboard
+    sout -systemoutprintln
      */
 }
