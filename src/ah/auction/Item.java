@@ -27,4 +27,18 @@ public class Item {
     public String toString(){
         return getItemName();
     }
+
+    /**
+     * @Override equals
+     * checks to see if two items are equal, by which they have the same name,
+     * or that the object is equal to this item
+     * @param o the object in question
+     * @return true if it is, false if it is not
+     */
+    public boolean equals(Object o){
+        if(o instanceof Item){
+            return itemName.equals(((Item) o).getItemName());
+        }
+        return false;
+    }
 }
