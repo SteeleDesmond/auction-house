@@ -21,9 +21,7 @@ public class AuctionHouse {
     private Random rand = new Random();
     private boolean quit = false;
 
-    private static Scanner commandLine = new Scanner(System.in);
-
-    private LinkedList<Bid> activeBids;  //should only be one
+    private LinkedList<Bid> activeAuctions;  //should only be one
     private LinkedList<Item> pendingAuctions; //items people want, but cannot
     //bid for yet
     //probably need a way to keep track of bidders....
@@ -37,13 +35,15 @@ public class AuctionHouse {
     public static void main(String[] args){
         //System.out.println("In auction house.");
         System.out.println("Welcome.");
+        Scanner commandLine = new Scanner(System.in);
+
         System.out.println("What do you want to name your Auction House?");
         String command = commandLine.nextLine();
         AuctionHouse aHouse = new AuctionHouse(command);
         System.out.println("Welcome "+aHouse.name+" Auction House");
 
         System.out.println("To Start, how many items do you want to sell");
-        aHouse.readInNumber();
+        aHouse.readInNumber(commandLine);
         System.out.println("Amount of items you wish to sell: "
                 + aHouse.numberOfItems);
         System.out.println("Importing items...");
@@ -72,6 +72,21 @@ public class AuctionHouse {
                 case("server"):
                     System.out.println("create server here");
                     break;
+                case("Start auction"):
+                    System.out.println("start an acution for an item");
+                    break;
+                case("view interest"):
+                    System.out.println("view flagged items");
+                    break;
+                case("view auctions"):
+                    System.out.println("view active auctions");
+                    break;
+                case ("b"):
+                    System.out.println("Creating a bid");
+                    Item item = new Item("The downpile");
+                    Bid bid = new Bid(item,40,"bob");
+                    System.out.println(bid);
+                    break;
 //                case("add item"):
 //                    aHouse.addCustomItem();
 //                    break;
@@ -91,6 +106,13 @@ public class AuctionHouse {
         commandLine.close();
     }
 
+    private void printActiveAuctions(){
+        System.out.println("Active Auctions");
+        for(Bid bid: activeAuctions){
+            System.out.println(bid);
+        }
+    }
+
     private void printHelp(){
         System.out.println("How to use your auction house:");
         System.out.println("1. set up a bank account");
@@ -104,7 +126,7 @@ public class AuctionHouse {
      * reads in the number of items an auction house wishes to sell
      *
      */
-    private void readInNumber(){
+    private void readInNumber(Scanner commandLine){
         System.out.println("Input the number of items you wish to sell," +
                 " or d for default");
         String command = commandLine.nextLine();

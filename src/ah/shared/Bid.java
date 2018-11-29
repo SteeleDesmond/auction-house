@@ -40,4 +40,8 @@ public class Bid {
     public String getBidder() {
         return bidder;
     }
+
+    public String toString(){
+        return ("Bidder: "+bidder+", $"+bidAmount+" for "+item);
+    }
 }
