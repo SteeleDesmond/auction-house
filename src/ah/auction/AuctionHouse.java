@@ -18,7 +18,7 @@ public class AuctionHouse {
     private Random rand = new Random();
     private boolean quit = false;
 
-    private LinkedList<AuctionHouseController.Bid> activeAuctions;  //should only be one
+    private LinkedList<Bid> activeAuctions;  //should only be one
     private LinkedList<Item> pendingAuctions; //items people want, but cannot
     //bid for yet
     //probably need a way to keep track of bidders....
@@ -83,7 +83,7 @@ public class AuctionHouse {
                 case ("t"):
                     System.out.println("create bid");
                     Item item = new Item("hell");
-                    AuctionHouseController.Bid bid = new AuctionHouseController.Bid(item, 30,"bob");
+                    Bid bid = new Bid(item, 30,"bob");
                     System.out.println(bid);
                     break;
 //                case("add item"):
@@ -111,7 +111,7 @@ public class AuctionHouse {
 
     private void printActiveAuctions(){
         System.out.println("Active Auctions");
-        for(AuctionHouseController.Bid bid: activeAuctions){
+        for(Bid bid: activeAuctions){
             System.out.println(bid);
         }
     }
@@ -121,7 +121,7 @@ public class AuctionHouse {
      * @param a one bid
      * @param b another bid
      */
-    private AuctionHouseController.Bid getLargerBid(AuctionHouseController.Bid a, AuctionHouseController.Bid b) {
+    private Bid getLargerBid(Bid a, Bid b) {
         if (a.getBidAmount() == b.getBidAmount()) {
             return null;
         }
