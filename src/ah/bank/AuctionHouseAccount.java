@@ -19,4 +19,9 @@ public class AuctionHouseAccount extends Account {
     public void run() {
 
     }
+
+    public boolean holdFunds(int amount, KeyGenerator key) {
+
+        return true;
+    }
 }

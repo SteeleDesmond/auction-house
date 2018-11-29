@@ -8,6 +8,7 @@ import java.io.PrintWriter;
  */
 public class Account implements Runnable {
 
+    private int accountBalance;
     private BankService parent;
     private PrintWriter out;
     private BufferedReader in;
@@ -20,10 +21,19 @@ public class Account implements Runnable {
         this.parent = parent;
         this.out = out;
         this.in = in;
+        accountBalance = 0;
     }
 
     @Override
     public void run() {
 
+    }
+
+    public int getBalance() {
+        return accountBalance;
+    }
+
+    public void depositFunds(int amount) {
+        accountBalance += amount;
     }
 }
