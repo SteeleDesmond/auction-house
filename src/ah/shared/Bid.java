@@ -1,6 +1,7 @@
 package ah.shared;
 
 public class Bid {
+    private String bidder;
     private int bidAmount;
     private Item item;
 
@@ -8,10 +9,12 @@ public class Bid {
      * Creates a bid
      * @param item the item the bid is on
      * @param money the amount of money bid on the item
+     * @param
      */
-    public Bid(Item item, int money){
+    public Bid(Item item, int money, String name){
         this.item=item;
         this.bidAmount=money;
+        this.bidder=name;
     }
 
     /**
@@ -28,5 +31,13 @@ public class Bid {
      */
     public Item getItem() {
         return item;
+    }
+
+    /**
+     * getter for the bidder's name
+     * @return bidder's name as a string
+     */
+    public String getBidder() {
+        return bidder;
     }
 }
