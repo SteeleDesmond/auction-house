@@ -41,6 +41,10 @@ public class Bid {
         return bidder;
     }
 
+    /**
+     * @Override toString
+     * @return string representation of bid
+     */
     public String toString(){
         return ("Bidder: "+bidder+", $"+bidAmount+" for "+item);
     }
