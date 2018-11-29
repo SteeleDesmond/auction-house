@@ -81,7 +81,10 @@ public class AuctionHouse {
                     aHouse.printActiveAuctions();
                     break;
                 case ("t"):
-
+                    System.out.println("create bid");
+                    Item item = new Item("hell");
+                    AuctionHouseController.Bid bid = new AuctionHouseController.Bid(item, 30,"bob");
+                    System.out.println(bid);
                     break;
 //                case("add item"):
 //                    aHouse.addCustomItem();
