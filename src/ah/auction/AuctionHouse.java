@@ -1,15 +1,12 @@
+
 package ah.auction;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
-import ah.shared.Bid;
-import ah.shared.Item;
 
 
 public class AuctionHouse {
@@ -21,7 +18,7 @@ public class AuctionHouse {
     private Random rand = new Random();
     private boolean quit = false;
 
-    private LinkedList<Bid> activeAuctions;  //should only be one
+    private LinkedList<AuctionHouseController.Bid> activeAuctions;  //should only be one
     private LinkedList<Item> pendingAuctions; //items people want, but cannot
     //bid for yet
     //probably need a way to keep track of bidders....
@@ -111,7 +108,7 @@ public class AuctionHouse {
 
     private void printActiveAuctions(){
         System.out.println("Active Auctions");
-        for(Bid bid: activeAuctions){
+        for(AuctionHouseController.Bid bid: activeAuctions){
             System.out.println(bid);
         }
     }
@@ -121,7 +118,7 @@ public class AuctionHouse {
      * @param a one bid
      * @param b another bid
      */
-    private Bid getLargerBid(Bid a, Bid b) {
+    private AuctionHouseController.Bid getLargerBid(AuctionHouseController.Bid a, AuctionHouseController.Bid b) {
         if (a.getBidAmount() == b.getBidAmount()) {
             return null;
         }

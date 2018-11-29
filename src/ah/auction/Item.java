@@ -1,4 +1,4 @@
-package ah.shared;
+package ah.auction;
 
 public class Item {
     private final String itemName;
