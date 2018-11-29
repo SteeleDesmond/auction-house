@@ -77,15 +77,14 @@ public class AuctionHouse {
                     break;
                 case("view interest"):
                     System.out.println("view flagged items");
+
                     break;
                 case("view auctions"):
                     System.out.println("view active auctions");
+                    aHouse.printActiveAuctions();
                     break;
-                case ("b"):
-                    System.out.println("Creating a bid");
-                    Item item = new Item("The downpile");
-                    Bid bid = new Bid(item,40,"bob");
-                    System.out.println(bid);
+                case ("t"):
+
                     break;
 //                case("add item"):
 //                    aHouse.addCustomItem();
@@ -106,10 +105,30 @@ public class AuctionHouse {
         commandLine.close();
     }
 
+    public void makeBid(){
+
+    }
+
     private void printActiveAuctions(){
         System.out.println("Active Auctions");
         for(Bid bid: activeAuctions){
             System.out.println(bid);
+        }
+    }
+
+    /*
+     * bid a and bid b must be of the same item
+     * @param a one bid
+     * @param b another bid
+     */
+    private Bid getLargerBid(Bid a, Bid b) {
+        if (a.getBidAmount() == b.getBidAmount()) {
+            return null;
+        }
+        else if(a.getBidAmount() > b.getBidAmount()){
+            return a;
+        }else{
+            return b;
         }
     }
 
