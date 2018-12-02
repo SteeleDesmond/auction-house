@@ -22,48 +22,14 @@ public class DisplayController extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        HBox pane = new HBox();
 
-        try {
+        UserDisplay userDisplay = new UserDisplay();
 
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
 
-        //agent button
-        Button runAgent = new Button("Run Agent");
-        runAgent.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                System.out.println("running agent");
-            }
-        });
-        pane.getChildren().add(runAgent);
-
-        //run Bank
-        Button runBank = new Button("Run Bank");
-        runBank.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("running bank");
-            }
-        });
-        pane.getChildren().add(runBank);
-
-        //run Auction house
-        Button runAuctionHouse = new Button("Run Auction House");
-        runAuctionHouse.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("running auction House");
-            }
-        });
-        pane.getChildren().add(runAuctionHouse);
-
-        primaryStage.setScene(new Scene(pane, 400, 400));
+        primaryStage.setScene(new Scene(userDisplay, 400, 400));
         primaryStage.show();
 
-
     }
+
+
 }

@@ -1,5 +1,6 @@
 package ah.agent;
 
+import ah.agent.display.UserDisplay;
 import ah.shared.AuctionHouseProxy;
 import ah.shared.BankProxy;
 import ah.shared.CommunicationService;

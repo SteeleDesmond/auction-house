@@ -13,7 +13,6 @@ public class Agent {
 
     private CommunicationService bankServer;
 
-
     public static void main(String[] args) {
 
         BankProxy bankProxy; // The BankProxy is used by agent and auction
