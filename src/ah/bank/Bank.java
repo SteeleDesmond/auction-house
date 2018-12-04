@@ -17,10 +17,14 @@ public class Bank {
         String serverType = "bank";
         int portNumber;
 
-        System.out.println("Starting Bank!");
-        Scanner commandLine = new Scanner(System.in);
-        System.out.println("Please enter the port number to start on:");
-        portNumber = commandLine.nextInt();
+        if (args.length > 0){
+            portNumber = Integer.parseInt(args[0]);
+        } else {
+            System.out.println("Starting Bank!");
+            Scanner commandLine = new Scanner(System.in);
+            System.out.println("Please enter the port number to start on:");
+            portNumber = commandLine.nextInt();
+        }
 
         System.out.println("Starting bank service...");
         try {

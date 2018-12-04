@@ -4,16 +4,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class BankService {
+public class BankService implements Runnable{
 
     private ExecutorService executor = Executors.newCachedThreadPool();
     private ArrayList<AuctionHouseAccount> auctionHouses = new ArrayList<>();
     private ArrayList<AgentAccount> agents = new ArrayList<>();
+
+
+    private ServerSocket  serverSocket;
+
+    public BankService(ServerSocket serverSocket) {
+
+        this.serverSocket = serverSocket;
+    }
 
     /**
      * This method is called by the NotificationServer when a new client has connected to this service. It handles the
@@ -55,5 +64,31 @@ public class BankService {
 
     public int getAccountBalance(int accountId) {
         return agents.get(accountId).getBalance();
+    }
+
+    @Override
+    public void run() {
+        String serverType = "bank";
+
+        // Listen  for  new  clients  forever
+        while(true) {
+
+            Socket clientSocket = null;
+            try {
+                clientSocket = serverSocket.accept(); // This method blocks until a connection is made
+            } catch (IOException io){
+                io.printStackTrace();
+            }
+            // If a client is trying to connect, accept and pass the socket connection to the corresponding service
+            if(clientSocket != null) {
+                try {
+                    handleNewConnection(clientSocket);
+                }catch (IOException io){
+                    io.printStackTrace();
+                }
+                break;
+            }
+        }
+
     }
 }
