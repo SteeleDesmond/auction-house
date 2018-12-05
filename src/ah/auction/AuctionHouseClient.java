@@ -10,6 +10,11 @@ public class AuctionHouseClient {
 
     private CommunicationService bankServer; // The bank to connect to
 
+    public AuctionHouseClient() {
+
+
+    }
+
     public static void main(String[] args) {
         BankProxy bankProxy;
         AuctionHouseProxy ahProxy;

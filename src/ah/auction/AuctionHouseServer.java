@@ -12,6 +12,8 @@ public class AuctionHouseServer {
 
     private NotificationServer auctionServer; // This service
 
+
+
     public static void main(String[] args) {
 
         AuctionHouseServer auctionHouseServer = new AuctionHouseServer();

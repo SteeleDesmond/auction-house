@@ -1,6 +1,6 @@
 package ah.agent;
 
-import ah.agent.display.UserDisplay;
+import ah.agent.UserDisplay;
 import ah.shared.AuctionHouseProxy;
 import ah.shared.BankProxy;
 import ah.shared.CommunicationService;
@@ -24,6 +24,8 @@ public class AgentController implements Runnable {
 
     public AgentController(BankProxy bank) {
         this.bank = bank;
+
+        this.userDisplay = new UserDisplay();
     }
 
     @Override

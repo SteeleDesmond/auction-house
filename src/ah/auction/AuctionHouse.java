@@ -29,81 +29,106 @@ public class AuctionHouse {
         itemList = new LinkedList<Item>();
     }
 
+    public AuctionHouse(String name, int numberOfItems, int bankPortNum, int portNum){
+
+        this.name = name;
+        this.numberOfItems = numberOfItems;
+    }
+
     public static void main(String[] args){
         //System.out.println("In auction house.");
-        System.out.println("Welcome.");
-        Scanner commandLine = new Scanner(System.in);
 
-        System.out.println("What do you want to name your Auction House?");
-        String command = commandLine.nextLine();
-        AuctionHouse aHouse = new AuctionHouse(command);
-        System.out.println("Welcome "+aHouse.name+" Auction House");
+        if (args.length > 0){
 
-        System.out.println("To Start, how many items do you want to sell");
-        aHouse.readInNumber(commandLine);
-        System.out.println("Amount of items you wish to sell: "
-                + aHouse.numberOfItems);
-        System.out.println("Importing items...");
-        aHouse.readItemList("resrcs/itemList.txt");
-        System.out.println("Complete.");
-        System.out.println("Auction House operational");
-        System.out.println("For commands, enter help");
-        while(!aHouse.quit){
-            command = commandLine.nextLine();
-            switch(command){
-                case("quit"):
-                    aHouse.quit = true;
-                    break;
-                case("help"):
-                    aHouse.printHelp();
-                    break;
-                case("print items"):
-                    System.out.println("Printing item list:");
-                    aHouse.printItemList();
-                    break;
-                case("bank"):
-                    System.out.println("Set up bank account here");
-                    //need to create the controller here, and the server
-                    //in order: server, bank, controller
-                    break;
-                case("server"):
-                    System.out.println("create server here");
-                    break;
-                case("Start auction"):
-                    System.out.println("start an acution for an item");
-                    break;
-                case("view interest"):
-                    System.out.println("view flagged items");
+             String name = args[0];
+             int numItems = Integer.parseInt(args[1]);
+             int bankPortNum = Integer.parseInt(args[2]);
+             int portNum = Integer.parseInt(args[3]);
 
-                    break;
-                case("view auctions"):
-                    System.out.println("view active auctions");
-                    aHouse.printActiveAuctions();
-                    break;
-                case ("t"):
+        } else {
 
-                    break;
+            System.out.println("Welcome.");
+            Scanner commandLine = new Scanner(System.in);
+
+            System.out.println("What do you want to name your Auction House?");
+            String command = commandLine.nextLine();
+            AuctionHouse aHouse = new AuctionHouse(command);
+            System.out.println("Welcome " + aHouse.name + " Auction House");
+
+            System.out.println("To Start, how many items do you want to sell");
+            aHouse.readInNumber(commandLine);
+            System.out.println("Amount of items you wish to sell: "
+                    + aHouse.numberOfItems);
+            System.out.println("Importing items...");
+            aHouse.readItemList("resrcs/itemList.txt");
+            System.out.println("Complete.");
+            System.out.println("Auction House operational");
+            System.out.println("For commands, enter help");
+            while (!aHouse.quit) {
+                command = commandLine.nextLine();
+                switch (command) {
+                    case ("quit"):
+                        aHouse.quit = true;
+                        break;
+                    case ("help"):
+                        aHouse.printHelp();
+                        break;
+                    case ("print items"):
+                        System.out.println("Printing item list:");
+                        aHouse.printItemList();
+                        break;
+                    case ("bank"):
+                        System.out.println("Set up bank account here");
+                        //need to create the controller here, and the server
+                        //in order: server, bank, controller
+                        break;
+                    case ("server"):
+                        System.out.println("create server here");
+                        break;
+                    case ("Start auction"):
+                        System.out.println("start an acution for an item");
+                        break;
+                    case ("view interest"):
+                        System.out.println("view flagged items");
+
+                        break;
+                    case ("view auctions"):
+                        System.out.println("view active auctions");
+                        aHouse.printActiveAuctions();
+                        break;
+                    case ("t"):
+
+                        break;
 //                case("add item"):
 //                    aHouse.addCustomItem();
 //                    break;
 
 
+                }
+
+                //probs should check notification here
+
+
             }
 
-            //probs should check notification here
-
-
+            //aHouse.getServerInfoFromUser();
+             commandLine.close();
         }
 
-        //aHouse.getServerInfoFromUser();
 
 
-
-        commandLine.close();
     }
 
     public void makeBid(){
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public LinkedList<Item> getItemList() {
+        return itemList;
     }
 
     private void printActiveAuctions(){

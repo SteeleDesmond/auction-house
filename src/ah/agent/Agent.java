@@ -18,6 +18,8 @@ public class Agent {
         BankProxy bankProxy; // The BankProxy is used by agent and auction
         AgentController agentController;
         Agent agent = new Agent();
+
+        //Bank Connect user input
         String hostName;
         int portNumber;
 
