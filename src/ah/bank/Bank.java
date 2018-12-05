@@ -11,6 +11,19 @@ public class Bank {
 
     private NotificationServer bankServer;
 
+    public Bank() {
+    }
+
+    public Bank(int portNumber) {
+
+        try {
+            bankServer = new NotificationServer(portNumber, "bank");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) {
 
         Bank bank = new Bank();

@@ -1,6 +1,8 @@
 
 package ah.auction;
 
+import ah.shared.NotificationServer;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.LinkedList;
@@ -44,6 +46,10 @@ public class AuctionHouse {
              int numItems = Integer.parseInt(args[1]);
              int bankPortNum = Integer.parseInt(args[2]);
              int portNum = Integer.parseInt(args[3]);
+
+             AuctionHouse auctionHouse = new AuctionHouse(name,numItems,bankPortNum,portNum);
+
+            NotificationServer server = new NotificationServer();
 
         } else {
 

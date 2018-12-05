@@ -1,21 +1,21 @@
 package ah.agent.display;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-public class BankDisplay extends Stage {
-
-    VBox vBox = new VBox();
-    ObservableList<Node> list = vBox.getChildren();
-
+public class BankDisplay {
 
     public BankDisplay() {
 
+        Stage stage = new Stage();
+        HBox hBox = new HBox();
 
+        TableView<String> tableView = new TableView<>();
 
-        setScene(new Scene(vBox, 400, 400));
+        tableView.getItems().add("Account: jhsdkjhcbg, bal: $100,000");
+
+        stage.setScene( new Scene(hBox, 400, 400));
     }
 }

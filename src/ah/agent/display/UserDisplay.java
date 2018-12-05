@@ -35,6 +35,10 @@ public class UserDisplay extends BorderPane {
         setRight(rightPane);
     }
 
+    void agentInfo(){
+
+    }
+
     VBox leftPane(){
 
         VBox vBox = new VBox();
@@ -46,6 +50,7 @@ public class UserDisplay extends BorderPane {
                 System.out.println("Start Bank");
                 //start the bank
 
+                BankDisplay bankDisplay = new BankDisplay();
 
                 center.getChildren().add(makeBankGroup());
             }
