@@ -18,8 +18,6 @@ public class AuctionHouse {
     private int maxMinBid = 1000; //easy access
     private Random rand = new Random(); //for all the random needs
 
-    private LinkedList<Bid> activeAuctions;  //may not need
-
     /**
      * creates an Auction house object
      * @param in requires a scanner for input.
@@ -27,7 +25,6 @@ public class AuctionHouse {
     public AuctionHouse(Scanner in){
         //initializing stuff
         inventory = new LinkedList<Item>();
-        activeAuctions = new LinkedList<Bid>();
 
         //auction house creation
         System.out.println("Welcome.");
