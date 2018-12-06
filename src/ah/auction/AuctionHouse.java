@@ -126,6 +126,14 @@ public class AuctionHouse {
         }
     }
 
+    /**
+     * getter for the auction house name
+     * @return the auction house name
+     */
+    public String getName() {
+        return name;
+    }
+
     public void setBankID(){
         //just set this, later, after bank account gets created, if needed...probs not
     }
