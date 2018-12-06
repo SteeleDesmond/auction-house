@@ -30,7 +30,7 @@ public class Item {
         itemID = id;
         itemName = str;
         minimumBid = minBid;
-        currentBid = minimumBid;
+        currentBid = minimumBid-1;
         bidder = null; //if null, there is no bidder
     }
 
@@ -73,7 +73,9 @@ public class Item {
      * @param bidder is the bidder that currently has this item.
      */
     public void setCurrentBid(int currentBid, String bidder) {
+        System.out.println("\t reached setting the current bid");
         if(currentBid>this.currentBid){
+            System.out.println("In if");
             this.currentBid = currentBid;
             this.bidder = bidder;
         }

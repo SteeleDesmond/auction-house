@@ -63,7 +63,15 @@ public class AuctionHouse {
         AuctionHouse ah = new AuctionHouse(commandLine);
         System.out.println(ah.getInventoryList());
         //ah.startAuction(new Item("excalibur"),400);
-        System.out.println(ah.activeAuctions);
+       // System.out.println(ah.activeAuctions);
+        Item item = ah.inventory.getFirst();
+        Item item2 = ah.inventory.getLast();
+        ah.makeBid(item,30,"bob");
+        ah.makeBid(item2,1001,"susie");
+        ah.makeBid(item,1001,"mike");
+        ah.makeBid(item2,1002,"mary");
+        ah.makeBid(item,1001,"darrel");
+        System.out.println(ah.getInventoryList());
 
 //        System.out.println("For commands, enter help");
 //        while(!aHouse.quit){
@@ -162,25 +170,26 @@ public class AuctionHouse {
         //assuming that thier account has already been checked, just update the item
         //return a value if success, then let the thing that called start the thread
         Item find = findItemInInventory(item);
+        System.out.println("bidder: "+name+" trymoney: "+tryMoney+" bidding on:" +
+                find);
         if(find == null){
             System.out.println(item.getItemName()+" is not in our inventory");
             return "NONE"; //item is out of stock
-        }else if(find.getBidder() == null){
-            if(tryMoney>find.getCurrentBid()){
+        }else if(tryMoney>find.getCurrentBid()){ //bid is larger
+            if(find.getBidder() == null){ //no one has bid
                 System.out.println("item is now being bid on");
                 return "START"; //item is now being bid on
-            }
-            else{ //not an overtaking bid
-                return "REJECT";
-            }
-        }else{
-            if(tryMoney>find.getCurrentBid()){
+            }else{ //someone has bid
+                System.out.println("overtaking bid"); //not reaching here, for whatever reason.
                 String theOutBid = find.getBidder();
                 find.setCurrentBid(tryMoney,name);
+                System.out.println(theOutBid+" has been passed");
                 return theOutBid; //return the outbid for notification
-            }else{
-                return "REJECT"; //reject if the bid was not enough to overtake
             }
+
+        }else{ //not an overtaking bid
+            System.out.println("Reject bid");
+            return "REJECT";
         }
 
 
