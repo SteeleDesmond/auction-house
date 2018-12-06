@@ -167,29 +167,28 @@ public class AuctionHouse {
      * started, or, if the bid is successful, the name of the previous bidder
      */
     public String makeBid(Item item, int tryMoney, String name){
-        //assuming that thier account has already been checked, just update the item
-        //return a value if success, then let the thing that called start the thread
+        //assuming that the account was already checked, going for item now
         Item find = findItemInInventory(item);
-        System.out.println("bidder: "+name+" trymoney: "+tryMoney+" bidding on:" +
-                find);
+//        System.out.println("bidder: "+name+" tryMoney: "
+//                +tryMoney+" bidding on: " + find);
         if(find == null){
-            System.out.println(item.getItemName()+" is not in our inventory");
+            //System.out.println(item.getItemName()+" is not in our inventory");
             return "NONE"; //item is out of stock
         }else if(tryMoney>find.getCurrentBid()){ //bid is larger
             if(find.getBidder() == null){ //no one has bid
-                System.out.println("item is now being bid on");
+                //System.out.println("item is now being bid on");
                 find.setCurrentBid(tryMoney,name);
                 return "START"; //item is now being bid on
             }else{ //someone has bid
-                System.out.println("overtaking bid"); //not reaching here, for whatever reason.
+                //System.out.println("overtaking bid");
                 String theOutBid = find.getBidder();
                 find.setCurrentBid(tryMoney,name);
-                System.out.println(theOutBid+" has been passed");
+                //System.out.println(theOutBid+" has been passed");
                 return theOutBid; //return the outbid for notification
             }
 
         }else{ //not an overtaking bid
-            System.out.println("Reject bid");
+            //System.out.println("Reject bid");
             return "REJECT";
         }
 
