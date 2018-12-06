@@ -178,6 +178,7 @@ public class AuctionHouse {
         }else if(tryMoney>find.getCurrentBid()){ //bid is larger
             if(find.getBidder() == null){ //no one has bid
                 System.out.println("item is now being bid on");
+                find.setCurrentBid(tryMoney,name);
                 return "START"; //item is now being bid on
             }else{ //someone has bid
                 System.out.println("overtaking bid"); //not reaching here, for whatever reason.
