@@ -1,10 +1,51 @@
 package ah.auction;
 
+import ah.shared.BankProxy;
+import ah.shared.CommunicationService;
+
 import java.util.Scanner;
 
 public class AuctionController {
     private Scanner commandLine = new Scanner(System.in);
     private Boolean running = true;
+
+    private AuctionHouse store;
+    private BankProxy bankProxy;
+    private CommunicationService bankServer;
+
+    public AuctionController(Scanner input){
+        store = new AuctionHouse(input);
+        System.out.println("What machine is the bank on?");
+        String bankHost = input.nextLine();
+        System.out.println("What port number is it on?");
+        int bankPort = input.nextInt();
+        try {
+            bankProxy = bankServer.connectToBankServer(bankHost, bankPort,"bank");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("Alright, now, ");
+    }
+
+    public static void main(String[] args){
+        Scanner commandLine = new Scanner(System.in);
+        AuctionController ac = new AuctionController(commandLine);
+        ac.run();
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void run() {
         while(running) {
