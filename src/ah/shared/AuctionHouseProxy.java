@@ -15,6 +15,9 @@ public class AuctionHouseProxy {
         this.ahIn = ahIn;
     }
 
+    // need to get inventory list
+    //maybe server number, if bank uses it
+
     public void sendMsg(String msg) {
         ahOut.println(msg);
     }
