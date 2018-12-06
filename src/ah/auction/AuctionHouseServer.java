@@ -13,7 +13,11 @@ public class AuctionHouseServer {
     private NotificationServer auctionServer; // This service
 
     public static void main(String[] args) {
-
+        //ah, found the main...alright then...Going to need to
+        //a) ensure that args is set up
+        //b) if not, use command line
+        //then, I need to Figure out the server type of thing.
+        //also, the stuff for the Ah proxy.
         AuctionHouseServer auctionHouseServer = new AuctionHouseServer();
         int portNumber; // Port number of this auction house's service
         Scanner commandLine = new Scanner(System.in);
