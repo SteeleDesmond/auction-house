@@ -8,29 +8,30 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-
+//need to clean this up a bit.
 public class AuctionHouse {
     private String name;
-    private String bankID; //?
-    private LinkedList<Item> itemList;
-    private int defaultItemNum = 5;
-    private int numberOfItems = 5; //for sale, pick from temp list
+    private String bankID; //keep for now
+    private LinkedList<Item> inventory;
+    private int defaultItemNum = 5;//make this a local variable
+    private int numberOfItems = 5; //for sale, pick from temp list //keep
+    private int defaultPrice =30; //temp default price...or use randomizer...
     private Random rand = new Random();
-    private boolean quit = false;
+    private boolean quit = false; //may not need
 
-    private LinkedList<Bid> activeAuctions;  //should only be one
-    private LinkedList<Item> pendingAuctions; //items people want, but cannot
+    private LinkedList<Bid> activeAuctions;  //may not need
+    private LinkedList<Item> pendingAuctions; //items people want, but cannot //remove
     //bid for yet
     //probably need a way to keep track of bidders....
-    private LinkedList bidders;
+    private LinkedList bidders; //may not need, espically since i keep track in item the person who is doing it
 
     /**
      * creates an Auction house object
      * @param in requires a scanner for input.
      */
     public AuctionHouse(Scanner in){
-        //initalizers
-        itemList = new LinkedList<Item>();
+        //initializing stuff
+        inventory = new LinkedList<Item>();
         activeAuctions = new LinkedList<Bid>();
 
         //auction house creation
@@ -61,7 +62,7 @@ public class AuctionHouse {
         Scanner commandLine = new Scanner(System.in);
         AuctionHouse ah = new AuctionHouse(commandLine);
         System.out.println(ah.getInventoryList());
-        ah.startAuction(new Item("excalibur"),400);
+        //ah.startAuction(new Item("excalibur"),400);
         System.out.println(ah.activeAuctions);
 
 //        System.out.println("For commands, enter help");
@@ -126,16 +127,16 @@ public class AuctionHouse {
      * Gets the list of items the auction is selling, all of them
      * @return a string representation of that
      */
-    public String getInventoryList(){
+    public String getInventoryList(){ /**need to fix this**/
         String ret = name+"\n";
-        for(Item i: itemList){
+        for(Item i: inventory){
             ret = ret+i.toString();
             ret = ret+"\n";
         }
         return ret;
     }
 
-    public void startAuction(Item item, int minMoney){
+    public void startAuction(Item item, int minMoney){ //def need to fix/remove this
         Item mcGuffin = findItemInInventory(item);
         if(mcGuffin==null){
             return;
@@ -145,6 +146,8 @@ public class AuctionHouse {
     }
 //ebay style, need to fix
     public void makeBid(Item item, int tryMoney, String name){
+        //assuming that thier account has already been checked, just update the item
+        //return a value if success, then let the thing that called start the thread
         Item find = findItemInInventory(item);
         if(activeAuctions.isEmpty()){
             System.out.println("There are no active auctions");
@@ -163,7 +166,7 @@ public class AuctionHouse {
     }
 
     public void setBankID(){
-        //just set this, later, after bank gets created
+        //just set this, later, after bank account gets created, if needed...probs not
     }
 
     /*
@@ -171,8 +174,8 @@ public class AuctionHouse {
      * @param item the thing you are looking for
      * @return item if found, null if not
      */
-    private Item findItemInInventory(Item item){
-        for(Item i: itemList){
+    private Item findItemInInventory(Item item){ //this is fine...if id compare is better, fix in item code
+        for(Item i: inventory){
             if(item.equals(i)){
                 return i;
             }
@@ -180,7 +183,7 @@ public class AuctionHouse {
         return null;
     }
 
-    private void printActiveAuctions(){
+    private void printActiveAuctions(){ //may not need
         System.out.println("Active Auctions");
         for(Bid bid: activeAuctions){
             System.out.println(bid);
@@ -192,7 +195,7 @@ public class AuctionHouse {
      * @param a one bid
      * @param b another bid
      */
-    private Bid getLargerBid(Bid a, Bid b) {
+    private Bid getLargerBid(Bid a, Bid b) { //good to go
         if (a.getBidAmount() == b.getBidAmount()) {
             return null;
         }
@@ -203,7 +206,7 @@ public class AuctionHouse {
         }
     }
 
-    private void printHelp(){
+    private void printHelp(){ //acutally,might not need this at all, at least, not here
         System.out.println("How to use your auction house:");
         System.out.println("1. set up a bank account");
         System.out.println("use 'bank' command to do this.");
@@ -214,7 +217,7 @@ public class AuctionHouse {
 
     /*
      * reads in the number of items an auction house wishes to sell
-     *
+     * @param scanner, to read in the number of items
      */
     private void readInNumber(Scanner commandLine){
         System.out.println("Input the number of items you wish to sell," +
@@ -238,15 +241,17 @@ public class AuctionHouse {
     /* @param fileName -file to be read in, along with relative path
      * @return true if successful, false if file isn't found
      */
-    private boolean readItemList(String fileName){
+    private boolean readItemList(String fileName){ //need to fix, to stock in inventory properly... in read in, with random, or input?
         LinkedList<Item> items = new LinkedList<>();
+        int idnum =1;
         try{
             Scanner readin = new Scanner(new FileReader(fileName));
             //Note adds ALL things in text file to auction house  itemlist
             while(readin.hasNextLine()){
                 String input = readin.nextLine();
-                Item item = new Item(input);
+                Item item = new Item(idnum,input,defaultPrice); //don't do default price...
                 items.add(item);
+                idnum++;
             }
             readin.close();
         }catch (FileNotFoundException ex){
@@ -254,9 +259,10 @@ public class AuctionHouse {
             return false;
         }
         //need to randomly pick a certain number of items
+        //I think I will keep the very random id numbers...i feel like it fits
         while(numberOfItems>0 && !items.isEmpty()){
             int next = rand.nextInt(items.size());
-            itemList.add(items.remove(next));
+            inventory.add(items.remove(next));
             numberOfItems--;
         }
 
@@ -265,8 +271,8 @@ public class AuctionHouse {
 
     private void printItemList(){
         System.out.println("Items Available: ");
-        if(!itemList.isEmpty()) {
-            for (Item i : itemList) {
+        if(!inventory.isEmpty()) {
+            for (Item i : inventory) {
                 System.out.println(i);
             }
         }else{

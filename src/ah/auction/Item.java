@@ -77,10 +77,12 @@ public class Item {
     /**
      * @Override toString
      * ensures that items are represented properly
-     * @return the string of the item name
+     * @return the string of the item id, its name, the minimun and current bid
+     * does not reveal the secret id of current bidder
      */
     public String toString(){
-        return getItemName();
+        return getItemID()+" "+getItemName()+" "+
+                getMinimumBid()+" "+getCurrentBid();
     }
 
     /**

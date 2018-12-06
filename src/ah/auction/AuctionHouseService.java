@@ -39,23 +39,23 @@ public class AuctionHouseService implements Runnable {
     }
 
 
-    private boolean readItemList(String fileName){
-        try{
-            Scanner readin = new Scanner(new FileReader(fileName));
-            //Note adds ALL things in text file to auction house  itemlist
-            while(readin.hasNextLine()){
-                String input = readin.nextLine();
-                Item item = new Item(input);
-                itemList.add(item);
-            }
-            readin.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("file not found");
-            return false;
-        }
-
-        return true;
-    }
+//    private boolean readItemList(String fileName){
+//        try{
+//            Scanner readin = new Scanner(new FileReader(fileName));
+//            //Note adds ALL things in text file to auction house  itemlist
+//            while(readin.hasNextLine()){
+//                String input = readin.nextLine();
+//                Item item = new Item(input);
+//                itemList.add(item);
+//            }
+//            readin.close();
+//        }catch (FileNotFoundException ex){
+//            System.out.println("file not found");
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
     private void printItemList(){
         System.out.println("Items Available: ");
