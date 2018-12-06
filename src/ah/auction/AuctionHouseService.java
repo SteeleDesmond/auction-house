@@ -57,21 +57,21 @@ public class AuctionHouseService implements Runnable {
 //        return true;
 //    }
 
-    private void printItemList(){
-        System.out.println("Items Available: ");
-        if(!itemList.isEmpty()) {
-            for (Item i : itemList) {
-                System.out.println(i);
-            }
-        }else{
-            System.out.println("nothing");
-        }
-    }
-
-    /**
-     * Post an auction for bidding. Used by the AuctionHouseClient only
-     */
-    protected void postAuction() {
-
-    }
+//    private void printItemList(){
+//        System.out.println("Items Available: ");
+//        if(!itemList.isEmpty()) {
+//            for (Item i : itemList) {
+//                System.out.println(i);
+//            }
+//        }else{
+//            System.out.println("nothing");
+//        }
+//    }
+//
+//    /**
+//     * Post an auction for bidding. Used by the AuctionHouseClient only
+//     */
+//    protected void postAuction() {
+//
+//    }
 }
