@@ -1,5 +1,5 @@
 package ah.auction;
-
+//may not need anymore
 public class Bid {
     private String bidder;
     private int bidAmount;
@@ -9,7 +9,7 @@ public class Bid {
      * Creates a bid
      * @param item the item the bid is on
      * @param money the amount of money bid on the item
-     * @param
+     * @param name name of the bidder
      */
     public Bid(Item item, int money, String name){
         this.item=item;

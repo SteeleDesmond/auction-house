@@ -20,6 +20,10 @@ public class AuctionHouseService implements Runnable {
 
     @Override
     public void run() {
+        Scanner commandLine = new Scanner(System.in);
+        AuctionHouse ah = new AuctionHouse(commandLine);
+        //so, ah will just use make bid and get inventory list.
+
         //        System.out.println("In auction house.");
         //        Scanner commandLine = new Scanner(System.in);
         //        System.out.println("Read in file__:");
@@ -27,6 +31,7 @@ public class AuctionHouseService implements Runnable {
         //        readItemList(command);
         //        System.out.println("Printing item list:");
         //        printItemList();
+        commandLine.close();
     }
 
     public void addNewClient(Socket s) throws IOException {
@@ -39,39 +44,39 @@ public class AuctionHouseService implements Runnable {
     }
 
 
-    private boolean readItemList(String fileName){
-        try{
-            Scanner readin = new Scanner(new FileReader(fileName));
-            //Note adds ALL things in text file to auction house  itemlist
-            while(readin.hasNextLine()){
-                String input = readin.nextLine();
-                Item item = new Item(input);
-                itemList.add(item);
-            }
-            readin.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("file not found");
-            return false;
-        }
+//    private boolean readItemList(String fileName){
+//        try{
+//            Scanner readin = new Scanner(new FileReader(fileName));
+//            //Note adds ALL things in text file to auction house  itemlist
+//            while(readin.hasNextLine()){
+//                String input = readin.nextLine();
+//                Item item = new Item(input);
+//                itemList.add(item);
+//            }
+//            readin.close();
+//        }catch (FileNotFoundException ex){
+//            System.out.println("file not found");
+//            return false;
+//        }
+//
+//        return true;
+//    }
 
-        return true;
-    }
-
-    private void printItemList(){
-        System.out.println("Items Available: ");
-        if(!itemList.isEmpty()) {
-            for (Item i : itemList) {
-                System.out.println(i);
-            }
-        }else{
-            System.out.println("nothing");
-        }
-    }
-
-    /**
-     * Post an auction for bidding. Used by the AuctionHouseClient only
-     */
-    protected void postAuction() {
-
-    }
+//    private void printItemList(){
+//        System.out.println("Items Available: ");
+//        if(!itemList.isEmpty()) {
+//            for (Item i : itemList) {
+//                System.out.println(i);
+//            }
+//        }else{
+//            System.out.println("nothing");
+//        }
+//    }
+//
+//    /**
+//     * Post an auction for bidding. Used by the AuctionHouseClient only
+//     */
+//    protected void postAuction() {
+//
+//    }
 }
