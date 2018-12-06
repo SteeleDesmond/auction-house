@@ -8,12 +8,11 @@ public class Item {
     private String bidder; //saves the name of the bidder, if any
 
     /**
-     * creates an item, temporarily
-     * @param id
-     * @param str
+     * creates an item, temporarily, to test for equality
+     * @param str is the name of the item you are looking for
      */
-    public Item(int id, String str){
-        itemID = id;
+    public Item( String str){
+        itemID = -1;
         itemName = str;
         minimumBid = 0;
         currentBid = minimumBid;

@@ -186,7 +186,6 @@ public class AuctionHouse {
                 //System.out.println(theOutBid+" has been passed");
                 return theOutBid; //return the outbid for notification
             }
-
         }else{ //not an overtaking bid
             //System.out.println("Reject bid");
             return "REJECT";
@@ -220,7 +219,7 @@ public class AuctionHouse {
      * @param item the thing you are looking for
      * @return item if found, null if not
      */
-    private Item findItemInInventory(Item item){ //this is fine...if id compare is better, fix in item code
+    private Item findItemInInventory(Item item){
         for(Item i: inventory){
             if(item.equals(i)){
                 return i;
