@@ -20,6 +20,10 @@ public class AuctionHouseService implements Runnable {
 
     @Override
     public void run() {
+        Scanner commandLine = new Scanner(System.in);
+        AuctionHouse ah = new AuctionHouse(commandLine);
+        //so, ah will just use make bid and get inventory list.
+
         //        System.out.println("In auction house.");
         //        Scanner commandLine = new Scanner(System.in);
         //        System.out.println("Read in file__:");
@@ -27,6 +31,7 @@ public class AuctionHouseService implements Runnable {
         //        readItemList(command);
         //        System.out.println("Printing item list:");
         //        printItemList();
+        commandLine.close();
     }
 
     public void addNewClient(Socket s) throws IOException {
