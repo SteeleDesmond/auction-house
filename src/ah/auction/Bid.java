@@ -1,5 +1,5 @@
 package ah.auction;
-
+//may not need anymore
 public class Bid {
     private String bidder;
     private int bidAmount;
