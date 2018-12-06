@@ -40,9 +40,9 @@ public class NotificationServer {
         // Create new Bank thread or AuctionHouseServer thread depending on the type of server
         switch(serverType.toLowerCase()) {
             case("bank"): {
-                bank = new BankService(serverSocket);
-                Thread t = new Thread(bank);
-                t.start();
+//                bank = new BankService();
+//                Thread t = new Thread(bank);
+//                t.start();
                 break;
             }
             // If this is an auction house server, connect to the bank service first

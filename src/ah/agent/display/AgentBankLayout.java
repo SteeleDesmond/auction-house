@@ -22,7 +22,7 @@ public class AgentBankLayout  extends BorderPane {
 
         //body
         vBox = new VBox();
-        setTop(vBox);
+        setCenter(vBox);
 
         HBox hBox;
         Button button;
@@ -34,7 +34,7 @@ public class AgentBankLayout  extends BorderPane {
         hBox.getChildren().add(button);
         hBox.getChildren().add(new TextField());
 
-        vBox.getChildren().add(vBox);
+        vBox.getChildren().add(hBox);
 
         //Withdrawl
         hBox = new HBox();
@@ -44,7 +44,7 @@ public class AgentBankLayout  extends BorderPane {
         hBox.getChildren().add(button);
         hBox.getChildren().add(new TextField());
 
-        vBox.getChildren().add(vBox);
+        vBox.getChildren().add(hBox);
 
     }
 

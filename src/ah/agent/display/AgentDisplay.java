@@ -10,7 +10,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-public class AgentDisp extends Stage {
+public class AgentDisplay {
+
+    Stage stage;
 
     private BorderPane agSceneChoiceLayout;
     Scene agSceneChoiceScene;
@@ -21,18 +23,19 @@ public class AgentDisp extends Stage {
     private AgentBankLayout agBankLayout;
     Scene agBankScene;
 
-    public AgentDisp() {
+    public AgentDisplay(Stage stage) {
 
-        HBox sceneChoiceHBox = sceneChoiceHBox();
+        this.stage = stage;
 
-        agSceneChoiceLayout = new BorderPane();
-        agSceneChoiceScene = new Scene(agSceneChoiceLayout);
+//        HBox sceneChoiceHBox = sceneChoiceHBox();
 
-        agAHLayout = new AgentAHLayout(sceneChoiceHBox);
+        agAHLayout = new AgentAHLayout(sceneChoiceHBox());
         agAHScene = new Scene(agAHLayout, 400, 400, Color.GREY);
 
-        agBankLayout = new AgentBankLayout(sceneChoiceHBox);
+        agBankLayout = new AgentBankLayout(sceneChoiceHBox());
         agBankScene = new Scene(agBankLayout, 400, 400, Color.LIGHTGREEN);
+
+        stage.setScene(agBankScene);
 
     }
 
@@ -43,7 +46,7 @@ public class AgentDisp extends Stage {
         button.setOnMouseClicked(handleAHScene());
         hBox.getChildren().add(button);
 
-        Button button = new Button("Bank");
+        button = new Button("Bank");
         button.setOnMouseClicked(handleBankScene());
         hBox.getChildren().add(button);
 
@@ -55,7 +58,7 @@ public class AgentDisp extends Stage {
         return new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setScene(agAHScene);
+                stage.setScene(agAHScene);
             }
         };
     }
@@ -64,7 +67,7 @@ public class AgentDisp extends Stage {
         return new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                setScene(agBankScene);
+                stage.setScene(agBankScene);
             }
         };
     }

@@ -37,6 +37,8 @@ public class Agent {
             agentController = new AgentController(bankProxy);
             Thread t = new Thread(agentController);
             t.start();
+
+            
         }
         catch (Exception e) {
             e.printStackTrace();

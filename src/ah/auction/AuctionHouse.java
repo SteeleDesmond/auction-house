@@ -5,6 +5,7 @@ import ah.shared.NotificationServer;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
@@ -49,7 +50,12 @@ public class AuctionHouse {
 
              AuctionHouse auctionHouse = new AuctionHouse(name,numItems,bankPortNum,portNum);
 
-            NotificationServer server = new NotificationServer();
+             try {
+                 NotificationServer server = new NotificationServer(2000, "auctionhouse");
+
+             }catch (IOException io){
+                 io.printStackTrace();
+             }
 
         } else {
 
