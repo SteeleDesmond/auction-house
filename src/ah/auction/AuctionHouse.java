@@ -15,7 +15,7 @@ public class AuctionHouse {
     private LinkedList<Item> inventory;
     private int defaultItemNum = 5;//make this a local variable
     private int numberOfItems = 5; //for sale, pick from temp list //keep
-    private int defaultPrice =30; //temp default price...or use randomizer...
+    private int maxMinBid = 1000; //this is the maximum that the minimum bid can be
     private Random rand = new Random();
     private boolean quit = false; //may not need
 
@@ -239,9 +239,11 @@ public class AuctionHouse {
 
 
     /* @param fileName -file to be read in, along with relative path
+     * will randomly generate a price, so people with large amounts of inventory
+     * don't have to do all of it by hand...also for fun.
      * @return true if successful, false if file isn't found
      */
-    private boolean readItemList(String fileName){ //need to fix, to stock in inventory properly... in read in, with random, or input?
+    private boolean readItemList(String fileName){
         LinkedList<Item> items = new LinkedList<>();
         int idnum =1;
         try{
@@ -249,7 +251,11 @@ public class AuctionHouse {
             //Note adds ALL things in text file to auction house  itemlist
             while(readin.hasNextLine()){
                 String input = readin.nextLine();
-                Item item = new Item(idnum,input,defaultPrice); //don't do default price...
+                int price = rand.nextInt(maxMinBid);
+                if(price == 0){
+                    price++; //add one just so the price isn't zero, ever
+                }
+                Item item = new Item(idnum,input,price); //set max bid at top.
                 items.add(item);
                 idnum++;
             }
