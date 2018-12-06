@@ -39,6 +39,13 @@ public class AgentDisplay {
 
     }
 
+    void displayBalance(double balance){
+
+        agBankLayout.displayBalance(balance);
+    }
+
+
+
     HBox sceneChoiceHBox(){
         HBox hBox = new HBox();
 

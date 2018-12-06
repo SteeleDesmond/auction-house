@@ -7,11 +7,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 
 public class AgentBankLayout  extends BorderPane {
 
 
     VBox vBox;
+
+    Text balance = new Text();
 
 
     public AgentBankLayout(HBox options) {
@@ -26,6 +29,8 @@ public class AgentBankLayout  extends BorderPane {
 
         HBox hBox;
         Button button;
+
+        vBox.getChildren().add(balance);
 
         //Deposit
         hBox = new HBox();
@@ -64,5 +69,10 @@ public class AgentBankLayout  extends BorderPane {
                 System.out.println("withdrawl");
             }
         };
+    }
+
+    public void displayBalance(double balance) {
+
+        this.balance.setText(Double.toString(balance));
     }
 }

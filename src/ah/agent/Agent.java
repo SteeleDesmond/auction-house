@@ -1,7 +1,10 @@
 package ah.agent;
 
+import ah.agent.display.AgentDisplay;
 import ah.shared.BankProxy;
 import ah.shared.CommunicationService;
+import javafx.stage.Stage;
+
 import java.util.Scanner;
 
 
@@ -11,7 +14,17 @@ import java.util.Scanner;
  */
 public class Agent {
 
+    AgentController agentController;
+    AgentDisplay agentDisplay;
+
     private CommunicationService bankServer;
+
+    public Agent() {
+
+
+
+
+    }
 
     public static void main(String[] args) {
 

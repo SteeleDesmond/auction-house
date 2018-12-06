@@ -29,11 +29,16 @@ public class Bank {
         Bank bank = new Bank();
         String serverType = "bank";
         int portNumber;
+        System.out.println("Starting Bank!");
 
         if (args.length > 0){
             portNumber = Integer.parseInt(args[0]);
+
+        } else if (args.length == 0) {
+
+            portNumber = 2000;
+
         } else {
-            System.out.println("Starting Bank!");
             Scanner commandLine = new Scanner(System.in);
             System.out.println("Please enter the port number to start on:");
             portNumber = commandLine.nextInt();

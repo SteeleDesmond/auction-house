@@ -1,17 +1,19 @@
 package ah.agent;
 
-import ah.agent.UserDisplay;
+import ah.agent.display.AgentDisplay;
 import ah.shared.AuctionHouseProxy;
 import ah.shared.BankProxy;
 import ah.shared.CommunicationService;
+import javafx.stage.Stage;
 
 import java.util.Scanner;
 
 public class AgentController implements Runnable {
 
+    AgentDisplay agentDisplay;
+
     private ActiveBids activeBids;
     private UserCommands userCommands;
-    private UserDisplay userDisplay;
     private UserAccount userAccount;
     private CommunicationService connector = new CommunicationService();
     private AuctionHouseProxy auctionHouse;
@@ -25,7 +27,11 @@ public class AgentController implements Runnable {
     public AgentController(BankProxy bank) {
         this.bank = bank;
 
-        this.userDisplay = new UserDisplay();
+//        Stage stage = new Stage();
+//        agentDisplay = new AgentDisplay(stage);
+//
+//        stage.show();
+
     }
 
     @Override
@@ -61,6 +67,8 @@ public class AgentController implements Runnable {
                     }
                 }
             }
+
+
         }
     }
 
