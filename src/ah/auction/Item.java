@@ -8,6 +8,19 @@ public class Item {
     private String bidder; //saves the name of the bidder, if any
 
     /**
+     * creates an item, temporarily
+     * @param id
+     * @param str
+     */
+    public Item(int id, String str){
+        itemID = id;
+        itemName = str;
+        minimumBid = 0;
+        currentBid = minimumBid;
+        bidder = null; //if null, there is no bidder
+    }
+
+    /**
      * Creates an item
      * @param id takes the id that will be used for the item in question
      * @param str takes the name of the item to be created

@@ -144,24 +144,59 @@ public class AuctionHouse {
         Bid minBid = new Bid(mcGuffin,minMoney, null);
         activeAuctions.add(minBid);
     }
-//ebay style, need to fix
-    public void makeBid(Item item, int tryMoney, String name){
+
+    /**
+     * This function attempts bids on items. It finds the item, ensuring it
+     * is actually there, and checks to see if the amount of money is
+     * larger than the amount currently in there
+     * @param item the item you want the bid to be made on, used to find it
+     * @param tryMoney the amount of money you want to bid
+     * @param name the name of the bidder
+     * @return "NONE" if the item is not there, "REJECT" if the amount you want
+     * to bid is not enough, "START" if the bid war on that item has just
+     * started, or, if the bid is successful, the name of the previous bidder
+     */
+    public String makeBid(Item item, int tryMoney, String name){
         //assuming that thier account has already been checked, just update the item
         //return a value if success, then let the thing that called start the thread
         Item find = findItemInInventory(item);
-        if(activeAuctions.isEmpty()){
-            System.out.println("There are no active auctions");
-            return;
-        }else if(find == null){
-            System.out.println("That item is not in our inventory");
-        }else if(!find.equals(activeAuctions.peekFirst())){
-            System.out.println("We are not accepting bids for that item " +
-                    "at this time");
+        if(find == null){
+            System.out.println(item.getItemName()+" is not in our inventory");
+            return "NONE"; //item is out of stock
+        }else if(find.getBidder() == null){
+            if(tryMoney>find.getCurrentBid()){
+                System.out.println("item is now being bid on");
+                return "START"; //item is now being bid on
+            }
+            else{ //not an overtaking bid
+                return "REJECT";
+            }
         }else{
-            Bid attempt = new Bid(find, tryMoney, name);
-            Bid win = getLargerBid(attempt,activeAuctions.peekFirst());
-            System.out.println("Winner of the battle: "+win);
+            if(tryMoney>find.getCurrentBid()){
+                String theOutBid = find.getBidder();
+                find.setCurrentBid(tryMoney,name);
+                return theOutBid; //return the outbid for notification
+            }else{
+                return "REJECT"; //reject if the bid was not enough to overtake
+            }
         }
+
+
+
+//    probs going to remove all of this
+//        if(activeAuctions.isEmpty()){
+//            System.out.println("There are no active auctions");
+//            return;
+//        }else if(find == null){
+//            System.out.println("That item is not in our inventory");
+//        }else if(!find.equals(activeAuctions.peekFirst())){
+//            System.out.println("We are not accepting bids for that item " +
+//                    "at this time");
+//        }else{
+//            Bid attempt = new Bid(find, tryMoney, name);
+//            Bid win = getLargerBid(attempt,activeAuctions.peekFirst());
+//            System.out.println("Winner of the battle: "+win);
+//        }
 
     }
 
