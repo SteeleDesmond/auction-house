@@ -24,79 +24,96 @@ public class AuctionHouse {
     //probably need a way to keep track of bidders....
     private LinkedList bidders;
 
-    public AuctionHouse(String name){
-        this.name = name;
+    /**
+     * creates an Auction house object
+     * @param in requires a scanner for input.
+     */
+    public AuctionHouse(Scanner in){
+        //initalizers
         itemList = new LinkedList<Item>();
+        activeAuctions = new LinkedList<Bid>();
+
+        //auction house creation
+        System.out.println("Welcome.");
+        System.out.println("Before you can use your auction house," +
+                "we need some information");
+        System.out.println();
+        System.out.println("What do you want to name your Auction House?");
+        this.name = in.nextLine();
+        System.out.println("Welcome "+this.name+" Auction House");
+
+        System.out.println("How many items do you want to sell?");
+        readInNumber(in);
+        System.out.println("Amount of items to be sold: "+numberOfItems);
+
+        System.out.println("Importing items...");
+        readItemList("resrcs/itemList.txt");
+        System.out.println("Complete.");
+
+        //bank related things set after creation
+
+        System.out.println("Auction House is now operational");
     }
 
     public static void main(String[] args){
         //System.out.println("In auction house.");
         System.out.println("Welcome.");
         Scanner commandLine = new Scanner(System.in);
+        AuctionHouse ah = new AuctionHouse(commandLine);
+        System.out.println(ah.getInventoryList());
+        ah.startAuction(new Item("excalibur"),400);
+        System.out.println(ah.activeAuctions);
 
-        System.out.println("What do you want to name your Auction House?");
-        String command = commandLine.nextLine();
-        AuctionHouse aHouse = new AuctionHouse(command);
-        System.out.println("Welcome "+aHouse.name+" Auction House");
-
-        System.out.println("To Start, how many items do you want to sell");
-        aHouse.readInNumber(commandLine);
-        System.out.println("Amount of items you wish to sell: "
-                + aHouse.numberOfItems);
-        System.out.println("Importing items...");
-        aHouse.readItemList("resrcs/itemList.txt");
-        System.out.println("Complete.");
-        System.out.println("Auction House operational");
-        System.out.println("For commands, enter help");
-        while(!aHouse.quit){
-            command = commandLine.nextLine();
-            switch(command){
-                case("quit"):
-                    aHouse.quit = true;
-                    break;
-                case("help"):
-                    aHouse.printHelp();
-                    break;
-                case("print items"):
-                    System.out.println("Printing item list:");
-                    aHouse.printItemList();
-                    break;
-                case("bank"):
-                    System.out.println("Set up bank account here");
-                    //need to create the controller here, and the server
-                    //in order: server, bank, controller
-                    break;
-                case("server"):
-                    System.out.println("create server here");
-                    break;
-                case("Start auction"):
-                    System.out.println("start an acution for an item");
-                    break;
-                case("view interest"):
-                    System.out.println("view flagged items");
-
-                    break;
-                case("view auctions"):
-                    System.out.println("view active auctions");
-                    aHouse.printActiveAuctions();
-                    break;
-                case ("t"):
-                    System.out.println("create bid");
-                    Item item = new Item("hell");
-                    Bid bid = new Bid(item, 30,"bob");
-                    System.out.println(bid);
-                    break;
+//        System.out.println("For commands, enter help");
+//        while(!aHouse.quit){
+//            command = commandLine.nextLine();
+//            switch(command){
+//                case("quit"):
+//                    aHouse.quit = true;
+//                    break;
+//                case("help"):
+//                    aHouse.printHelp();
+//                    break;
+//                case("print items"):
+//                    System.out.println("Printing item list:");
+//                    aHouse.printItemList();
+//                    break;
+//                case("bank"):
+//                    System.out.println("Set up bank account here");
+//                    //need to create the controller here, and the server
+//                    //in order: server, bank, controller
+//                    break;
+//                case("server"):
+//                    System.out.println("create server here");
+//                    break;
+//                case("Start auction"):
+//                    System.out.println("start an acution for an item");
+//                    break;
+//                case("view interest"):
+//                    System.out.println("view flagged items");
+//
+//                    break;
+//                case("view auctions"):
+//                    System.out.println("view active auctions");
+//                    aHouse.printActiveAuctions();
+//                    break;
+//                case ("t"):
+//                    System.out.println("create bid");
+//                    Item item = new Item("hell");
+//                    Bid bid = new Bid(item, 30,"bob");
+//                    System.out.println(bid);
+//                    break;
 //                case("add item"):
 //                    aHouse.addCustomItem();
 //                    break;
 
-
-            }
+//
+//            }
 
             //probs should check notification here
 
 
-        }
+//        }
 
         //aHouse.getServerInfoFromUser();
 
@@ -105,8 +122,62 @@ public class AuctionHouse {
         commandLine.close();
     }
 
-    public void makeBid(){
+    /**
+     * Gets the list of items the auction is selling, all of them
+     * @return a string representation of that
+     */
+    public String getInventoryList(){
+        String ret = name+"\n";
+        for(Item i: itemList){
+            ret = ret+i.toString();
+            ret = ret+"\n";
+        }
+        return ret;
+    }
 
+    public void startAuction(Item item, int minMoney){
+        Item mcGuffin = findItemInInventory(item);
+        if(mcGuffin==null){
+            return;
+        }
+        Bid minBid = new Bid(mcGuffin,minMoney, null);
+        activeAuctions.add(minBid);
+    }
+//ebay style, need to fix
+    public void makeBid(Item item, int tryMoney, String name){
+        Item find = findItemInInventory(item);
+        if(activeAuctions.isEmpty()){
+            System.out.println("There are no active auctions");
+            return;
+        }else if(find == null){
+            System.out.println("That item is not in our inventory");
+        }else if(!find.equals(activeAuctions.peekFirst())){
+            System.out.println("We are not accepting bids for that item " +
+                    "at this time");
+        }else{
+            Bid attempt = new Bid(find, tryMoney, name);
+            Bid win = getLargerBid(attempt,activeAuctions.peekFirst());
+            System.out.println("Winner of the battle: "+win);
+        }
+
+    }
+
+    public void setBankID(){
+        //just set this, later, after bank gets created
+    }
+
+    /*
+     * looks for the specified item in the ah inventory
+     * @param item the thing you are looking for
+     * @return item if found, null if not
+     */
+    private Item findItemInInventory(Item item){
+        for(Item i: itemList){
+            if(item.equals(i)){
+                return i;
+            }
+        }
+        return null;
     }
 
     private void printActiveAuctions(){
@@ -117,7 +188,7 @@ public class AuctionHouse {
     }
 
     /*
-     * bid a and bid b must be of the same item
+     * bid a and bid b are assumed be of the same item
      * @param a one bid
      * @param b another bid
      */
