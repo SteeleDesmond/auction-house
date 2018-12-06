@@ -149,6 +149,8 @@ public class AuctionHouse {
      * This function attempts bids on items. It finds the item, ensuring it
      * is actually there, and checks to see if the amount of money is
      * larger than the amount currently in there
+     * Assumes funds are in the account, blocked and ready to go
+     * does not do the thread stuff, just saves value
      * @param item the item you want the bid to be made on, used to find it
      * @param tryMoney the amount of money you want to bid
      * @param name the name of the bidder
