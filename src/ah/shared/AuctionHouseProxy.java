@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AuctionHouseProxy {
     //think I need to do some error checking here, like
@@ -46,11 +47,12 @@ public class AuctionHouseProxy {
                 if(input.equalsIgnoreCase(AuctionHouseMessages.SUCCESS.name())) {
                     // The following message is the number of Auctions to be coming in
 
-                    numberOfAuctions = Integer.valueOf(ahIn.readLine());
-                    System.out.println(numberOfAuctions); // For console testing
-                    for(int i = 0; i < numberOfAuctions; i++) {
-                        listOfAuctions.add(ahIn.readLine());
+
+                    Scanner sc = new Scanner(ahIn.readLine());
+                    while (sc.hasNext()){
+                        listOfAuctions.add(sc.nextLine());
                     }
+
                     waiting = false;
                     return listOfAuctions;
                 }
