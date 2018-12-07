@@ -6,6 +6,7 @@ import ah.auction.AuctionHouseController;
 
 import java.io.*;
 import java.net.*;
+import java.util.Scanner;
 
 /**
  * Used by clients to connect to a given host and port. The Agent and the AuctionHouse both have clients that connect to
@@ -37,6 +38,13 @@ public class CommunicationService {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             out.println(clientType); // Tell the bank which kind of client this is
+            if(clientType.equalsIgnoreCase("auction house")) {
+                System.out.println("Please enter the name of this auction house:");
+                Scanner commandLine = new Scanner(System.in);
+                out.println(commandLine.nextLine());
+                out.println(hostName);
+                out.println(portNumber);
+            }
             bankProxy = new BankProxy(out, in);
             return bankProxy;
         }

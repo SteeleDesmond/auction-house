@@ -12,14 +12,21 @@ import java.util.concurrent.Executors;
 public class BankService {
 
     private ExecutorService executor = Executors.newCachedThreadPool();
-    private ArrayList<AuctionHouseAccount> auctionHouses = new ArrayList<>();
-    private ArrayList<AgentAccount> agents = new ArrayList<>();
+    //private ArrayList<AuctionHouseAccount> auctionHouses = new ArrayList<>();
+    //private ArrayList<AgentAccount> agents = new ArrayList<>();
+    private ArrayList<Account> auctionHouses = new ArrayList<>();
+    private ArrayList<Account> agents = new ArrayList<>();
+    private int accountId;
+
+    public BankService() {
+        accountId = 0;
+    }
 
     /**
      * This method is called by the NotificationServer when a new client has connected to this service. It handles the
      * new connection by creating an appropriate account thread for the client.
      * @param s The client socket that just connected
-     * @throws IOException
+     * @throws IOException Error connecting
      */
     public void handleNewConnection(Socket s) throws IOException {
         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
@@ -41,19 +48,40 @@ public class BankService {
         // Create an Account for the client and start its thread to listen for and handle requests individually
         switch(type) {
             case("agent"): {
-                AgentAccount agent = new AgentAccount(this, out, in);
+                //AgentAccount agent = new AgentAccount(this, out, in);
+                String name = "temp name";
+                String hostName = "temp host";
+                String portNumber = "temp port";
+                Account agent = new Account(accountId, name, this, out, in, hostName, portNumber);
+                accountId++;
                 agents.add(agent);
                 executor.execute(agent);
+                break;
             }
             case("auction house"): {
-                AuctionHouseAccount aHouse = new AuctionHouseAccount(this, out, in);
+                //AuctionHouseAccount aHouse = new AuctionHouseAccount(this, out, in);
+                String name = in.readLine(); // Name of auction house is sent after its type
+                String hostName = in.readLine();
+                String portNumber = in.readLine();
+                Account aHouse = new Account(accountId, name, this, out, in, hostName, portNumber);
+                accountId++;
                 auctionHouses.add(aHouse);
                 executor.execute(aHouse);
+                break;
+            }
+            default: {
+                System.out.println("Issue connecting --> BankService in handleNewConnection");
             }
         }
     }
-
-    public int getAccountBalance(int accountId) {
-        return agents.get(accountId).getBalance();
+    public ArrayList<Account> getAuctionHouses() {
+        return auctionHouses;
     }
+
+    public ArrayList<Account> getAgents() {
+        return agents;
+    }
+//    public int getAccountBalance(int accountId) {
+//        return agents.get(accountId).getBalance();
+//    }
 }

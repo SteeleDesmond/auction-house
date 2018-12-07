@@ -4,6 +4,8 @@ import ah.shared.AuctionHouseProxy;
 import ah.shared.BankProxy;
 import ah.shared.CommunicationService;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AgentController implements Runnable {
@@ -36,11 +38,55 @@ public class AgentController implements Runnable {
                     break;
                 }
                 case("a"): {
-                    getAuctionHouses();
+                    try {
+                        ArrayList<String> aHouses = bank.getAuctionHouses();
+                        for(String s : aHouses) {
+                            System.out.println(s);
+                        }
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case("b"): {
-                    bank.checkBalance();
+                    try {
+                        bank.checkBalance();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+                case("d"): {
+                    System.out.println("Enter amount to deposit:");
+                    String input = commandLine.nextLine();
+                    try {
+                        bank.deposit(Integer.valueOf(input));
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+                case("w"): {
+                    System.out.println("Enter amount to withdraw:");
+                    String input = commandLine.nextLine();
+                    try {
+                        bank.withdraw(Integer.valueOf(input));
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
+                case("key"): {
+                    try {
+                        bank.getBiddingKey();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case("c"): {
@@ -56,17 +102,22 @@ public class AgentController implements Runnable {
                     catch (Exception e) {
                         e.printStackTrace();
                     }
+                    break;
                 }
             }
         }
     }
 
     private void printCommands() {
+        System.out.println();
         System.out.println("User Options:");
         System.out.println("BankMsg -- Send a message to the bank");
         System.out.println("(a)uction houses -- Get a list of auction houses from the bank");
         System.out.println(("(c)onnect to an auction house"));
         System.out.println("(b)get account balance");
+        System.out.println("(d)eposit money in bank account");
+        System.out.println("(w)ithdraw money from bank account");
+        System.out.println("(key) get bidding key");
 
         // If the agent is connected to an auction house then print additional options
         if(auctionHouse != null) {
