@@ -118,7 +118,7 @@ public class AgentController implements Runnable {
                 }
                 case("g"): {
                     try {
-                        bid();
+                        getAuctionsList();
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -172,7 +172,7 @@ public class AgentController implements Runnable {
         }
         // Check account balance
         // check active bids
-        // bid
+        // getAuctionsList
         // etc
     }
 
@@ -180,7 +180,7 @@ public class AgentController implements Runnable {
      *
      * @throws IOException
      */
-    private void bid() throws IOException{
+    private void getAuctionsList() throws IOException{
         ArrayList<String> auctions = auctionHouse.getAuctions();
         int i = 1;
         for(String s : auctions) {
@@ -189,10 +189,10 @@ public class AgentController implements Runnable {
             System.out.println(s);
         }
 
-        System.out.println(" enter 'x' to exit");
+         //System.out.println(" enter 'x' to exit");
 
 //        while (true) {
-//            System.out.println(" enter number of item to bid: ");
+//            System.out.println(" enter number of item to getAuctionsList: ");
 //            Scanner sc = new Scanner(System.in);
 //            String input = sc.nextLine();
 //
