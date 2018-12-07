@@ -68,7 +68,5 @@ public class AuctionHouseProxy {
         return listOfAuctions; // If empty --> error
     }
 
-    public boolean makeBid(){
 
-    }
 }

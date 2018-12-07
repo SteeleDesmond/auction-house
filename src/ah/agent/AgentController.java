@@ -178,7 +178,7 @@ public class AgentController implements Runnable {
     /**
      *
      */
-    private void bid() {
+    private void bid() throws IOException{
         ArrayList<String> auctions = auctionHouse.getAuctions();
         int i = 1;
         for(String s : auctions) {
@@ -200,9 +200,6 @@ public class AgentController implements Runnable {
             int itemNumber = Integer.parseInt(sc.nextLine());
 
         }
-        break;
-
-
 
     }
 }
