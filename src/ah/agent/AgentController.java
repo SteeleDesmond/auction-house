@@ -35,7 +35,7 @@ public class AgentController implements Runnable {
             printCommands();
             switch(commandLine.nextLine()) {
                 case ("BankMsg"): {
-                    System.out.println("Type a message to send to the bank");
+                    System.out.println("Please enter a command:");
                     bank.sendMsg(commandLine.nextLine());
                     break;
                 }
@@ -110,6 +110,7 @@ public class AgentController implements Runnable {
                     System.out.println("Connecting to auction house...");
                     try {
                         auctionHouse = connector.connectToAuctionHouseServer(hostName, portNumber);
+                        auctionHouse.sendBiddingKey(bank.getBiddingKey());
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -143,10 +144,25 @@ public class AgentController implements Runnable {
                     }
                     break;
                 }
-
-
-                default:{
-                    System.out.println("please reenter command");
+                case("bid"): {
+                    System.out.println("Enter the name of the item to bid on");
+                    String item = commandLine.nextLine();
+                    System.out.println("Enter the amount to bid:");
+                    String input = commandLine.nextLine();
+                    if(input.equals("")) {
+                        System.out.println("Invalid amount entered");
+                        break;
+                    }
+                    int amount = Integer.valueOf(commandLine.nextLine());
+                    try {
+                        auctionHouse.bid(item, amount);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                default: {
+                    System.out.println("Invalid input given");
                 }
             }
         }
@@ -155,36 +171,35 @@ public class AgentController implements Runnable {
     private void printCommands() {
         System.out.println();
         System.out.println("User Options:");
-        System.out.println("BankMsg -- Send a message to the bank");
-        System.out.println("(a)uction houses -- Get a list of auction houses from the bank");
-        System.out.println(("(c)onnect to an auction house"));
+        System.out.println();
+        System.out.println("Bank Options");
         System.out.println("(b)get account balance");
         System.out.println("(d)eposit money in bank account");
         System.out.println("(w)ithdraw money from bank account");
-        System.out.println("(key) get bidding key");
+        System.out.println("(a)uction houses -- Get a list of auction houses from the bank");
+        System.out.println("(c)onnect to an auction house");
+        System.out.println("(key) -- get bidding key");
 
         // If the agent is connected to an auction house then print additional options
         if(auctionHouse != null) {
             System.out.println();
-            System.out.println("Auction House:");
+            System.out.println("Auction House Options:");
             System.out.println("(g)et list of current auctions");
             System.out.println("(t)ransfer funds to an Auction House");
+            System.out.println("(bid) bid on an auction");
+            System.out.println("(won) get a list of auctions that this agent has won and the amount owed");
         }
-        // Check account balance
-        // check active bids
-        // getAuctionsList
-        // etc
+        System.out.println();
     }
 
     /**
-     *
-     * @throws IOException
+     * Request a list of auctions from the auction house
      */
     private void getAuctionsList() throws IOException{
         ArrayList<String> auctions = auctionHouse.getAuctions();
         int i = 1;
         for(String s : auctions) {
-            System.out.print("" + i + " :");
+            System.out.print(i + ": ");
             i++;
             System.out.println(s);
         }
