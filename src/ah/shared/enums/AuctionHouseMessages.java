@@ -1,4 +1,4 @@
-package ah.auction.enums;
+package ah.shared.enums;
 
 public enum AuctionHouseMessages {
 
