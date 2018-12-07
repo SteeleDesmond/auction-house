@@ -16,4 +16,6 @@ public class AuctionHouseProxy {
     public void sendMsg(String msg) {
         ahOut.println(msg);
     }
+
+
 }
