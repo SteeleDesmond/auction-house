@@ -25,6 +25,8 @@ public class AgentController implements Runnable {
 
     public AgentController(BankProxy bank) {
         this.bank = bank;
+
+        userAccount = new UserAccount();
     }
 
     @Override
@@ -51,7 +53,8 @@ public class AgentController implements Runnable {
                 }
                 case("b"): {
                     try {
-                        bank.checkBalance();
+
+                        System.out.println("Balance: "+ bank.checkBalance());
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -62,7 +65,11 @@ public class AgentController implements Runnable {
                     System.out.println("Enter amount to deposit:");
                     String input = commandLine.nextLine();
                     try {
-                        bank.deposit(Integer.valueOf(input));
+                        if(bank.deposit(Integer.valueOf(input))){
+                            System.out.println("transaction success");
+                        } else {
+                            System.out.println("transaction failed");
+                        }
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -73,7 +80,12 @@ public class AgentController implements Runnable {
                     System.out.println("Enter amount to withdraw:");
                     String input = commandLine.nextLine();
                     try {
-                        bank.withdraw(Integer.valueOf(input));
+                        if (bank.withdraw(Integer.valueOf(input))){
+                            System.out.println("transaction success");
+
+                        } else {
+                            System.out.println("transaction failed");
+                        }
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -104,8 +116,16 @@ public class AgentController implements Runnable {
                     }
                     break;
                 }
+                case("g"): {
+
+                }
                 case("t"): {
                     System.out.println("Enter the amount to transfer:");
+                    String input = commandLine.nextLine();
+                    if(input.equals("")) {
+                        System.out.println("Invalid amount entered");
+                        break;
+                    }
                     int amountToTransfer = Integer.valueOf(commandLine.nextLine());
                     System.out.println("Please enter the AH Key given:");
                     String ahKey = commandLine.nextLine();
@@ -116,6 +136,11 @@ public class AgentController implements Runnable {
                         e.printStackTrace();
                     }
                     break;
+                }
+
+
+                default:{
+                    System.out.println("please reenter command");
                 }
             }
         }

@@ -36,7 +36,7 @@ public class Account implements Runnable {
         this.in = in;
         this.hostName = hostName;
         this.portNumber = portNumber;
-        accountBalance = 0;
+        accountBalance = 5000;
         holdsAmount = 0;
         accountIsOpen = true;
         System.out.println("New account created! Account ID: " + id);
