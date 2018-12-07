@@ -63,19 +63,21 @@ public class NotificationServer {
                 break;
             }
         }
-        System.out.println("Server is running.");
+        //System.out.println("Server is running.");
 
         // Listen  for  new  clients  forever
         while(true) {
             Socket clientSocket = serverSocket.accept(); // This method blocks until a connection is made
             // If a client is trying to connect, accept and pass the socket connection to the corresponding service
             if(clientSocket != null) {
+               // System.out.println("Socket has connected");
                 switch(serverType.toLowerCase()) {
                     case("bank"): {
                         bank.handleNewConnection(clientSocket);
                         break;
                     }
                     case("auction house"): {
+                        //System.out.println("Auction house client is trying to connect");
                         auctionHouse.addNewClient(clientSocket);
                         break;
                     }

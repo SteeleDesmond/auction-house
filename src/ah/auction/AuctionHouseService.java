@@ -7,11 +7,15 @@ import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AuctionHouseService implements Runnable {
+    private ExecutorService pool = Executors.newCachedThreadPool();
+    private LinkedList<Bidder> bidders = new LinkedList();
 
     private BankProxy bank;
-    private LinkedList<Item> itemList = new LinkedList<>();
+    //private LinkedList<Item> itemList = new LinkedList<>();
 
     public AuctionHouseService(BankProxy bank) {
         this.bank = bank;
@@ -20,58 +24,78 @@ public class AuctionHouseService implements Runnable {
 
     @Override
     public void run() {
-        //        System.out.println("In auction house.");
-        //        Scanner commandLine = new Scanner(System.in);
-        //        System.out.println("Read in file__:");
-        //        String command = commandLine.nextLine();
-        //        readItemList(command);
-        //        System.out.println("Printing item list:");
-        //        printItemList();
+        Scanner commandLine = new Scanner(System.in);
+        AuctionHouse ah = new AuctionHouse(commandLine);
+
+        commandLine.close();
     }
 
     public void addNewClient(Socket s) throws IOException {
+        System.out.println("entering addnewclient");
         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        while(true) {
-            if(in.readLine() != null)
-                System.out.println("AHService received message: " + in.readLine());
-        }
+        System.out.println("past in and out streams");
+
+        /* only agents are connecting to the auction house
+         */
+//        String type;
+//        if((type = in.readLine()) != null) {
+//            System.out.println("BankService received connection type: " + type);
+//        }
+//        else {
+//            // There should be a better way to handle the connection in case the message isn't sent
+//            System.out.println("Connection message not received");
+//            return;
+//        }
+
+        String name = "temp";//in.readLine();
+        //create a bidder
+        Bidder newbidder =  new Bidder(name,out,in);
+        bidders.add(newbidder);
+        pool.execute(newbidder);
+
+//        while(true) {
+//            if(in.readLine() != null)
+//                System.out.println("AHService received message: " + in.readLine());
+//        }
     }
 
 
-    private boolean readItemList(String fileName){
-        try{
-            Scanner readin = new Scanner(new FileReader(fileName));
-            //Note adds ALL things in text file to auction house  itemlist
-            while(readin.hasNextLine()){
-                String input = readin.nextLine();
-                Item item = new Item(input);
-                itemList.add(item);
-            }
-            readin.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("file not found");
-            return false;
-        }
 
-        return true;
-    }
-
-    private void printItemList(){
-        System.out.println("Items Available: ");
-        if(!itemList.isEmpty()) {
-            for (Item i : itemList) {
-                System.out.println(i);
-            }
-        }else{
-            System.out.println("nothing");
-        }
-    }
-
-    /**
-     * Post an auction for bidding. Used by the AuctionHouseClient only
-     */
-    protected void postAuction() {
-
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
