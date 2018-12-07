@@ -38,12 +38,5 @@ public class AuctionHouseServer {
         //then, I need to Figure out the server type of thing.
         //also, the stuff for the Ah proxy.
 
-
-
-//        System.out.println("Starting Auction House!");
-//
-//        System.out.println("Starting auction house service...");
-
-        // start the AuctionHouseServer server (AuctionHouseService)
     }
 }
