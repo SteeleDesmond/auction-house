@@ -23,6 +23,7 @@ public class Bidder implements Runnable{
         System.out.println("run entered - bidder");
         String input;
         while(loggedIn){
+            System.out.println("Loop");
             try{
                 input = in.readLine();
                 if(input!= null){

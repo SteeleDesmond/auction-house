@@ -31,12 +31,24 @@ public class AuctionHouseService implements Runnable {
     }
 
     public void addNewClient(Socket s) throws IOException {
+        System.out.println("entering addnewclient");
         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        System.out.println("past in and out streams");
 
         /* only agents are connecting to the auction house
          */
-        String name = in.readLine();
+//        String type;
+//        if((type = in.readLine()) != null) {
+//            System.out.println("BankService received connection type: " + type);
+//        }
+//        else {
+//            // There should be a better way to handle the connection in case the message isn't sent
+//            System.out.println("Connection message not received");
+//            return;
+//        }
+
+        String name = "temp";//in.readLine();
         //create a bidder
         Bidder newbidder =  new Bidder(name,out,in);
         bidders.add(newbidder);
