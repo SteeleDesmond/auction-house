@@ -13,12 +13,14 @@ public class AuctionHouseAccount extends Account {
         this.parent = parent;
         this.out = out;
         this.in = in;
-    }
-
-    @Override
-    public void run() {
+        System.out.println("New AH account created!");
 
     }
+
+//    @Override
+//    public void run() {
+//
+//    }
 
     public boolean holdFunds(int amount, KeyGenerator key) {
 

@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 public class AgentAccount extends Account {
 
+    private boolean accountIsOpen;
     private int accountBalance;
     private BankService parent;
     private PrintWriter out;
@@ -16,11 +17,8 @@ public class AgentAccount extends Account {
         this.out = out;
         this.in = in;
         accountBalance = 0;
-    }
-
-    @Override
-    public void run() {
-
+        accountIsOpen = true;
+        System.out.println("New Agent account created!");
     }
 
     public String getAgentKey() {
