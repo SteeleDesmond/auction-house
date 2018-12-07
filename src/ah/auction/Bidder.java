@@ -20,12 +20,14 @@ public class Bidder implements Runnable{
 
     @Override
     public void run(){
+        System.out.println("run entered - bidder");
         String input;
         while(loggedIn){
             try{
                 input = in.readLine();
                 if(input!= null){
                     System.out.println("Request received from account " + name+ ": " + input);
+
                 }
             }catch(Exception e){
                 e.printStackTrace();
