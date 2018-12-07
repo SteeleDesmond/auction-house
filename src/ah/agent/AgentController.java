@@ -153,13 +153,14 @@ public class AgentController implements Runnable {
                         System.out.println("Invalid amount entered");
                         break;
                     }
-                    int amount = Integer.valueOf(commandLine.nextLine());
+                    int amount = Integer.valueOf(input);
                     try {
                         auctionHouse.bid(item, amount);
                     }
                     catch (Exception e) {
                         e.printStackTrace();
                     }
+                    break;
                 }
                 default: {
                     System.out.println("Invalid input given");
