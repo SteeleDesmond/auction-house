@@ -121,6 +121,11 @@ public class AgentController implements Runnable {
                 }
                 case("t"): {
                     System.out.println("Enter the amount to transfer:");
+                    String input = commandLine.nextLine();
+                    if(input.equals("")) {
+                        System.out.println("Invalid amount entered");
+                        break;
+                    }
                     int amountToTransfer = Integer.valueOf(commandLine.nextLine());
                     System.out.println("Please enter the AH Key given:");
                     String ahKey = commandLine.nextLine();
