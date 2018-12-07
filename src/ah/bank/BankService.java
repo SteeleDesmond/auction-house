@@ -49,7 +49,10 @@ public class BankService {
         switch(type) {
             case("agent"): {
                 //AgentAccount agent = new AgentAccount(this, out, in);
-                Account agent = new Account(accountId, this, out, in);
+                String name = "temp name";
+                String hostName = "temp host";
+                String portNumber = "temp port";
+                Account agent = new Account(accountId, name, this, out, in, hostName, portNumber);
                 accountId++;
                 agents.add(agent);
                 executor.execute(agent);
@@ -57,7 +60,10 @@ public class BankService {
             }
             case("auction house"): {
                 //AuctionHouseAccount aHouse = new AuctionHouseAccount(this, out, in);
-                Account aHouse = new Account(accountId, this, out, in);
+                String name = in.readLine(); // Name of auction house is sent after its type
+                String hostName = in.readLine();
+                String portNumber = in.readLine();
+                Account aHouse = new Account(accountId, name, this, out, in, hostName, portNumber);
                 accountId++;
                 auctionHouses.add(aHouse);
                 executor.execute(aHouse);
@@ -68,7 +74,13 @@ public class BankService {
             }
         }
     }
+    public ArrayList<Account> getAuctionHouses() {
+        return auctionHouses;
+    }
 
+    public ArrayList<Account> getAgents() {
+        return agents;
+    }
 //    public int getAccountBalance(int accountId) {
 //        return agents.get(accountId).getBalance();
 //    }

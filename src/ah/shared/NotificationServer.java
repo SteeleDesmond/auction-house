@@ -57,11 +57,7 @@ public class NotificationServer {
                 commandLine.nextLine(); // This is to remove the new line character after the nextInt function
                 BankProxy bankProxy = connector.connectToBankServer(hostName, portNumber, "auction house");
 
-                String name; // The name of the auction house
-                System.out.println("Please enter the name of this auction house:");
-                name = commandLine.nextLine();
-
-                auctionHouse = new AuctionHouseService(bankProxy, name);
+                auctionHouse = new AuctionHouseService(bankProxy);
                 Thread t = new Thread(auctionHouse);
                 t.start();
                 break;

@@ -147,11 +147,12 @@ public class BankProxy {
                     return listOfAHs;
                 }
                 else if (input.equalsIgnoreCase(BankMessages.FAILURE.name())) {
-                    System.out.println("Error processing get auction houses with Bank");
+                    System.out.println("There are currently no auction houses registered with the bank.");
                 }
                 else {
                     System.out.println("Error: BankProxy --> getAuctionHouses");
                 }
+                waiting = false;
             }
         }
         return listOfAHs; // If empty --> error

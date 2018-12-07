@@ -5,6 +5,7 @@ import ah.shared.BankProxy;
 import ah.shared.CommunicationService;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AgentController implements Runnable {
@@ -37,7 +38,15 @@ public class AgentController implements Runnable {
                     break;
                 }
                 case("a"): {
-                    getAuctionHouses();
+                    try {
+                        ArrayList<String> aHouses = bank.getAuctionHouses();
+                        for(String s : aHouses) {
+                            System.out.println(s);
+                        }
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case("b"): {

@@ -4,6 +4,7 @@ import ah.shared.enums.BankMessages;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 /**
  * The Account class is used for methods that both AuctionHouse Accounts and Agent Accounts can use.
@@ -11,22 +12,29 @@ import java.io.PrintWriter;
 public class Account implements Runnable {
 
     private int id;
+    private String name;
     private boolean accountIsOpen;
     private int accountBalance;
     private BankService parent;
     private PrintWriter out;
     private BufferedReader in;
+    private String hostName;
+    private String portNumber;
     private String personalKey = new KeyGenerator().getKey();
 
     public Account() {
 
     }
 
-    public Account(int Accountid, BankService parent, PrintWriter out, BufferedReader in) {
-        this.id = Accountid;
+    public Account(int AccountId, String name, BankService parent, PrintWriter out, BufferedReader in,
+                   String hostName, String portNumber) {
+        this.id = AccountId;
+        this.name = name;
         this.parent = parent;
         this.out = out;
         this.in = in;
+        this.hostName = hostName;
+        this.portNumber = portNumber;
         accountBalance = 0;
         accountIsOpen = true;
         System.out.println("New account created! Account ID: " + id);
@@ -69,7 +77,16 @@ public class Account implements Runnable {
                             break;
                         }
                         case GETAUCTIONHOUSES: {
-
+                            ArrayList<Account> aHouses = parent.getAuctionHouses();
+                            if(aHouses.size() < 1) {
+                                sendFailure();
+                                break;
+                            }
+                            sendSuccess();
+                            out.println(aHouses.size()); // First send how many auction houses there are
+                            for(Account a : aHouses) {
+                                out.println(a.getAccountInformation()); // Send info of each auction house
+                            }
                             break;
                         }
                         case GETBIDDINGKEY: {
@@ -119,5 +136,9 @@ public class Account implements Runnable {
 
     public int getId() {
         return id;
+    }
+
+    public String getAccountInformation() {
+        return name + " " + hostName + " " + portNumber;
     }
 }
