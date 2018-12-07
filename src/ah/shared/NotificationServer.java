@@ -55,7 +55,8 @@ public class NotificationServer {
                 System.out.println("Please enter the bank's port number:");
                 int portNumber = commandLine.nextInt();
                 commandLine.nextLine(); // This is to remove the new line character after the nextInt function
-                BankProxy bankProxy = connector.connectToBankServer(hostName, portNumber, "auction house");
+                BankProxy bankProxy = connector.connectToBankServer(hostName, portNumber,
+                        "auction house", this.portNumber);
 
                 auctionHouse = new AuctionHouseService(bankProxy);
                 Thread t = new Thread(auctionHouse);

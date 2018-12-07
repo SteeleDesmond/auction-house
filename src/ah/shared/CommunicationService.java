@@ -24,7 +24,7 @@ public class CommunicationService {
      * @return A bank proxy that handles the interactions with the auction house server.
      * @throws IOException
      */
-    public BankProxy connectToBankServer(String hostName, int portNumber, String clientType) throws IOException {
+    public BankProxy connectToBankServer(String hostName, int portNumber, String clientType, int auctionPort) throws IOException {
         BankProxy bankProxy; // The BankProxy is used by agent and auction
 
         try {
@@ -44,8 +44,10 @@ public class CommunicationService {
                 out.println(commandLine.nextLine());
                 System.out.println("Please enter the hostname of this Auction House (For agents to use to connect):");
                 out.println(commandLine.nextLine());
-                System.out.println("Please re-enter the port number of the Auction House (sorry):");
-                out.println(commandLine.nextLine());
+               // System.out.println("Please re-enter the port number of the Auction House (sorry):");
+                out.println(auctionPort);
+                //System.out.println("Auciton port");
+                //out.println(commandLine.nextLine());
             }
             bankProxy = new BankProxy(out, in);
             return bankProxy;

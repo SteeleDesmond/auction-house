@@ -32,7 +32,7 @@ public class Agent {
         agent.bankServer = new CommunicationService();
         System.out.println("Connecting to the bank server...");
         try {
-            bankProxy = agent.bankServer.connectToBankServer(hostName, portNumber, "agent");
+            bankProxy = agent.bankServer.connectToBankServer(hostName, portNumber, "agent",9999);
             agentController = new AgentController(bankProxy);
             Thread t = new Thread(agentController);
             t.start();
