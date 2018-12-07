@@ -15,6 +15,7 @@ public class Account implements Runnable {
     private String name;
     private boolean accountIsOpen;
     private int accountBalance;
+    private int holdsAmount;
     private BankService parent;
     private PrintWriter out;
     private BufferedReader in;
@@ -36,6 +37,7 @@ public class Account implements Runnable {
         this.hostName = hostName;
         this.portNumber = portNumber;
         accountBalance = 0;
+        holdsAmount = 0;
         accountIsOpen = true;
         System.out.println("New account created! Account ID: " + id);
     }
@@ -68,6 +70,7 @@ public class Account implements Runnable {
                             if(accountBalance - amount < 0) {
                                 sendFailure(); // Send a failure message if the withdrawal would overdraft
                                 System.out.println("Account " + id + " would overdraft! Withdrawal was denied.");
+                                out.println("Account " + id + " would overdraft! Withdrawal was denied.");
                             }
                             else {
                                 accountBalance -= amount;
@@ -80,6 +83,7 @@ public class Account implements Runnable {
                             ArrayList<Account> aHouses = parent.getAuctionHouses();
                             if(aHouses.size() < 1) {
                                 sendFailure();
+                                out.println("There aren't any auction houses currently registered with the bank.");
                                 break;
                             }
                             sendSuccess();
@@ -94,14 +98,69 @@ public class Account implements Runnable {
                             out.println(personalKey);
                             break;
                         }
+                        case GETAHKEY: {
+                            sendSuccess();
+                            out.println(personalKey);
+                            break;
+                        }
                         case TRANSFERFUNDS: {
-
+                            // Expects 3 following messages: the agent's bidding key, the ah key, and the amount
+                            String agentKey = in.readLine();
+                            String ahKey = in.readLine();
+                            String amount = in.readLine();
+                            if(!personalKey.equals(agentKey)) {
+                                System.out.println("Error: Agent is sending a false key");
+                                sendFailure();
+                                out.println("Error: The Agent key sent is not registered with the bank");
+                            }
+                            // If the transfer is successful send a success response
+                            else if (parent.transferFunds(agentKey, ahKey, Integer.valueOf(amount))) {
+                                sendSuccess();
+                            }
+                            else {
+                                sendFailure();
+                                out.println("Error processing the transfer (Insufficient funds, perhaps?)");
+                            }
                             break;
                         }
                         case BLOCKFUNDS: {
+                            // Expects 3 following messages: the agent's bidding key, the ah key, and the amount
+                            String ahKey = in.readLine();
+                            String agentKey = in.readLine();
+                            String amount = in.readLine();
+                            if(!personalKey.equals(ahKey)) {
+                                System.out.println("Error: AHouse is sending a false key");
+                                sendFailure();
+                                out.println("Error: The AHouse key sent is not registered with the bank");
+                            }
+                            // If the hold is successful send a success response
+                            else if (parent.blockFunds(ahKey, agentKey, Integer.valueOf(amount))) {
+                                sendSuccess();
+                            }
+                            else {
+                                sendFailure();
+                                out.println("Error processing the hold (Insufficient funds, perhaps?)");
+                            }
                             break;
                         }
                         case UNBLOCKFUNDS: {
+                            // Expects 3 following messages: the agent's bidding key, the ah key, and the amount
+                            String ahKey = in.readLine();
+                            String agentKey = in.readLine();
+                            String amount = in.readLine();
+                            if(!personalKey.equals(ahKey)) {
+                                System.out.println("Error: AHouse is sending a false key");
+                                sendFailure();
+                                out.println("Error: The AHouse key sent is not registered with the bank");
+                            }
+                            // If the hold is successful send a success response
+                            else if (parent.unblockFunds(ahKey, agentKey, Integer.valueOf(amount))) {
+                                sendSuccess();
+                            }
+                            else {
+                                sendFailure();
+                                out.println("Error removing the hold (Perhaps the account has no holds?)");
+                            }
                             break;
                         }
                         default: {
@@ -139,6 +198,22 @@ public class Account implements Runnable {
     }
 
     public String getAccountInformation() {
-        return name + " " + hostName + " " + portNumber;
+        return name + " " + hostName + " " + portNumber + " " + personalKey;
+    }
+
+    public int getAccountBalance() {
+        return accountBalance;
+    }
+
+    public void setAccountBalance(int accountBalance) {
+        this.accountBalance = accountBalance;
+    }
+
+    public int getHoldsAmount() {
+        return holdsAmount;
+    }
+
+    public void setHoldsAmount(int holdsAmount) {
+        this.holdsAmount = holdsAmount;
     }
 }
