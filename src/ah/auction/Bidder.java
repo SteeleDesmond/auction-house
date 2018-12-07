@@ -15,6 +15,8 @@ public class Bidder implements Runnable{
 
     public Bidder(String callMe, PrintWriter out, BufferedReader in){
         this.name = callMe;
+        this.in=in;
+        this.out = out;
         System.out.println("new bidder created! "+name);
     }
 
@@ -23,7 +25,7 @@ public class Bidder implements Runnable{
         System.out.println("run entered - bidder");
         String input;
         while(loggedIn){
-            System.out.println("Loop");
+            //System.out.println("Loop");
             try{
                 input = in.readLine();
                 if(input!= null){
