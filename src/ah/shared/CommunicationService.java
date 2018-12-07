@@ -42,8 +42,10 @@ public class CommunicationService {
                 System.out.println("Please enter the name of this auction house:");
                 Scanner commandLine = new Scanner(System.in);
                 out.println(commandLine.nextLine());
-                out.println(hostName);
-                out.println(portNumber);
+                System.out.println("Please enter the hostname of this Auction House:");
+                out.println(commandLine.nextLine());
+                System.out.println("Please re-enter the port number of the Auction House (sorry):");
+                out.println(commandLine.nextLine());
             }
             bankProxy = new BankProxy(out, in);
             return bankProxy;
