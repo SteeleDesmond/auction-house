@@ -1,5 +1,5 @@
 package ah.auction;
-//may not need anymore
+//I think I might make this into a runnable, and it will check to see if time has run out.
 public class Bid {
     private String bidder;
     private int bidAmount;
