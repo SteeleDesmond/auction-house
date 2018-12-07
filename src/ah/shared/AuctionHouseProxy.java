@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AuctionHouseProxy {
     //think I need to do some error checking here, like
@@ -34,7 +35,6 @@ public class AuctionHouseProxy {
      * @throws IOException
      */
     public ArrayList<String> getAuctions() throws IOException {
-        int numberOfAuctions; // Second message sent back by bank is the number of AHs available
 
         ArrayList<String> listOfAuctions = new ArrayList<>();
         waiting = true;
@@ -44,15 +44,13 @@ public class AuctionHouseProxy {
             if((input = ahIn.readLine()) != null) {
                 System.out.println(input); // Print message received for testing
                 if(input.equalsIgnoreCase(AuctionHouseMessages.SUCCESS.name())) {
-                    // The following message is the number of Auctions to be coming in
 
-//                    numberOfAuctions = Integer.valueOf(ahIn.readLine());
-//                    System.out.println(numberOfAuctions); // For console testing
-//                    for(int i = 0; i < numberOfAuctions; i++) {
-//                        listOfAuctions.add(ahIn.readLine());
-//                    }
-
-                    listOfAuctions.add(ahIn.readLine());
+                    // If a success then the list of auctions follows the success message in one line
+                    // Split the line at new line characters and add to ArrayList
+                    Scanner sc = new Scanner(ahIn.readLine());
+                    while (sc.hasNext()){
+                        listOfAuctions.add(sc.nextLine());
+                    }
                     waiting = false;
                     return listOfAuctions;
                 }

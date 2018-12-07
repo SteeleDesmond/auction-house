@@ -46,7 +46,7 @@ public class BankProxy {
                 System.out.println(input); // First message sent back should always be a success or failure message
                 if(input.equalsIgnoreCase(BankMessages.SUCCESS.name())) { // If success message was sent
                     input = bankIn.readLine();
-                    System.out.println(input); // The following message is the balance.
+                    // System.out.println(input); // The following message is the balance.
                     waiting = false;
                     return Integer.valueOf(input);
                 }
