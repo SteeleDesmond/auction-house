@@ -101,7 +101,7 @@ public class AuctionHouseProxy {
                     System.out.println(ahIn.readLine()); // Print error message sent by auction house
                 }
                 else {
-                    System.out.println("Error processing transfer request");
+                    System.out.println("Error processing the bid");
                 }
             }
             waiting = false;
