@@ -123,6 +123,7 @@ public class AgentController implements Runnable {
                     catch (Exception e) {
                         e.printStackTrace();
                     }
+                    break;
                 }
                 case("t"): {
                     System.out.println("Enter the amount to transfer:");
@@ -177,6 +178,7 @@ public class AgentController implements Runnable {
 
     /**
      *
+     * @throws IOException
      */
     private void bid() throws IOException{
         ArrayList<String> auctions = auctionHouse.getAuctions();
@@ -189,17 +191,16 @@ public class AgentController implements Runnable {
 
         System.out.println(" enter 'x' to exit");
 
-        while (true) {
-            System.out.println(" enter number of item to bid: ");
-            Scanner sc = new Scanner(System.in);
-            String input = sc.nextLine();
-
-            if (input.equals('x')) {
-                break;
-            }
-            int itemNumber = Integer.parseInt(sc.nextLine());
-
-        }
+//        while (true) {
+//            System.out.println(" enter number of item to bid: ");
+//            Scanner sc = new Scanner(System.in);
+//            String input = sc.nextLine();
+//
+//            if (input.equals('x')) {
+//                break;
+//            }
+//            int itemNumber = Integer.parseInt(sc.nextLine());
+//        }
 
     }
 }

@@ -48,7 +48,6 @@ public class AuctionHouseProxy {
 
                     numberOfAuctions = Integer.valueOf(ahIn.readLine());
                     System.out.println(numberOfAuctions); // For console testing
-
                     for(int i = 0; i < numberOfAuctions; i++) {
                         listOfAuctions.add(ahIn.readLine());
                     }
