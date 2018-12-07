@@ -40,8 +40,10 @@ public class AuctionHouseProxy {
                 System.out.println(input); // Print message received for testing
                 if(input.equalsIgnoreCase(AuctionHouseMessages.SUCCESS.name())) {
                     // The following message is the number of Auctions to be coming in
+
                     numberOfAuctions = Integer.valueOf(ahIn.readLine());
                     System.out.println(numberOfAuctions); // For console testing
+
                     for(int i = 0; i < numberOfAuctions; i++) {
                         listOfAuctions.add(ahIn.readLine());
                     }
@@ -59,6 +61,9 @@ public class AuctionHouseProxy {
             }
         }
         return listOfAuctions; // If empty --> error
+    }
+
+    public boolean makeBid(){
 
     }
 }
