@@ -44,6 +44,11 @@ public class Bidder implements Runnable{
                             break;
                         case QUIT:
                             break;
+                        case BID:
+                            input = in.readLine();
+                            int money = Integer.parseInt(in.readLine());
+                            house.makeBid(name,input,money);
+                            break;
                     }
 
 

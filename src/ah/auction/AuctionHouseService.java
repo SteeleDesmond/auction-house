@@ -68,6 +68,27 @@ public class AuctionHouseService implements Runnable {
         return ah.getInventoryList();
     }
 
+    public String makeBid(String name, String item, int money)throws IOException{
+        if(bank.blockFunds(bank.getAHKey(),name,money)){
+            Item mcguffin = new Item(item);
+            String result = ah.makeBid(mcguffin,money,name);
+            switch(result){
+                case ("NONE"):
+                case("REJECT"):
+                    return ("REJECT");
+                case("START"):
+                    break;
+                    default:
+                        //other bidder
+            }
+        }
+
+
+
+
+
+        return "Reject";
+    }
 
 
 }

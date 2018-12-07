@@ -46,11 +46,13 @@ public class AuctionHouseProxy {
                 if(input.equalsIgnoreCase(AuctionHouseMessages.SUCCESS.name())) {
                     // The following message is the number of Auctions to be coming in
 
-                    numberOfAuctions = Integer.valueOf(ahIn.readLine());
-                    System.out.println(numberOfAuctions); // For console testing
-                    for(int i = 0; i < numberOfAuctions; i++) {
-                        listOfAuctions.add(ahIn.readLine());
-                    }
+//                    numberOfAuctions = Integer.valueOf(ahIn.readLine());
+//                    System.out.println(numberOfAuctions); // For console testing
+//                    for(int i = 0; i < numberOfAuctions; i++) {
+//                        listOfAuctions.add(ahIn.readLine());
+//                    }
+
+                    listOfAuctions.add(ahIn.readLine());
                     waiting = false;
                     return listOfAuctions;
                 }
@@ -67,5 +69,27 @@ public class AuctionHouseProxy {
         return listOfAuctions; // If empty --> error
     }
 
+    public boolean makeBid(String item, int money) throws IOException{
+        waiting = true;
+        ahOut.println(AuctionHouseMessages.BID);
+        ahOut.println(item);
+        ahOut.println(money);
+        while(waiting){
+
+            if((input = ahIn.readLine()) != null){
+                System.out.println(input); // Print the message received to console for testing
+                if(input.equalsIgnoreCase(AuctionHouseMessages.SUCCESS.name())) {
+                    System.out.println(ahIn.readLine());
+                    waiting = false;
+                    return true;
+                }
+            } else {
+                System.out.println("Error processing bid");
+            }
+            waiting = false;
+        }
+        return false; // Error depositing
+
+    }
 
 }
