@@ -26,7 +26,7 @@ public class BankService {
      * This method is called by the NotificationServer when a new client has connected to this service. It handles the
      * new connection by creating an appropriate account thread for the client.
      * @param s The client socket that just connected
-     * @throws IOException
+     * @throws IOException Error connecting
      */
     public void handleNewConnection(Socket s) throws IOException {
         PrintWriter out = new PrintWriter(s.getOutputStream(), true);

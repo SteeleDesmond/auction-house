@@ -40,10 +40,10 @@ public class Account implements Runnable {
             //System.out.println("in agent account loop");
             try {
                 if((input = in.readLine()) != null) {
-                    System.out.println("Request received from account " + id + " :" + input);
+                    System.out.println("Request received from account " + id + ": " + input);
                     BankMessages message = BankMessages.valueOf(input);
                     switch(message) {
-                        case GETBALANCE: {
+                        case GETBALANCE: { // Send two messages, a success followed by a balance
                             sendSuccess();
                             sendBalance();
                             break;
@@ -51,19 +51,19 @@ public class Account implements Runnable {
                         case DEPOSIT: {
                             input = in.readLine(); // Get the deposit amount
                             accountBalance += Integer.parseInt(input);
-                            sendSuccess();
+                            sendSuccess(); // Send two messages, a success followed by a new balance
                             sendBalance();
                             break;
                         }
                         case WITHDRAW: {
                             int amount = Integer.parseInt(in.readLine()); // Get the withdrawal amount
                             if(accountBalance - amount < 0) {
-                                sendFailure();
+                                sendFailure(); // Send a failure message if the withdrawal would overdraft
                                 System.out.println("Account " + id + " would overdraft! Withdrawal was denied.");
                             }
                             else {
                                 accountBalance -= amount;
-                                sendSuccess();
+                                sendSuccess(); // Send two messages, success followed by a new balance
                                 sendBalance();
                             }
                             break;
@@ -115,5 +115,9 @@ public class Account implements Runnable {
 
     public void sendFailure() {
         out.println(BankMessages.FAILURE);
+    }
+
+    public int getId() {
+        return id;
     }
 }
