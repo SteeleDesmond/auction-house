@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 public class AuctionHouseService implements Runnable {
     private ExecutorService pool = Executors.newCachedThreadPool();
-    private LinkedList<Bidder> bidders = new LinkedList();
+    private LinkedList<Bidder> bidders = new LinkedList<>();
     private AuctionHouse ah;
     private BankProxy bank;
     private Scanner commandLine;
@@ -28,9 +28,6 @@ public class AuctionHouseService implements Runnable {
 
     @Override
     public void run() {
-
-
-
         //commandLine.close();
     }
 
@@ -68,8 +65,23 @@ public class AuctionHouseService implements Runnable {
         return ah.getInventoryList();
     }
 
+    /**
+     * Tell the bank to put a hold on a given amount of funds.
+     * @param agentBiddingKey The agent's bidding key given to the AH
+     * @param amount The amount to hold
+     */
+    public boolean blockFunds(String agentBiddingKey, int amount) throws IOException {
+        return bank.blockFunds(bank.getAHKey(), agentBiddingKey, amount);
+    }
 
-
+    /**
+     * Tell the bank to remove a hold on a given amount of funds of a given agent account
+     * @param agentBiddingKey The agent's bidding key given to the AH
+     * @param amount The amount to hold
+     */
+    public boolean unblockFunds(String agentBiddingKey, int amount)  throws IOException {
+        return bank.unblockFunds(bank.getAHKey(), agentBiddingKey, amount);
+    }
 }
 
 
