@@ -6,6 +6,7 @@ public enum AuctionHouseMessages {
     BID,
     GETAUCTIONS,
     WON,
+    QUIT,
 
     // Bank to Client
     SUCCESS,

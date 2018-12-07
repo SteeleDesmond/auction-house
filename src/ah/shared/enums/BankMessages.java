@@ -12,6 +12,7 @@ public enum BankMessages {
     TRANSFERFUNDS,
     BLOCKFUNDS,
     UNBLOCKFUNDS,
+    QUIT,
 
     // Bank to Client
     SUCCESS,
