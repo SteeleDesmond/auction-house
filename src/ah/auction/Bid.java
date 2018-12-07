@@ -2,10 +2,10 @@ package ah.auction;
 //I think I might make this into a runnable, and it will check to see if time has run out.
 public class Bid implements Runnable{
     private String theBid;
-    private AuctionHouseService
+    private AuctionHouseService hi;
 
     //thread sleep hahahahaha
-    @Override
+//    @Override
     public void run(){
 
     }
