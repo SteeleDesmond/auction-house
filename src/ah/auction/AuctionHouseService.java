@@ -1,77 +1,101 @@
 package ah.auction;
 
 import ah.shared.BankProxy;
-import ah.shared.CommunicationService;
-
 import java.io.*;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AuctionHouseService implements Runnable {
-
+    private ExecutorService pool = Executors.newCachedThreadPool();
+    private LinkedList<Bidder> bidders = new LinkedList<>();
+    private AuctionHouse ah;
     private BankProxy bank;
-    private LinkedList<Item> itemList = new LinkedList<>();
+    private Scanner commandLine;
 
     public AuctionHouseService(BankProxy bank) {
         this.bank = bank;
-        // Register with the static bank
+        commandLine = new Scanner(System.in);
+        ah = new AuctionHouse(commandLine);
+
     }
 
     @Override
     public void run() {
-        //        System.out.println("In auction house.");
-        //        Scanner commandLine = new Scanner(System.in);
-        //        System.out.println("Read in file__:");
-        //        String command = commandLine.nextLine();
-        //        readItemList(command);
-        //        System.out.println("Printing item list:");
-        //        printItemList();
+
     }
 
     public void addNewClient(Socket s) throws IOException {
         PrintWriter out = new PrintWriter(s.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        while(true) {
-            if(in.readLine() != null)
-                System.out.println("AHService received message: " + in.readLine());
-        }
+
+        String name = "temp";
+        Bidder newbidder =  new Bidder(name,out,in,this);
+        bidders.add(newbidder);
+        pool.execute(newbidder);
     }
 
-
-    private boolean readItemList(String fileName){
-        try{
-            Scanner readin = new Scanner(new FileReader(fileName));
-            //Note adds ALL things in text file to auction house  itemlist
-            while(readin.hasNextLine()){
-                String input = readin.nextLine();
-                Item item = new Item(input);
-                itemList.add(item);
-            }
-            readin.close();
-        }catch (FileNotFoundException ex){
-            System.out.println("file not found");
-            return false;
-        }
-
-        return true;
-    }
-
-    private void printItemList(){
-        System.out.println("Items Available: ");
-        if(!itemList.isEmpty()) {
-            for (Item i : itemList) {
-                System.out.println(i);
-            }
-        }else{
-            System.out.println("nothing");
-        }
+    public String getInventory(){
+        return ah.getInventoryList();
     }
 
     /**
-     * Post an auction for bidding. Used by the AuctionHouseClient only
+     * Tell the bank to put a hold on a given amount of funds.
+     * @param agentBiddingKey The agent's bidding key given to the AH
+     * @param amount The amount to hold
      */
-    protected void postAuction() {
+    public boolean blockFunds(String agentBiddingKey, int amount) throws IOException {
+        return bank.blockFunds(bank.getAHKey(), agentBiddingKey, amount);
+    }
 
+    /**
+     * Tell the bank to remove a hold on a given amount of funds of a given agent account
+     * @param agentBiddingKey The agent's bidding key given to the AH
+     * @param amount The amount to hold
+     */
+    public boolean unblockFunds(String agentBiddingKey, int amount)  throws IOException {
+        return bank.unblockFunds(bank.getAHKey(), agentBiddingKey, amount);
+    }
+
+    public boolean attemptToBid(String bidderKey, String itemName, int amount) {
+        return true;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
