@@ -11,7 +11,7 @@ import java.util.Scanner;
 //need to clean this up a bit.
 public class AuctionHouse {
     private String name;
-    private String bankID; //keep for now
+    private String bankID; //keep for now //delete this
     private LinkedList<Item> inventory;
     private int defaultItemNum = 5;//easy access
     private int numberOfItems = 5; //...don't need to change this
