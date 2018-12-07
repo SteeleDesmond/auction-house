@@ -2,6 +2,7 @@ package ah.auction;
 
 import ah.bank.BankService;
 import ah.shared.enums.AuctionHouseMessages;
+import ah.shared.enums.BankMessages;
 
 import java.io.BufferedReader;
 import java.io.PrintWriter;
@@ -38,6 +39,7 @@ public class Bidder implements Runnable{
                     AuctionHouseMessages msg = AuctionHouseMessages.valueOf(input);
                     switch(msg){
                         case GETAUCTIONS:
+                            sendSuccess();
                             out.println(house.getInventory());
                             break;
                         case QUIT:
@@ -51,5 +53,10 @@ public class Bidder implements Runnable{
             }
         }
     }
+
+    public void sendSuccess() {
+        out.println(BankMessages.SUCCESS);
+    }
+
 
 }
