@@ -12,8 +12,15 @@ import java.util.concurrent.Executors;
 public class BankService {
 
     private ExecutorService executor = Executors.newCachedThreadPool();
-    private ArrayList<AuctionHouseAccount> auctionHouses = new ArrayList<>();
-    private ArrayList<AgentAccount> agents = new ArrayList<>();
+    //private ArrayList<AuctionHouseAccount> auctionHouses = new ArrayList<>();
+    //private ArrayList<AgentAccount> agents = new ArrayList<>();
+    private ArrayList<Account> auctionHouses = new ArrayList<>();
+    private ArrayList<Account> agents = new ArrayList<>();
+    private int accountId;
+
+    public BankService() {
+        accountId = 0;
+    }
 
     /**
      * This method is called by the NotificationServer when a new client has connected to this service. It handles the
@@ -41,19 +48,28 @@ public class BankService {
         // Create an Account for the client and start its thread to listen for and handle requests individually
         switch(type) {
             case("agent"): {
-                AgentAccount agent = new AgentAccount(this, out, in);
+                //AgentAccount agent = new AgentAccount(this, out, in);
+                Account agent = new Account(accountId, this, out, in);
+                accountId++;
                 agents.add(agent);
                 executor.execute(agent);
+                break;
             }
             case("auction house"): {
-                AuctionHouseAccount aHouse = new AuctionHouseAccount(this, out, in);
+                //AuctionHouseAccount aHouse = new AuctionHouseAccount(this, out, in);
+                Account aHouse = new Account(accountId, this, out, in);
+                accountId++;
                 auctionHouses.add(aHouse);
                 executor.execute(aHouse);
+                break;
+            }
+            default: {
+                System.out.println("Issue connecting --> BankService in handleNewConnection");
             }
         }
     }
 
-    public int getAccountBalance(int accountId) {
-        return agents.get(accountId).getBalance();
-    }
+//    public int getAccountBalance(int accountId) {
+//        return agents.get(accountId).getBalance();
+//    }
 }

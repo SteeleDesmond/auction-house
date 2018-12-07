@@ -4,6 +4,7 @@ import ah.shared.AuctionHouseProxy;
 import ah.shared.BankProxy;
 import ah.shared.CommunicationService;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class AgentController implements Runnable {
@@ -40,7 +41,12 @@ public class AgentController implements Runnable {
                     break;
                 }
                 case("b"): {
-                    bank.checkBalance();
+                    try {
+                        bank.checkBalance();
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     break;
                 }
                 case("c"): {
