@@ -104,6 +104,19 @@ public class AgentController implements Runnable {
                     }
                     break;
                 }
+                case("t"): {
+                    System.out.println("Enter the amount to transfer:");
+                    int amountToTransfer = Integer.valueOf(commandLine.nextLine());
+                    System.out.println("Please enter the AH Key given:");
+                    String ahKey = commandLine.nextLine();
+                    try {
+                        bank.transferFunds(bank.getBiddingKey(), ahKey, amountToTransfer);
+                    }
+                    catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                }
             }
         }
     }
@@ -124,6 +137,7 @@ public class AgentController implements Runnable {
             System.out.println();
             System.out.println("Auction House:");
             System.out.println("(g)et list of current auctions");
+            System.out.println("(t)ransfer funds to an Auction House");
         }
         // Check account balance
         // check active bids

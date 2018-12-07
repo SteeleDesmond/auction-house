@@ -81,7 +81,83 @@ public class BankService {
     public ArrayList<Account> getAgents() {
         return agents;
     }
-//    public int getAccountBalance(int accountId) {
-//        return agents.get(accountId).getBalance();
-//    }
+
+    /**
+     * Used when an agent requests a transfer to an aHouse.
+     * @param agentKey The agent's key
+     * @param ahKey The aHouse's key
+     * @param amount The amount to transfer
+     * @return True if successful, false if there was an error with key validation or insufficient funds
+     */
+    public boolean transferFunds(String agentKey, String ahKey, int amount) {
+        Account agent = null;
+        Account aHouse = null;
+        for(Account a : agents) {
+            if(a.getPersonalKey().equals(agentKey)) {
+                agent = a;
+            }
+        }
+        for(Account a : auctionHouses) {
+            if(a.getPersonalKey().equals(ahKey)) {
+                aHouse = a;
+            }
+        }
+        if(agent == null || aHouse == null) {
+            return false;
+        }
+        if(agent.getAccountBalance() < amount) {
+            return false;
+        }
+        agent.setAccountBalance(agent.getAccountBalance() - amount);
+        aHouse.setAccountBalance(aHouse.getAccountBalance() + amount);
+        return true;
+    }
+
+    public boolean blockFunds(String ahKey, String agentKey, int amount) {
+        Account aHouse = null;
+        Account agent = null;
+        for(Account a : auctionHouses) {
+            if(a.getPersonalKey().equals(ahKey)) {
+                aHouse = a;
+            }
+        }
+        for(Account a : agents) {
+            if(a.getPersonalKey().equals(agentKey)) {
+                agent = a;
+            }
+        }
+        if(agent == null || aHouse == null) {
+            return false;
+        }
+        if(agent.getAccountBalance() < amount) {
+            return false;
+        }
+        agent.setHoldsAmount(agent.getHoldsAmount() + amount);
+        agent.setAccountBalance(agent.getAccountBalance() - amount);
+        return true;
+    }
+
+    public boolean unblockFunds(String ahKey, String agentKey, int amount) {
+        Account aHouse = null;
+        Account agent = null;
+        for(Account a : auctionHouses) {
+            if(a.getPersonalKey().equals(ahKey)) {
+                aHouse = a;
+            }
+        }
+        for(Account a : agents) {
+            if(a.getPersonalKey().equals(agentKey)) {
+                agent = a;
+            }
+        }
+        if(agent == null || aHouse == null) {
+            return false;
+        }
+        if(agent.getHoldsAmount() < amount) { // Prevent negative holds from happening
+            return false;
+        }
+        agent.setHoldsAmount(agent.getHoldsAmount() - amount);
+        agent.setAccountBalance(agent.getAccountBalance() + amount);
+        return true;
+    }
 }
