@@ -67,27 +67,45 @@ public class AuctionHouseProxy {
         return listOfAuctions; // If empty --> error
     }
 
-    public boolean makeBid(String item, int money) throws IOException{
-        waiting = true;
+    public boolean bid(String itemName, int amount) throws IOException {
         ahOut.println(AuctionHouseMessages.BID);
-        ahOut.println(item);
-        ahOut.println(money);
-        while(waiting){
+        ahOut.println(itemName);
+        ahOut.println(amount);
+        return handleResponse();
+    }
 
-            if((input = ahIn.readLine()) != null){
-                System.out.println(input); // Print the message received to console for testing
+    /**
+     * Used after connecting with an Auction House to send its bidding key. Initialized in Bidder's constructor.
+     * @param biddingKey The bidding key of the user
+     */
+    public void sendBiddingKey(String biddingKey) {
+        ahOut.println(biddingKey);
+    }
+
+    /**
+     * Helper function for AuctionHouseProxy. If the AH only responds a simple success or failure/error message, this
+     * method can be used to handle it.
+     * @return True if the request was successful, false if there was an error.
+     */
+    private boolean handleResponse() throws IOException {
+        System.out.println("Waiting for response from Auction House...");
+        waiting = true;
+        while(waiting) {
+            if((input = ahIn.readLine()) != null) {
+                System.out.println(input); // Print to console for testing
                 if(input.equalsIgnoreCase(AuctionHouseMessages.SUCCESS.name())) {
-                    System.out.println(ahIn.readLine());
                     waiting = false;
                     return true;
                 }
-            } else {
-                System.out.println("Error processing bid");
+                else if(input.equalsIgnoreCase(AuctionHouseMessages.FAILURE.name())) {
+                    System.out.println(ahIn.readLine()); // Print error message sent by auction house
+                }
+                else {
+                    System.out.println("Error processing transfer request");
+                }
             }
             waiting = false;
         }
-        return false; // Error depositing
-
+        return false;
     }
-
 }

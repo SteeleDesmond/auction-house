@@ -5,30 +5,30 @@ import ah.shared.enums.AuctionHouseMessages;
 import ah.shared.enums.BankMessages;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
-public class Bidder implements Runnable{
+public class Bidder implements Runnable {
     private String name;
     boolean loggedIn = true;
     private PrintWriter out;
     private BufferedReader in;
     private AuctionHouseService house;
+    private String biddingKey;
+    private ArrayList<String> itemsWon = new ArrayList<>();
 
-    public Bidder(){
-
-    }
-
-    public Bidder(String callMe, PrintWriter out, BufferedReader in, AuctionHouseService house){
+    public Bidder(String callMe, PrintWriter out, BufferedReader in, AuctionHouseService house) throws IOException {
         this.name = callMe;
         this.in=in;
         this.out = out;
         this.house=house;
-        System.out.println("new bidder created! "+name);
+        biddingKey = in.readLine();
+        System.out.println("New bidder added! Bidding key = " + biddingKey);
     }
 
     @Override
-    public void run(){
-        System.out.println("run entered - bidder");
+    public void run() {
         String input;
         while(loggedIn){
             //System.out.println("Loop");
@@ -42,8 +42,25 @@ public class Bidder implements Runnable{
                             sendSuccess();
                             out.println(house.getInventory());
                             break;
-                        case QUIT:
+                        case BID: {
+                            String itemName = in.readLine(); // Get the item to bid on
+                            int amount = Integer.valueOf(in.readLine());
+                            if(house.attemptToBid(biddingKey, itemName, amount)) {
+                                out.println(AuctionHouseMessages.SUCCESS);
+                            }
+                            else {
+                                out.println(AuctionHouseMessages.FAILURE);
+                            }
                             break;
+                        }
+                        case WON: {
+                            out.println(AuctionHouseMessages.SUCCESS);
+                            out.println(itemsWon.size());
+                            for(String s : itemsWon) {
+                                out.println(s);
+                            }
+                            break;
+                        }
                         case BID:
                             input = in.readLine();
                             int money = Integer.parseInt(in.readLine());
@@ -59,9 +76,19 @@ public class Bidder implements Runnable{
         }
     }
 
-    public void sendSuccess() {
+    private void sendSuccess() {
         out.println(BankMessages.SUCCESS);
     }
 
+    public ArrayList<String> getItemsWon() {
+        return itemsWon;
+    }
 
+    /**
+     * Used by the parent class (AuctionHouseService) to add items to the bidder's list of won items
+     * @param item The item name of the item won
+     */
+    public void addWonItem(String item) {
+        itemsWon.add(item);
+    }
 }
