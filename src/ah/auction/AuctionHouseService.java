@@ -57,6 +57,8 @@ public class AuctionHouseService implements Runnable {
         return true;
     }
 
+
+
     private void printItemList(){
         System.out.println("Items Available: ");
         if(!itemList.isEmpty()) {
