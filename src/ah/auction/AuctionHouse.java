@@ -73,7 +73,7 @@ public class AuctionHouse {
      * @return a string representation of that information
      */
     public String getInventoryList(){
-        String ret = name+"\n";
+        String ret="";//name+"\n";
         for(Item i: inventory){
             ret = ret+i.toString();
             ret = ret+"\n";
