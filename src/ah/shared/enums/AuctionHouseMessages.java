@@ -4,6 +4,7 @@ public enum AuctionHouseMessages {
 
     // Client to Bank
     GETAUCTIONS,
+    QUIT,
     GETBIDDINGKEY,
     GETAHGENTKEY,
 

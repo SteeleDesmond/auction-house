@@ -13,21 +13,25 @@ import java.util.concurrent.Executors;
 public class AuctionHouseService implements Runnable {
     private ExecutorService pool = Executors.newCachedThreadPool();
     private LinkedList<Bidder> bidders = new LinkedList();
-
+    private AuctionHouse ah;
     private BankProxy bank;
+    private Scanner commandLine;
     //private LinkedList<Item> itemList = new LinkedList<>();
 
     public AuctionHouseService(BankProxy bank) {
         this.bank = bank;
         // Register with the static bank
+        commandLine = new Scanner(System.in);
+        ah = new AuctionHouse(commandLine);
+
     }
 
     @Override
     public void run() {
-        Scanner commandLine = new Scanner(System.in);
-        AuctionHouse ah = new AuctionHouse(commandLine);
 
-        commandLine.close();
+
+
+        //commandLine.close();
     }
 
     public void addNewClient(Socket s) throws IOException {
@@ -50,7 +54,7 @@ public class AuctionHouseService implements Runnable {
 
         String name = "temp";//in.readLine();
         //create a bidder
-        Bidder newbidder =  new Bidder(name,out,in);
+        Bidder newbidder =  new Bidder(name,out,in,this);
         bidders.add(newbidder);
         pool.execute(newbidder);
 
@@ -58,6 +62,10 @@ public class AuctionHouseService implements Runnable {
 //            if(in.readLine() != null)
 //                System.out.println("AHService received message: " + in.readLine());
 //        }
+    }
+
+    public String getInventory(){
+        return ah.getInventoryList();
     }
 
 

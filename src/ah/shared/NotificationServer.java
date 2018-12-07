@@ -63,7 +63,7 @@ public class NotificationServer {
                 break;
             }
         }
-        //System.out.println("Server is running.");
+        System.out.println("Server is running.");
 
         // Listen  for  new  clients  forever
         while(true) {
