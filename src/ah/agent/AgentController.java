@@ -54,7 +54,7 @@ public class AgentController implements Runnable {
                 case("b"): {
                     try {
 
-                        System.out.println("new Balance: "+ bank.checkBalance());
+                        System.out.println("Balance: "+ bank.checkBalance());
                     }
                     catch (Exception e) {
                         e.printStackTrace();
@@ -66,7 +66,7 @@ public class AgentController implements Runnable {
                     String input = commandLine.nextLine();
                     try {
                         if(bank.deposit(Integer.valueOf(input))){
-                            userAccount.balance += Double.valueOf(input);
+                            System.out.println("transaction success");
                         } else {
                             System.out.println("transaction failed");
                         }
@@ -81,7 +81,7 @@ public class AgentController implements Runnable {
                     String input = commandLine.nextLine();
                     try {
                         if (bank.withdraw(Integer.valueOf(input))){
-                            userAccount.balance -= Double.valueOf(input);
+                            System.out.println("transaction success");
 
                         } else {
                             System.out.println("transaction failed");
@@ -116,6 +116,9 @@ public class AgentController implements Runnable {
                     }
                     break;
                 }
+                case("g"): {
+
+                }
                 case("t"): {
                     System.out.println("Enter the amount to transfer:");
                     int amountToTransfer = Integer.valueOf(commandLine.nextLine());
@@ -129,6 +132,8 @@ public class AgentController implements Runnable {
                     }
                     break;
                 }
+
+
                 default:{
                     System.out.println("please reenter command");
                 }
