@@ -1,9 +1,6 @@
 package ah.shared;
 
 
-import ah.agent.AgentController;
-import ah.auction.AuctionHouseController;
-
 import java.io.*;
 import java.net.*;
 import java.util.Scanner;
