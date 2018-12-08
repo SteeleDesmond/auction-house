@@ -11,6 +11,7 @@ import java.util.concurrent.Executors;
 public class AuctionHouseService implements Runnable {
     private ExecutorService pool = Executors.newCachedThreadPool();
     private LinkedList<Bidder> bidders = new LinkedList<>();
+    private LinkedList<Bid> bids= new LinkedList<>();
     private AuctionHouse ah;
     private BankProxy bank;
     private Scanner commandLine;
@@ -37,7 +38,7 @@ public class AuctionHouseService implements Runnable {
         pool.execute(newbidder);
     }
 
-    public String getInventory(){
+    public LinkedList<String> getInventory(){
         return ah.getInventoryList();
     }
 
@@ -51,6 +52,15 @@ public class AuctionHouseService implements Runnable {
     }
 
 
+    /**
+     * Tell the bank to remove a hold on a given amount of funds of a given agent account
+     * @param agentBiddingKey The agent's bidding key given to the AH
+     * @param amount The amount to hold
+     */
+    public boolean unblockFunds(String agentBiddingKey, int amount)  throws IOException {
+        return bank.unblockFunds(bank.getAHKey(), agentBiddingKey, amount);
+    }
+
     public String makeBid(String name, String item, int money)throws IOException{
         if(bank.blockFunds(bank.getAHKey(),name,money)){
             Item mcguffin = new Item(item);
@@ -61,29 +71,28 @@ public class AuctionHouseService implements Runnable {
                     return ("REJECT");
                 case("START"):
                     break;
-                    default:
-                        //other bidder
+                default:
+                    //other bidder
             }
         }
 
-
-
-
-
         return "Reject";
     }
-
-    /**
-     * Tell the bank to remove a hold on a given amount of funds of a given agent account
-     * @param agentBiddingKey The agent's bidding key given to the AH
-     * @param amount The amount to hold
-     */
-    public boolean unblockFunds(String agentBiddingKey, int amount)  throws IOException {
-        return bank.unblockFunds(bank.getAHKey(), agentBiddingKey, amount);
-    }
-
     public boolean attemptToBid(String bidderKey, String itemName, int amount) {
         return true;
+    }
+    public boolean checkWin(String winCard, Item item){
+        LinkedList<Item> inventory = ah.getInventory();
+        if(inventory.contains(item)){
+            Item compare = inventory.remove(inventory.indexOf(item));
+            if(compare.getBidder().equals(item.getBidder())){
+                if(compare.getCurrentBid()==item.getCurrentBid()){
+                    return true;
+                }
+            }
+            inventory.add(compare);
+        }
+        return false;
     }
 }
 

@@ -40,6 +40,7 @@ public class AuctionHouseProxy {
         waiting = true;
         ahOut.println(AuctionHouseMessages.GETAUCTIONS);
         System.out.println("Waiting for response from Auction House...");
+        int numberOfAuctions;
         while(waiting) {
             if((input = ahIn.readLine()) != null) {
                 System.out.println(input); // Print message received for testing
@@ -47,9 +48,15 @@ public class AuctionHouseProxy {
 
                     // If a success then the list of auctions follows the success message in one line
                     // Split the line at new line characters and add to ArrayList
-                    Scanner sc = new Scanner(ahIn.readLine());
-                    while (sc.hasNext()){
-                        listOfAuctions.add(sc.nextLine());
+//                    Scanner sc = new Scanner(ahIn);
+//                    while (sc.hasNext()){
+//                        listOfAuctions.add(sc.nextLine());
+//                    }
+                    // The following message is the number of AHs to be coming in
+                    numberOfAuctions = Integer.valueOf(ahIn.readLine());
+                    // System.out.println(numberOfAHs); // For console testing
+                    for(int i = 0; i < numberOfAuctions; i++) {
+                        listOfAuctions.add(ahIn.readLine());
                     }
                     waiting = false;
                     return listOfAuctions;

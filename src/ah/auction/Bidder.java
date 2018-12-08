@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Bidder implements Runnable {
     private String name;
@@ -40,7 +41,11 @@ public class Bidder implements Runnable {
                     switch(msg){
                         case GETAUCTIONS:
                             sendSuccess();
-                            out.println(house.getInventory());
+                            LinkedList<String> inventory = house.getInventory();
+                            out.println(inventory.size());
+                            for(String item: inventory){
+                                out.println(item);
+                            }
                             break;
                         case BID: {
                             String itemName = in.readLine(); // Get the item to bid on

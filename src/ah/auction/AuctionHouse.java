@@ -31,9 +31,9 @@ public class AuctionHouse {
         System.out.println("Before you can use your auction house," +
                 "we need some information");
         System.out.println();
-        System.out.println("What do you want to name your Auction House?");
-        name = in.nextLine();
-        System.out.println("Welcome "+name+" Auction House");
+        //System.out.println("What do you want to name your Auction House?");
+        //name = in.nextLine();
+        //System.out.println("Welcome "+name+" Auction House");
 
         System.out.println("How many items do you want to sell?");
         readInNumber(in);
@@ -48,37 +48,20 @@ public class AuctionHouse {
         //bank related things set after creation, or before...just not here
     }
 
-//    /**
-//     * temporary main, used for testing right now.
-//     * @param args not used
-//     */
-//    public static void main(String[] args){
-//        Scanner commandLine = new Scanner(System.in);
-//        AuctionHouse ah = new AuctionHouse(commandLine);
-//        System.out.println(ah.getInventoryList());
-//        Item item = ah.inventory.getFirst();
-//        Item item2 = ah.inventory.getLast();
-//        ah.makeBid(item,30,"bob");
-//        ah.makeBid(item2,1001,"susie");
-//        ah.makeBid(item,1001,"mike");
-//        ah.makeBid(item2,1002,"mary");
-//        ah.makeBid(item,1001,"darrel");
-//        System.out.println(ah.getInventoryList());
-//
-//        commandLine.close();
-//    }
 
     /**
      * Gets the list of items the auction is selling, all of them
      * @return a string representation of that information
      */
-    public String getInventoryList(){
-        String ret="";//name+"\n";
+    public LinkedList<String> getInventoryList(){
+        LinkedList<String> ret= new LinkedList<>();
         for(Item i: inventory){
-            ret = ret+i.toString();
-            ret = ret+"\n";
+            ret.add(i.toString());
         }
         return ret;
+    }
+    public synchronized LinkedList<Item> getInventory(){
+        return inventory;
     }
 
     /**
