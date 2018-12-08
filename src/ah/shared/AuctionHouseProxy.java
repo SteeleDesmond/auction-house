@@ -8,6 +8,10 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * AuctionHouseProxy functions as a stand in for the Auction House
+ * and is where the input and output of the socket work takes place
+ */
 public class AuctionHouseProxy {
     //think I need to do some error checking here, like
     //make sure messages are being passed correctly...
@@ -17,20 +21,26 @@ public class AuctionHouseProxy {
     private boolean waiting;
     private String input;
 
+    /**
+     * constructor for the Auction house proxy
+     * @param ahOut the output stream
+     * @param ahIn the input stream
+     */
     public AuctionHouseProxy(PrintWriter ahOut, BufferedReader ahIn) {
         this.ahOut = ahOut;
         this.ahIn = ahIn;
     }
 
-    // need to get inventory list
-    //maybe server number, if bank uses it
-
+    /**
+     * sends less specific messages to the Auction house
+     * @param msg message you want to send
+     */
     public void sendMsg(String msg) {
         ahOut.println(msg);
     }
 
     /**
-     *
+     * Gets the list of Auctions from the actual Auction house
      * @return a list of all the items and their info
      * @throws IOException
      */
@@ -45,13 +55,6 @@ public class AuctionHouseProxy {
             if((input = ahIn.readLine()) != null) {
                 System.out.println(input); // Print message received for testing
                 if(input.equalsIgnoreCase(AuctionHouseMessages.SUCCESS.name())) {
-
-                    // If a success then the list of auctions follows the success message in one line
-                    // Split the line at new line characters and add to ArrayList
-//                    Scanner sc = new Scanner(ahIn);
-//                    while (sc.hasNext()){
-//                        listOfAuctions.add(sc.nextLine());
-//                    }
                     // The following message is the number of AHs to be coming in
                     numberOfAuctions = Integer.valueOf(ahIn.readLine());
                     // System.out.println(numberOfAHs); // For console testing
@@ -74,6 +77,13 @@ public class AuctionHouseProxy {
         return listOfAuctions; // If empty --> error
     }
 
+    /**
+     * Bid is meant to send bids over the socket work
+     * @param itemName name of item being bid on
+     * @param amount amount the person wishes to bid
+     * @return a boolean
+     * @throws IOException if it occurs
+     */
     public boolean bid(String itemName, int amount) throws IOException {
         ahOut.println(AuctionHouseMessages.BID);
         ahOut.println(itemName);
