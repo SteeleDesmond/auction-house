@@ -1,11 +1,20 @@
 package ah.auction;
-//I think I might make this into a runnable, and it will check to see if time has run out.
+
+/**
+ * Bid class is meant to keep track of the count down for the auctions
+ */
 public class Bid extends Thread implements Runnable{
     private String theBid;
     private Bidder bidder;
     private Item item;
     private AuctionHouseService a;
 
+    /**
+     * creates a bid object
+     * @param item item being bid on
+     * @param parent reference to parent for notification purposes
+     * @param bidder referance to the bidder who makes the bid
+     */
     public Bid(Item item, AuctionHouseService parent, Bidder bidder){
         System.out.println("bid created");
         this.bidder=bidder;
@@ -14,7 +23,12 @@ public class Bid extends Thread implements Runnable{
         a = parent;
     }
 
-
+    /**
+     * Run is meant to be the count down
+     * thread sleeps for thirty seconds,
+     * then it checks to see if the will is valid
+     * then, if the win is there, it notifies the bidder
+     */
     @Override
     public void run(){
         System.out.println("Bid run");
@@ -29,48 +43,4 @@ public class Bid extends Thread implements Runnable{
            //tell that they won
        }
     }
-
-//    /**
-//     * Creates a bid
-//     * @param item the item the bid is on
-//     * @param money the amount of money bid on the item
-//     * @param name name of the bidder
-//     */
-//    public Bid(String){
-//        this.item=item;
-//        this.bidAmount=money;
-//        this.bidder=name;
-//    }
-//
-//    /**
-//     * getter for the bid amount
-//     * @return the bid amount
-//     */
-//    public int getBidAmount() {
-//        return bidAmount;
-//    }
-//
-//    /**
-//     * getter for the item
-//     * @return the item in question
-//     */
-//    public Item getItem() {
-//        return item;
-//    }
-//
-//    /**
-//     * getter for the bidder's name
-//     * @return bidder's name as a string
-//     */
-//    public String getBidder() {
-//        return bidder;
-//    }
-//
-//    /**
-//     * @Override toString
-//     * @return string representation of bid
-//     */
-//    public String toString(){
-//        return ("Bidder: "+bidder+", $"+bidAmount+" for "+item);
-//    }
 }
