@@ -1,5 +1,9 @@
 package ah.auction;
 
+/**
+ * Item class stores all item information.
+ * it also keeps track of numerical bid information
+ */
 public class Item {
     private final int itemID;
     private final String itemName;
