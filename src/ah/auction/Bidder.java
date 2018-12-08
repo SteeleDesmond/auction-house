@@ -89,6 +89,17 @@ public class Bidder implements Runnable {
         return itemsWon;
     }
 
+    public void sendWinNotification(Item item){
+        out.println(AuctionHouseMessages.WON);
+        addWonItem(item.getItemName());
+    }
+    public void sendPassNotification(){
+        out.println(AuctionHouseMessages.PASS);
+    }
+
+    public void sendRejectNotification(){
+        out.println(AuctionHouseMessages.REJECT);
+    }
     /**
      * Used by the parent class (AuctionHouseService) to add items to the bidder's list of won items
      * @param item The item name of the item won

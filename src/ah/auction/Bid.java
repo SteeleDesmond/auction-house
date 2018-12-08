@@ -2,10 +2,13 @@ package ah.auction;
 //I think I might make this into a runnable, and it will check to see if time has run out.
 public class Bid extends Thread implements Runnable{
     private String theBid;
+    private Bidder bidder;
     private Item item;
     private AuctionHouseService a;
 
-    public Bid(Item item, AuctionHouseService parent){
+    public Bid(Item item, AuctionHouseService parent, Bidder bidder){
+        System.out.println("bid created");
+        this.bidder=bidder;
         theBid = item.toString();
         this.item =item;
         a = parent;
@@ -14,7 +17,7 @@ public class Bid extends Thread implements Runnable{
     //thread sleep hahahahaha
 //    @Override
     public void run(){
-        System.out.println("Bid created");
+        System.out.println("Bid run");
         try{
             sleep(30000);
         }catch(Exception e){
@@ -22,6 +25,7 @@ public class Bid extends Thread implements Runnable{
         }
         System.out.println("Bid has awoken");
        if(a.checkWin(theBid, item)){
+           bidder.sendWinNotification();
            //tell that they won
        }
     }

@@ -2,13 +2,15 @@ package ah.shared.enums;
 
 public enum AuctionHouseMessages {
 
-    // Client to Bank
+    // Client to Auction house
     BID,
     GETAUCTIONS,
-    WON,
     QUIT,
 
-    // Bank to Client
+    // Auction house to client
+    WON,
+    PASS,
+    REJECT,
     SUCCESS,
     FAILURE
 }
