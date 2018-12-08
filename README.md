@@ -20,7 +20,7 @@ Version 1.0
 
 They should be started in the following order:
 
-Bank --> AuctionHouseServer --> AuctionHouseClient --> Agent
+Bank --> AuctionHouseServer  --> Agent
 
 ## Implemented Features
 
