@@ -14,8 +14,8 @@ public class Bid extends Thread implements Runnable{
         a = parent;
     }
 
-    //thread sleep hahahahaha
-//    @Override
+
+    @Override
     public void run(){
         System.out.println("Bid run");
         try{
@@ -25,7 +25,7 @@ public class Bid extends Thread implements Runnable{
         }
         System.out.println("Bid has awoken");
        if(a.checkWin(theBid, item)){
-           bidder.sendWinNotification();
+           bidder.sendWinNotification(item);
            //tell that they won
        }
     }

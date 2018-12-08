@@ -61,24 +61,49 @@ public class AuctionHouseService implements Runnable {
         return bank.unblockFunds(bank.getAHKey(), agentBiddingKey, amount);
     }
 
-    public String makeBid(String name, String item, int money)throws IOException{
-        if(bank.blockFunds(bank.getAHKey(),name,money)){
-            Item mcguffin = new Item(item);
-            String result = ah.makeBid(mcguffin,money,name);
+    private Bidder findBidder(String bidderkey) {
+        for(Bidder b: bidders) {
+            if (b.matches(bidderkey)) {
+                return b;
+            }
+        }
+        return null;
+    }
+    public void createBidThread(Item item, Bidder bidder){
+        Bid bid = new Bid(item,this,bidder);
+        bids.add(bid);
+        bid.start();
+    }
+
+    public boolean attemptToBid(String bidderKey, String itemName, int amount)
+    throws IOException{
+        System.out.println("Attempting to bid");
+        if(bank.blockFunds(bank.getAHKey(),bidderKey,amount)){
+            Item mcguffin = new Item(itemName);
+            String result = ah.makeBid(mcguffin,amount,bidderKey);
+            Bidder newBidder = findBidder(bidderKey);
+            if(newBidder==null){
+                return false;
+            }
             switch(result){
                 case ("NONE"):
                 case("REJECT"):
-                    return ("REJECT");
+                    newBidder.sendRejectNotification();
+                    break;
                 case("START"):
+                    createBidThread(mcguffin,newBidder);
                     break;
                 default:
+                    Bidder oldBidder = findBidder(result);
+                    if(oldBidder==null){
+                        return false;
+                    }
+                    oldBidder.sendPassNotification();
+                    createBidThread(mcguffin,newBidder);
                     //other bidder
             }
-        }
 
-        return "Reject";
-    }
-    public boolean attemptToBid(String bidderKey, String itemName, int amount) {
+        }
         return true;
     }
     public boolean checkWin(String winCard, Item item){

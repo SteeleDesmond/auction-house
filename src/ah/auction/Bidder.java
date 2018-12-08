@@ -107,4 +107,8 @@ public class Bidder implements Runnable {
     public void addWonItem(String item) {
         itemsWon.add(item);
     }
+
+    public boolean matches(String name){
+        return this.name.equals(name);
+    }
 }
