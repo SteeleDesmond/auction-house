@@ -7,11 +7,12 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
-
-//need to clean this up a bit.
+/**
+ * Auction House stores all the auction house information,
+ * like what is in the inventory
+ */
 public class AuctionHouse {
-    private String name;
-    private String bankID; //keep for now //delete this
+//    private String name;
     private LinkedList<Item> inventory;
     private int defaultItemNum = 5;//easy access
     private int numberOfItems = 5; //...don't need to change this
@@ -109,17 +110,14 @@ public class AuctionHouse {
         }
     }
 
-    /**
-     * getter for the auction house name
-     * @return the auction house name
-     */
-    public String getName() {
-        return name;
-    }
+//    /**
+//     * getter for the auction house name
+//     * @return the auction house name
+//     */
+//    public String getName() {
+//        return name;
+//    }
 
-    public void setBankID(){
-        //just set this, later, after bank account gets created, if needed...probs not
-    }
 
     /*
      * looks for the specified item in the ah inventory
