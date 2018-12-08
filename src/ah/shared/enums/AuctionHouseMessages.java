@@ -1,5 +1,8 @@
 package ah.shared.enums;
 
+/**
+ * AuctionHouseMessages standardizes communication
+ */
 public enum AuctionHouseMessages {
 
     // Client to Auction house
