@@ -1,12 +1,6 @@
+Author: Steele Desmond - sdesmondemail@gmail.com
 # Auction House
-
-## Contributors
-
-Steele Desmond
-
-Savanna Middaugh
-
-Gavin McGuire
+This program is designed to encompass an auction house simulation that is available over the network. It implements a client/server model that allows users(Agents) to connect to a Bank and Auction House. Users can create a bank account and bid on auctions at an Auction house.
 
 ## Versions (Jar files)
 
@@ -106,6 +100,14 @@ run an AuctionHouseController. It would act as the front-end for the Auction Hou
 The code was left in case we wanted to convert back later on, but the finished design
 used a runnable thread in the AuctionHouseService that acted as a small built-in
 controller for the service.
+
+## Contributors
+
+Steele Desmond
+
+Savanna Middaugh
+
+Gavin McGuire
 
 ## Contributions
 
