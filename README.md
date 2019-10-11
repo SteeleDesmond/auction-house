@@ -105,16 +105,7 @@ controller for the service.
 
 Steele Desmond
 
-Savanna Middaugh
-
-Gavin McGuire
-
 ## Contributions
-
-We used the issue board in gitlab throughout this project to delegate work for 
-the assignment.
-
-### Steele Desmond
 
 - Initial setup of the gitlab repository with structured branches and git best practices
 - Setting up and maintaining the issue board for issue tracking, work delegation, and milestone tracking
@@ -134,10 +125,6 @@ the assignment.
 - Writing design diagrams
 - Writing README
 - Adding jar files
-
-### Gavin McGuire
-
-### Savanna Middaugh
 
 ## Bugs
 
